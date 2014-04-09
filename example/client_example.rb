@@ -4,6 +4,7 @@ class ClientExample
 
   app_key = '466f7032ac604e02fb7bda89' #必填，例如466f7032ac604e02fb7bda89
   master_secret = '57c45646c772983fede7c455' #必填，每个应用都对应一个masterSecret
+  apns_production = 0 #选填, 0表示向开发环境推送，1表示向生长环境推送, 如果不携带此参数则推送环境与 JPush Web 上的应用 APNS 环境设置相同。
 
   # 保存离线的时长。秒为单位。最多支持10天（864000秒）。
   # 0 表示该消息不保存离线。即：用户在线马上发出，当前不在线用户将不会收到此消息。
@@ -28,7 +29,7 @@ class ClientExample
   # jpush_client = JPushApiRubyClient::Client.new(app_key, master_secret)
   #
 
-  jpush_client = JPushApiRubyClient::Client.new(app_key, master_secret,'platform' => JPushApiRubyClient::PlatformType::BOTH)
+  jpush_client = JPushApiRubyClient::Client.new(app_key, master_secret, 'platform' => JPushApiRubyClient::PlatformType::BOTH, 'apns_production' => apns_production)
 
   #jpush_client.enable_ssl(true) 是否启用https请求，缺省false
 
