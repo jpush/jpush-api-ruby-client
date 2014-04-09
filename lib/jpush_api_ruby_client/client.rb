@@ -10,7 +10,7 @@ module JPushApiRubyClient
 
   class Client
     include PlatformType, MsgType, ReceiverType
-    attr_accessor :app_key, :master_secret, :https, :time_to_live, :platform
+    attr_accessor :app_key, :master_secret, :https, :time_to_live, :platform, :apns_production
 
 =begin
     * @param [String] app_key
@@ -22,6 +22,7 @@ module JPushApiRubyClient
       @master_secret = master_secret
       @time_to_live = opts['time_to_live'] || 86400
       @platform = opts['platform'] || PlatformType::BOTH
+      @apns_production = opts['apns_production'] || 0
     end
 
 =begin
@@ -169,7 +170,8 @@ module JPushApiRubyClient
       msg = {:msg_type => MsgType::NOTIFICATION,
              :msg_content => msg_body,
              :platform => platform,
-             :time_to_live => time_to_live
+             :time_to_live => time_to_live,
+             :apns_production => apns_production
       }
       msg[:override_msg_id] = opts['override_msg_id'] if opts.has_key?('override_msg_id')
       send_message(send_no, msg, receiver)
@@ -184,7 +186,8 @@ module JPushApiRubyClient
       msg = {:msg_type => MsgType::MESSAGE,
              :msg_content => msg_body,
              :platform => platform,
-             :time_to_live => time_to_live
+             :time_to_live => time_to_live,
+             :apns_production => apns_production
       }
       msg[:override_msg_id] = opts['override_msg_id'] if msg.has_key?('override_msg_id')
 
@@ -213,6 +216,7 @@ module JPushApiRubyClient
       post_body[:msg_type] = msg[:msg_type]
       post_body[:msg_content] = JSON.generate(msg[:msg_content])
       post_body[:platform] = msg[:platform]
+      post_body[:apns_production] = msg[:apns_production]
       post_body[:time_to_live] = msg[:time_to_live]
       post_body[:override_msg_id] = msg[:override_msg_id] if msg.has_key?(:override_msg_id)
 
