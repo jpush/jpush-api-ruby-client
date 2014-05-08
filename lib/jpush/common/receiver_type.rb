@@ -1,16 +1,13 @@
-module JPushApiRubyClient
+module JPush
 =begin
-  * 消息接收类型
+  * Message Receiver Type
 =end
   module ReceiverType
 
-    # 手机串号
     IMEI = '1'
-    # 标签
     TAG = '2'
-    # 别名
     ALIAS = '3'
-    # 广播
     BROADCAST = '4'
+    REGISTRATION_ID = '5'
   end
 end
