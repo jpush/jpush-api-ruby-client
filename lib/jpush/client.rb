@@ -1,7 +1,4 @@
-require "net/https"
-require 'uri'
-require 'base64'
-require 'rest_client'
+require 'jpush/util'
 
 module JPush
 
@@ -12,6 +9,8 @@ module JPush
   PLATFORM = %w{android ios winphone}
 
   class Client
+    include JPush::Util
+    attr_reader :app_key, :master_secret
 
     def initialize app_key, master_secret, opts = {}
       @app_key = app_key.to_s
@@ -96,21 +95,14 @@ module JPush
     end
 
     def do_post(options)
-      auth_string = "Basic #{urlsafe_base64_encode(@app_key + ':' + @master_secret)}"
-      params_hash = @options.merge(options).to_json
-      header_hash = { content_type: :json, Authorization: auth_string }
+      params_hash = @options.merge(options)
 
-      RestClient.post API_URI, params_hash, header_hash do |response|
-        response
-      end
+      post(API_URI, params_hash)
     end
 
     def get_random_sendno
       Random.rand(1000000000)
     end
 
-    def urlsafe_base64_encode content
-      Base64.encode64(content).strip.gsub('+', '-').gsub('/','_').gsub(/\r?\n/, '')
-    end
   end
 end
