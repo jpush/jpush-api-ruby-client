@@ -1,4 +1,4 @@
-require 'jpush_api_ruby_client'
+require 'jpush'
 
 class ClientExample
 
