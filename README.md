@@ -69,7 +69,7 @@ client.tag_push({notification: { alert: 'Hi, JPush!' }, audience: { tag: ['tag1'
 
 ```ruby
 client = JPush::Client.new(app_key, master_key, platform: 'all')
-client.tag_push({notification: { alert: 'Hi, JPush!' }, audience: ['4312kjklfds2', '8914afd2']})
+client.registration_push({notification: { alert: 'Hi, JPush!' }, audience: ['4312kjklfds2', '8914afd2']})
 ```
 
 ## Test
