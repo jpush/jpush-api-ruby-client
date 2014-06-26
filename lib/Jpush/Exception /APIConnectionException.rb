@@ -1,6 +1,6 @@
 class APIConnectionException <Excption
-  def initialize(e,messsge=nil);
-    @maxRetryTimes=maxRetryTimes;
+  def initialize(messsge=nil)
+   super
   end
   
 end

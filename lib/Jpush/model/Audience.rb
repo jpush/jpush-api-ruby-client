@@ -1,3 +1,4 @@
+ module JPushApiRubyClient
   class Audience
      attr_accessor  :tag,:tag_and, :_alias,:registration_id,:segment;
     def initialize
@@ -25,5 +26,5 @@
         return array;
     end
    
-    
+  end
   end

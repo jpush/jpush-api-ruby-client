@@ -1,3 +1,4 @@
+  module JPushApiRubyClient
   class AndroidNotification
     attr_accessor :alert,:title,:builder_id,:extras;
     def toJSON
@@ -16,4 +17,5 @@
       end
       return array;
     end
+  end
   end

@@ -1,3 +1,4 @@
+module JPushApiRubyClient
 class Platform
   attr_accessor :android,:ios,:winphone;
   def initialize
@@ -22,4 +23,5 @@ class Platform
       return array;
     end
   end
+end
 end

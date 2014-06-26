@@ -1,3 +1,4 @@
+module JPushApiRubyClient
  class Options
     attr_accessor :sendno,:time_to_live,:override_msg_id,:apns_production;
     def initialize
@@ -20,3 +21,4 @@
            return array;
     end
  end
+end

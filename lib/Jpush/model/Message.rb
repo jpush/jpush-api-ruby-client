@@ -1,3 +1,4 @@
+ module JPushApiRubyClient
   class Message
     attr_accessor :title,:msg_content,:content_type,:extras;
     def initialize()
@@ -18,4 +19,5 @@
         array['extras']=@extras;
       end
     end
+  end
   end

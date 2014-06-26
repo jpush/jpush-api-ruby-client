@@ -1,6 +1,6 @@
+module JPushApiRubyClient
   class PushPayload
     attr_accessor :platform,:audience,:message,:options,:notification;
- 
     def toJSON
       array={};
       if @platform!=nil then
@@ -20,3 +20,4 @@
       end
     end
   end
+end

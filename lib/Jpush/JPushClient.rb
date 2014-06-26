@@ -3,6 +3,7 @@ require File.join(path, 'NativeHttpClient.rb')
 require File.join(path, 'PushClient.rb')
 require File.join(path, 'ReportClient.rb')
 require File.join(path, 'util/ServiceHelper.rb')
+module JPushApiRubyClient
 =begin
   The global entrance of JPush API library.
 =end
@@ -29,8 +30,8 @@ class JPushClient
     
     
     @masterSecret=masterSecret;
-    @pushClient=PushClient.new;
-    @reportClient=ReportClient.new;
+    @pushClient=JPushApiRubyClient::PushClient.new;
+    @reportClient=JPushApiRubyClient::ReportClient.new;
     @authcode=ServiceHelper.getAuthorizationBase64(appkey,masterSecret);
   end
   def sendPush(payload)
@@ -38,6 +39,7 @@ class JPushClient
   end
   
   def getReportMessages(msgIds)
-     return reportClient.getMessages(msgIds);
+     return reportClient.getMessages(msgIds).to_json;
   end
+end
 end

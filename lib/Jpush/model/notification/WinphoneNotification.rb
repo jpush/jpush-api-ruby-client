@@ -1,3 +1,4 @@
+module JPushApiRubyClient
 class WinphoneNotification
   attr_accessor :alert,:title,:_open_page,:extras;
   def toJSON
@@ -15,4 +16,5 @@ class WinphoneNotification
       array['extras']=@extras;
     end
   end
+end
 end

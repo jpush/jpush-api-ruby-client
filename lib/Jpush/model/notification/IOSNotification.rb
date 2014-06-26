@@ -1,3 +1,4 @@
+module JPushApiRubyClient
 class IOSNotification
    attr_accessor :alert,:sound,:badge,:extras,:content_available;
    def toJSON
@@ -18,4 +19,5 @@ class IOSNotification
        array['contene_available']=@contene_available;
      end
    end
+end
 end
