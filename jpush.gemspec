@@ -19,6 +19,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'rest-client', "~> 1.6.7"
-  spec.add_dependency "json", "~> 1.7.7"
+  spec.add_dependency "json", "> 1.7.7"
 
 end
