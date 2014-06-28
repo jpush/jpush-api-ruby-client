@@ -55,11 +55,11 @@ module JPushApiRubyClient
           req = Net::HTTP::Post.new(uri.path, initheader = header)
         req.body = content
         response = http.request(req)
-        puts 'asdasd'
+    
 
         elsif method=='GET'&&use_ssl == true
          request = Net::HTTP::Get.new(uri.request_uri,initheader = header)
-          response = https.request(request)
+          response = http.request(request)
         end
         #if method=='POST'
         # @response= http.post(path,content,header);
@@ -71,7 +71,9 @@ module JPushApiRubyClient
 
         if code==200
           @logger.debug("Succeed to get response - 200 OK");
+          if content!=nil
           @logger.debug('Response Content -'+content);
+          end
         elsif code>200&&code<400
           @logger.warn('Normal response but unexpected - responseCode:'+code.to_s+',responseContent='+content);
         else

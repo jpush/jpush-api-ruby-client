@@ -41,7 +41,7 @@ class JPushClient
   end
   
   def getReportMessages(msgIds)
-     return @reportClient.getMessagesOrReceiveds(msgIds,@autocode);
+     return @reportClient.getMessagesOrReceiveds(msgIds,@authcode);
   end
 end
 end
