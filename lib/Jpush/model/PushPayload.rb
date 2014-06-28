@@ -4,7 +4,7 @@ module JPushApiRubyClient
     def toJSON
       array={};
       if @platform!=nil then
-        array['platform']=@plaform.toJSON;
+        array['platform']=@platform.toJSON;
       end
       if @audience!=nil then
         array['audience']=@audience.toJSON;
@@ -15,9 +15,10 @@ module JPushApiRubyClient
       if @options!=nil then
         array['options']=@options.toJSON;
       end
-      if @platform!=nil then
-        array['platform']=@plaform.toJSON;
+      if @notification!=nil then
+        array['notification']=@notification.toJSON;
       end
+      return array
     end
   end
 end

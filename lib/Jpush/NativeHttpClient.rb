@@ -21,7 +21,6 @@ module JPushApiRubyClient
     private
 
     def sendRequest(url,content,method,authCode)
-      puts url
       response=_sendRequest(url,content,method,authCode)
       retryTimes=0;
       while retryTimes>@maxRetryTimes
@@ -32,6 +31,7 @@ module JPushApiRubyClient
 
         end
       end
+      return response
     end
 
     def _sendRequest(url,content,method,authCode)
@@ -41,24 +41,25 @@ module JPushApiRubyClient
         header['Connection']='Keep-Alive';
         header['Charset']='UTF-8';
         header['Content-Type']='application/json';
-        header['Authorization']=authCode;
+        header['Authorization']=authCode
         #url=url+content;
+
         uri  = URI.parse(url)
-        puts uri
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         http.open_timeout = 5;
         http.read_timeout = 30;
-        path =  uri.path;
         use_ssl=true
         if method=='POST'&&use_ssl == true
           req = Net::HTTP::Post.new(uri.path, initheader = header)
         req.body = content
         response = http.request(req)
+        puts 'asdasd'
+
         elsif method=='GET'&&use_ssl == true
-          req = Net::HTTP::Get.new(uri.path, initheader = header)
-        req.body = content
+         request = Net::HTTP::Get.new(uri.request_uri,initheader = header)
+          response = https.request(request)
         end
         #if method=='POST'
         # @response= http.post(path,content,header);
@@ -66,16 +67,15 @@ module JPushApiRubyClient
         # @response= http.get2(path,content,header);
         # end
         code=response.code;
-        puts code.class
         code=Integer(code)
-        puts 200.class
+
         if code==200
           @logger.debug("Succeed to get response - 200 OK");
-          @logger.debug('Response Content -'+content.to_str);
+          @logger.debug('Response Content -'+content);
         elsif code>200&&code<400
-          @logger.warn('Normal response but unexpected - responseCode:'+code.to_s+',responseContent='+content.to_json);
+          @logger.warn('Normal response but unexpected - responseCode:'+code.to_s+',responseContent='+content);
         else
-          @logger.error("Got error response - responseCode:" + code.to_s + ", responseContent:" + content.to_json);
+          @logger.error("Got error response - responseCode:" + code.to_s + ", responseContent:" + content);
           case code
           when 400
             @logger.error("Your request params is invalid. Please check them according to error message.");
@@ -93,11 +93,10 @@ module JPushApiRubyClient
           @logger.error("Unexpected response.");
           end
         end
-        return response;
       rescue Exception => ex
         p ex
       end
-
+      return response
     end
   end
 end

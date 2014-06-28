@@ -1,15 +1,12 @@
  module JPushApiRubyClient
   class Audience
      attr_accessor  :tag,:tag_and, :_alias,:registration_id,:segment;
-    def initialize
-      @tag=false;
-      @tag_and=false;
-      @alias=false;
-      @segment=false;
-      @registration_id=false;
-    end
+
 
     def toJSON
+      if @tag!=nil&&@tag_and!=nil&&@_alias!=nil&&@registration_id!=nil then
+        return 'all';
+      end
       array={};
         if !@tag==nil then
           array['tag']=@tag;

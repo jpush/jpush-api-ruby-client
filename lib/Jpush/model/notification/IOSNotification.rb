@@ -18,6 +18,7 @@ class IOSNotification
      if !@contene_available==nil then
        array['contene_available']=@contene_available;
      end
+     return array
    end
 end
 end

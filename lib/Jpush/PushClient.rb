@@ -11,8 +11,7 @@ class PushClient
 
   def sebdPush(payload,autoCode)
     
-    json_data=payload.toJSON
-   # puts @@PUSH_API_URL
+    json_data=JSON.generate(payload.toJSON)
     return @httpclient.sendPsot(@@PUSH_API_URL,json_data,autoCode)
   end
 end

@@ -18,6 +18,8 @@
       if !@extras==nil then
         array['extras']=@extras;
       end
+      return array
     end
+    
   end
   end

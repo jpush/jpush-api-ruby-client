@@ -4,12 +4,12 @@ require File.join(path, 'PushClient.rb')
 require 'json'
 module JPushApiRubyClient
 class ReportClient
-   @RECEIVE_API_URL = "https://report.jpush.cn/v2/received";
+   @@RECEIVE_API_URL = "https://report.jpush.cn/v2/received";
   
-  def getMessages(msg_ids,autocode)
-    @url=RECEIVE_API_URL+'?msg_ids'+msg_ids;
+  def getMessagesOrReceiveds(msg_ids,autocode)
+    @url=@@RECEIVE_API_URL+'?msg_ids='+msg_ids;
     @httpclient=JPushApiRubyClient::NativeHttpClient.new
-    return httpclient.sendGet(@RECEIVE_API_URL,nil,autoCode)
+    return @httpclient.sendGet(@url,nil,autocode)
   end
 end
 end

@@ -22,7 +22,7 @@ class JPushClient
     else
       @logger.error('appkey is formal error ; ');
     end
-    if masterSecret.class==String&&masterSecret.length==24
+    if masterSecret.class==String&&masterSecret.length==24 then
     @masterSecret=masterSecret;
     else
     @logger.error('masterSecret is formal error')
@@ -34,12 +34,14 @@ class JPushClient
     @reportClient=JPushApiRubyClient::ReportClient.new;
     @authcode=ServiceHelper.getAuthorizationBase64(appkey,masterSecret);
   end
+  
   def sendPush(payload)
-    @pushClient.sebdPush(payload,@authcode);
+    response=@pushClient.sebdPush(payload,@authcode);
+       return  response.body
   end
   
   def getReportMessages(msgIds)
-     return reportClient.getMessages(msgIds).to_json;
+     return @reportClient.getMessagesOrReceiveds(msgIds,@autocode);
   end
 end
 end

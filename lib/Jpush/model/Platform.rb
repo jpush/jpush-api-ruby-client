@@ -20,8 +20,8 @@ class Platform
       if @winphone==true then
         array.push('winphone')
       end
-      return array;
     end
+     return array;
   end
 end
 end

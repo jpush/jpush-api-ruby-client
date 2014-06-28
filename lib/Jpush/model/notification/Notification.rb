@@ -1,20 +1,13 @@
 module JPushApiRubyClient
 class Notification
-  attr_accessor :alert,:ios,:android,:winphone;
+  attr_accessor :alert
   def toJSON
     array={}
-    if @alert!=nil
+    if @alert!=nil&&alert.lstrip.length>0
       array['alert']=@alert
     end
-    if @ios!=nil
-      array['ios']=@ios;
-    end
-    if @android!=nil
-      array['android']=@android
-    end
-    if @winphone!=nil
-      array['winphone']=@winphone
-    end
+    
+    return array
   end
 end
 end
