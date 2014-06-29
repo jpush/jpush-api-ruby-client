@@ -19,5 +19,10 @@ class WinphoneNotification
      array2['winphone']=array
      return array2
   end
+    def check
+    if @alert==nil
+       raise ArgumentError.new('the alert should be setted')
+    end
+  end
 end
 end

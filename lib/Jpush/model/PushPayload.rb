@@ -20,5 +20,24 @@ module JPushApiRubyClient
       end
       return array
     end
+    def check
+      if @audience==nil||@platform==nil
+       raise ArgumentError.new(' audience and platform both should be set.')
+      end
+      if @notification==nil&&@message==nil
+        raise ArgumentError.new('notification or message should be set at least one')
+      end
+      @audience.check
+      @platform.check
+      if @message!=nil
+        @message.check
+      end
+      if @options!=nil
+        @options.check
+      end
+      if @notification!=nil
+        @notification.check
+      end
+    end
   end
 end

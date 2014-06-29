@@ -20,5 +20,10 @@ class IOSNotification
      end
      return array
    end
+     def check
+    if @alert==nil
+       raise ArgumentError.new('the alert should be setted')
+    end
+  end
 end
 end

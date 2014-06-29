@@ -2,10 +2,6 @@ require 'jpush_api_ruby_client'
 
 master_secret='2b38ce69b1de2a7fa95706ea';
 app_key='dd1066407b044738b6479275';
-tag='tag1,tag2';
-tag_and="tag3,tag4";
-_alias="alias1,alias2";
-registration_id="id1,id2";
 client=JPushApiRubyClient::JPushClient.new(app_key, master_secret);
 
 notification=JPushApiRubyClient::Notification.new;
@@ -20,10 +16,6 @@ options=JPushApiRubyClient::Options.new;
 platform.ios=true;
 platform.winphone=true;
 platform.android=true
-options.sendno=1
-options.apns_production=true;
-options.override_msg_id=2;
-options.time_to_live=60;
 
 #set message params
 message.msg_content = "message content test";
@@ -34,9 +26,13 @@ message.extras = {"key1"=>"value1", "key2"=>"value2"};
 #set options params
 options.sendno = 1;
 options.apns_production = true;
-options.override_msg_id = 2;
+#options.override_msg_id = 2;
 options.time_to_live = 60;
 #set audience params
+tag=['tag1','tag2'];
+tag_and=["tag3","tag4"];
+_alias=["alias1","alias2"]
+registration_id=["id1","id2"];
 audience.tag = tag;
 audience.tag_and = tag_and;
 audience._alias = _alias;
@@ -60,32 +56,41 @@ winphone._open_page = "/friends.xaml";
 winphone.extras = {"key1"=>"value1", "key2"=>"value2"};
 
 
-
+logger = Logger.new(STDOUT);
 #send broadcast
 payload1 =JPushApiRubyClient::PushPayload.new;
 notification.alert = "alert message";
 payload1.notification = notification;
 payload1.platform=platform;
 payload1.audience=audience;
-puts payload1.toJSON
-result1 = client.sendPush(payload1);
-puts result1;
+payload1.check
+result = client.sendPush(payload1);
+ logger.debug("Got result - " + result)
 #send winphone
 payload1 =JPushApiRubyClient::PushPayload.new;
 payload1.notification=winphone
-puts winphone.toJSON
 puts payload1.notification
 payload1.platform=platform;
 payload1.audience=audience;
-puts payload1.notification.alert;
-result1 = client.sendPush(payload1);
-puts result1;
-#send android
+payload1.check
+result = client.sendPush(payload1);
+ logger.debug("Got result - " + result)
+#send android WithExtrasMessage
 payload1 =JPushApiRubyClient::PushPayload.new;
 payload1.notification=android
 payload1.platform=platform;
 payload1.audience=audience;
-puts payload1.toJSON;
-result1 = client.sendPush(payload1);
-puts result1;
-
+payload1.message=message
+payload1.check
+result = client.sendPush(payload1);
+ logger.debug("Got result - " + result)
+#send ios WithExtrasMessageANDoptions
+payload1 =JPushApiRubyClient::PushPayload.new;
+payload1.notification=android
+payload1.platform=platform;
+payload1.audience=audience;
+payload1.message=message
+payload1.options=options
+payload1.check
+result = client.sendPush(payload1);
+ logger.debug("Got result - " + result)

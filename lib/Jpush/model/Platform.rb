@@ -23,5 +23,17 @@ class Platform
     end
      return array;
   end
+  def self.all
+  pl=JPushApiRubyClient::Platform.new
+  pl.ios=true
+  pl.android=true
+  pl.winphone=true
+    return pl
+  end
+  def check
+    if @android!=true&&@ios!=true&&@winphone!=true
+      raise ArgumentError.new('No any deviceType is set.')
+    end
+  end
 end
 end
