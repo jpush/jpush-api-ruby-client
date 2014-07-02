@@ -11,21 +11,32 @@ module JPushApiRubyClient
     @@REPORT_MESSAGE_PATH = "/v3/messages";
     
     def getReceiveds(msg_ids,authcode)
+      msg_ids=checkMsgids(msg_ids)
       @url=@@REPORT_HOST_NAME+@@REPORT_RECEIVE_PATH+'?msg_ids='+msg_ids;
       @httpclient=JPushApiRubyClient::NativeHttpClient.new
       return @httpclient.sendGet(@url,nil,authcode)
     end
 
     def getMessages(msg_ids,authcode)
+      msg_ids=checkMsgids(msg_ids)
       @url=@@REPORT_HOST_NAME+@@REPORT_MESSAGE_PATH+'?msg_ids='+msg_ids;
       @httpclient=JPushApiRubyClient::NativeHttpClient.new
       return @httpclient.sendGet(@url,nil,authcode)
     end
 
     def getUsers(timeUnit,start,duration,authcode)
-      @url = @@REPORT_HOST_NAME + @@REPORT_USER_PATH+ "?time_unit=" + timeUnit+ "&start=" + start + "&duration=" + duration;
+      @url = @@REPORT_HOST_NAME + @@REPORT_USER_PATH+ "?time_unit="+timeUnit+"&start=" + start + "&duration=" + duration.to_s;
       @httpclient=JPushApiRubyClient::NativeHttpClient.new
       return @httpclient.sendGet(@url,nil,authcode)
+    end
+    
+    def checkMsgids(msg_ids)
+      if msg_ids.empty?
+         raise ArgumentError.new('msgIds param is required')
+      end
+      msg_ids=msg_ids.split.join('').to_s
+      puts msg_ids
+      return msg_ids;
     end
   end
 end

@@ -68,8 +68,8 @@ result = client.sendPush(payload1);
  logger.debug("Got result - " + result)
 #send winphone
 payload1 =JPushApiRubyClient::PushPayload.new;
-payload1.notification=winphone
-puts payload1.notification
+notification.winphone=winphone
+payload1.notification=notification
 payload1.platform=platform;
 payload1.audience=audience;
 payload1.check
@@ -77,7 +77,8 @@ result = client.sendPush(payload1);
  logger.debug("Got result - " + result)
 #send android WithExtrasMessage
 payload1 =JPushApiRubyClient::PushPayload.new;
-payload1.notification=android
+notification.android=android
+payload1.notification=notification
 payload1.platform=platform;
 payload1.audience=audience;
 payload1.message=message
@@ -86,7 +87,8 @@ result = client.sendPush(payload1);
  logger.debug("Got result - " + result)
 #send ios WithExtrasMessageANDoptions
 payload1 =JPushApiRubyClient::PushPayload.new;
-payload1.notification=android
+notification.ios=ios
+payload1.notification=notification
 payload1.platform=platform;
 payload1.audience=audience;
 payload1.message=message

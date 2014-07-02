@@ -22,11 +22,11 @@ module JPushApiRubyClient
         end
         array['alias']=@_alias;
       end
-      if @tag_end!=nil  then
-        if @tag_end.class!=Array
+      if @tag_and!=nil  then
+        if @tag_and.class!=Array
           raise ArgumentError.new('tag_end is not Array')
         end
-        array['tag_end']=@tag_end;
+        array['tag_and']=@tag_and;
       end
       if @registration_id!=nil then
         if @registration_id.class!=Array
@@ -45,12 +45,12 @@ module JPushApiRubyClient
 
     def check
       if @all==true
-        if @tag!=nil||@_alias!=nil||@tag_end!=nil||@registration_id!=nil
+        if @tag!=nil||@_alias!=nil||@tag_and!=nil||@registration_id!=nil
           raise ArgumentError.new('If audience is all, no any other audience may be set.')
         end
       end
       if @all==false
-        if @tag==nil&&@_alias==nil&&@tag_end==nil&&@registration_id==nil
+        if @tag==nil&&@_alias==nil&&@tag_and==nil&&@registration_id==nil
           raise ArgumentError.new('No any audience target is set.')
         end
       end

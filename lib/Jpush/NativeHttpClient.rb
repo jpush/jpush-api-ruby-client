@@ -6,7 +6,7 @@ require 'net/https'
 
 module JPushApiRubyClient
   class NativeHttpClient
-    def initialize(maxRetryTimes=3)
+    def initialize(maxRetryTimes=0)
       @maxRetryTimes=maxRetryTimes;
       @logger = Logger.new(STDOUT);
     end

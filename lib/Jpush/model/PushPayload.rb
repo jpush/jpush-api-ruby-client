@@ -38,6 +38,9 @@ module JPushApiRubyClient
       if @notification!=nil
         @notification.check
       end
+      if @notification.to_s.bytesize+@message.to_s.bytesize>1200
+        raise ArgumentError.new('notfication and message‘s size is longer than 1200 ')
+      end
     end
   end
 end

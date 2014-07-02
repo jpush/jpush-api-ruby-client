@@ -15,9 +15,7 @@ class WinphoneNotification
     if @extras!=nil then
       array['extras']=@extras;
     end
-    array2={}
-     array2['winphone']=array
-     return array2
+     return array
   end
     def check
     if @alert==nil
