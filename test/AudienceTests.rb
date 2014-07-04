@@ -1,4 +1,5 @@
 require 'jpush_api_ruby_client'
+
 require './BaseRemoteTests.rb';
 
 require 'test/unit'
@@ -18,7 +19,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByTagAnd
@@ -32,7 +35,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByAlias
@@ -46,7 +51,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByRegistrationID
@@ -60,7 +67,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByTagMore
@@ -74,7 +83,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByTagAndMore
@@ -89,7 +100,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByTagAndMore_fail
@@ -103,7 +116,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByAliasMore
@@ -117,7 +132,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByRegistrationIDMore
@@ -131,7 +148,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByTagAlias
@@ -146,7 +165,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByTagRegistrationID
@@ -161,7 +182,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByTagRegistrationID_0
@@ -176,7 +199,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByTagAlias_0
@@ -191,7 +216,9 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendByTagAlias_0_2
@@ -206,6 +233,8 @@ class AudienceTests <Test::Unit::TestCase
     @payload.notification=notification
     @payload.audience=audience
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
 end

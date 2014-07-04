@@ -11,14 +11,14 @@ class PushPayLoadTest <Test::Unit::TestCase
     @payload=JPushApiRubyClient::PushPayload.new
     platform=JPushApiRubyClient::Platform.all
     @payload.platform=platform
-    @payload.check
+    assert_not_nil(@payload.check,"payload formate error")
   end
 
   def testIllegal_OnlyAudience
     @payload=JPushApiRubyClient::PushPayload.new
     audience=JPushApiRubyClient::Audience.all
     @payload.platform=audience
-    @payload.check
+    assert_not_nil(@payload.check,"payload formate error")
   end
 
   def testIllegal_PlatformAudience
@@ -27,7 +27,7 @@ class PushPayLoadTest <Test::Unit::TestCase
     @payload.audience=audience
     platform=JPushApiRubyClient::Platform.all
     @payload.platform=platform
-    @payload.check
+    assert_not_nil(@payload.check,"payload formate error")
   end
 
   def testIllegal_NoAudience
@@ -37,7 +37,7 @@ class PushPayLoadTest <Test::Unit::TestCase
     notification=JPushApiRubyClient::Notification.new;
     notification.alert='alert'
     @payload.notification=notification
-    @payload.check
+    assert_not_nil(@payload.check,"payload formate error")
   end
 
   def testIllegal_NoPlatform
@@ -47,7 +47,7 @@ class PushPayLoadTest <Test::Unit::TestCase
     notification=JPushApiRubyClient::Notification.new;
     notification.alert='alert'
     @payload.notification=notification
-    @payload.check
+    assert_not_nil(@payload.check,"payload formate error")
   end
 
   def testNotification
@@ -59,7 +59,7 @@ class PushPayLoadTest <Test::Unit::TestCase
     notification=JPushApiRubyClient::Notification.new;
     notification.alert='alert'
     @payload.notification=notification
-    @payload.check
+    assert_not_nil(@payload.check,"payload formate error")
   end
 
   def testMessage
@@ -74,6 +74,6 @@ class PushPayLoadTest <Test::Unit::TestCase
     message.content_type = "message content type test";
     message.extras = {"key1"=>"value1", "key2"=>"value2"};
     @payload.message=message
-    @payload.check
+    assert_not_nil(@payload.check,"payload formate error")
   end
 end

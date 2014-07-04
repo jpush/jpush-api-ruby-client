@@ -21,7 +21,9 @@ class NotificationTests < Test::Unit::TestCase
     @payload.platform=platform
     @payload.notification=notification
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendNotification_android_buildId
@@ -37,7 +39,9 @@ class NotificationTests < Test::Unit::TestCase
     @payload.platform=platform
     @payload.notification=notification
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
   def testsendNotification_android_extras
@@ -51,13 +55,15 @@ class NotificationTests < Test::Unit::TestCase
     array['key1']='value1'
     array['key2']='value2'
     array['key3']='value3'
-    android.extras=array.to_json
+    android.extras=array
     notification.android=android
     @payload.audience=audience
     @payload.platform=platform
     @payload.notification=notification
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
   
 

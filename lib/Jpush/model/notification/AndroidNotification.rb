@@ -1,6 +1,13 @@
   module JPushApiRubyClient
   class AndroidNotification
     attr_accessor :alert,:title,:builder_id,:extras;
+    
+    def initialize(opts={})
+      @alert=opts[:alert]
+      @title=opts[:title]
+      @builder_id=opts[:builder_id]
+      @extras=opts[:extras]
+    end
     def toJSON
       array={};
       if @alert!=nil then
@@ -20,7 +27,7 @@
     end
       def check
     if @alert==nil
-       raise ArgumentError.new('the alert should be setted')
+       raise ArgumentError.new('android the alert should be setted')
     end
   end
   end

@@ -1,6 +1,15 @@
 module JPushApiRubyClient
   class PushPayload
     attr_accessor :platform,:audience,:message,:options,:notification;
+    
+    def initialize(opts={})
+      @platform=opts[:platform];
+      @audience=opts[:audience]
+      @message=opts[:message]
+      @options=opts[:options]
+      @notification=opts[:notification]
+    end
+
     def toJSON
       array={};
       if @platform!=nil then
@@ -40,6 +49,23 @@ module JPushApiRubyClient
       end
       if @notification.to_s.bytesize+@message.to_s.bytesize>1200
         raise ArgumentError.new('notfication and message‘s size is longer than 1200 ')
+      end
+      return self;
+    end
+    #used only the ios nitification is not nil
+    def isIOSExceedLength
+         if @notification.ios..to_s.bytesize>220
+           return false
+         else
+           return true
+         end
+    end
+    
+    def isGlobalExceed
+      if @notification.to_s.bytesize+@message.to_s.bytesize>1200
+        return false
+      else
+        return true
       end
     end
   end

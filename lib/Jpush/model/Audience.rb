@@ -1,8 +1,13 @@
 module JPushApiRubyClient
   class Audience
     attr_accessor  :tag,:tag_and, :_alias,:registration_id,:segment,:all;
-    def initialize
+    def initialize(opts={})
       @all=false
+      @tag=opts[:tag]
+      @tag_and=opts[:tag_and]
+      @_alias=opts[:_alias]
+      @registration_id=opts[:registration_id]
+      @segment=opts[:segment]
     end
 
     def toJSON

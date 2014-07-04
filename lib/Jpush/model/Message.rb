@@ -1,8 +1,11 @@
  module JPushApiRubyClient
   class Message
     attr_accessor :title,:msg_content,:content_type,:extras;
-    def initialize()
-      
+    def initialize(opts={})
+      @title=opts[:title]
+      @msg_content=opts[:msg_content]
+      @content_type=opts[:content_type]
+      @extras=opts[:extras]
     end
     def toJSON
       array={};

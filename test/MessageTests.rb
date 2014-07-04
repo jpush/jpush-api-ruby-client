@@ -19,7 +19,9 @@ class MessageTests < Test::Unit::TestCase
     @payload.platform=platform
     @payload.message=message
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
 
   def testsendMessageContentAndTitle
@@ -34,7 +36,9 @@ class MessageTests < Test::Unit::TestCase
     @payload.platform=platform
     @payload.message=message
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
 
   def testsendMessageContentAndExtras
@@ -47,12 +51,14 @@ class MessageTests < Test::Unit::TestCase
     array['key1']='value1'
     array['key2']='value2'
     array['key3']='value3'
-    message.extras=array.to_json
+    message.extras=array
     @payload.audience=audience
     @payload.platform=platform
     @payload.message=message
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
 
 end

@@ -1,6 +1,13 @@
 module JPushApiRubyClient
 class WinphoneNotification
   attr_accessor :alert,:title,:_open_page,:extras;
+  
+  def initialize(opts={})
+    @alert=opts[:alert]
+    @title=opts[:title]
+    @_open_page=opts[:_open_page]
+    @extras=opts[:extras]
+  end
   def toJSON
     array={};
     if @alert!=nil then
@@ -19,7 +26,7 @@ class WinphoneNotification
   end
     def check
     if @alert==nil
-       raise ArgumentError.new('the alert should be setted')
+       raise ArgumentError.new('winphone the alert should be setted')
     end
   end
 end

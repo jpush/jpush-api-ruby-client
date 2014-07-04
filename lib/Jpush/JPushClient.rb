@@ -14,7 +14,7 @@ Create a JPush Client.
 masterSecret API access secret of the appKey.
 appKey The KEY of one application on JPush.
 =end
-    def initialize(appkey,masterSecret)
+    def initialize(appkey,masterSecret,maxRetryTimes=5)
       begin
       @logger = Logger.new(STDOUT);
       if appkey.class==String&&appkey.length==24 then
@@ -29,8 +29,8 @@ appKey The KEY of one application on JPush.
       end
      end
       @masterSecret=masterSecret;
-      @pushClient=JPushApiRubyClient::PushClient.new;
-      @reportClient=JPushApiRubyClient::ReportClient.new;
+      @pushClient=JPushApiRubyClient::PushClient.new(maxRetryTimes=maxRetryTimes);
+      @reportClient=JPushApiRubyClient::ReportClient.new(maxRetryTimes=maxRetryTimes);
       @authcode=ServiceHelper.getAuthorizationBase64(appkey,masterSecret);
     end
 
@@ -38,7 +38,7 @@ appKey The KEY of one application on JPush.
      # @param pushPayload payload object of a push. 
     # @return JSON data.
     def sendPush(payload)
-      response=@pushClient.sebdPush(payload,@authcode);
+      response=@pushClient.sendPush(payload,@authcode);
       return  response.body
     end
 

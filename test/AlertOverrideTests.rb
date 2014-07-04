@@ -1,4 +1,5 @@
 require 'jpush_api_ruby_client'
+
 require './BaseRemoteTests.rb';
 
 require 'test/unit'
@@ -7,8 +8,6 @@ class AlertOverrideTests < Test::Unit::TestCase
   def setup
     @client=JPushApiRubyClient::JPushClient.new(AppKey, MasterSecret);
   end
-
-
 
   def testsendAlert_all
     @payload=JPushApiRubyClient::PushPayload.new
@@ -29,7 +28,9 @@ class AlertOverrideTests < Test::Unit::TestCase
     @payload.platform=platform
     @payload.notification=notification
     @payload.check
-    @client.sendPush(@payload)
+    res=res=@client.sendPush(@payload)
+    assert_not_nil(res['sendno'], message="")
+    puts res
   end
 
   def testsendAlert_android
@@ -45,7 +46,10 @@ class AlertOverrideTests < Test::Unit::TestCase
     @payload.platform=platform
     @payload.notification=notification
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+
+    assert_not_nil(hash['sendno'], message="")
   end
 
   def testsendAlert_ios
@@ -61,7 +65,9 @@ class AlertOverrideTests < Test::Unit::TestCase
     @payload.platform=platform
     @payload.notification=notification
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
 
   def testsendAlert_wp
@@ -77,7 +83,9 @@ class AlertOverrideTests < Test::Unit::TestCase
     @payload.platform=platform
     @payload.notification=notification
     @payload.check
-    @client.sendPush(@payload)
+    res=@client.sendPush(@payload)
+    hash=JSON.parse(res)
+    assert_not_nil(hash['sendno'], message="")
   end
 
 end

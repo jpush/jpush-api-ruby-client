@@ -1,6 +1,13 @@
 module JPushApiRubyClient
   class Notification
     attr_accessor :alert,:android,:ios,:winphone
+    
+    def initialize(opts={})
+      @alert=opts[:alert]
+      @android=opts[:android]
+      @ios=opts[:ios]
+      @winphone=opts[:winphone]
+    end
     def toJSON
       array={}
       if @alert!=nil&&alert.lstrip.length>0

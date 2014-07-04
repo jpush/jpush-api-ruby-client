@@ -6,7 +6,7 @@ require 'net/https'
 
 module JPushApiRubyClient
   class NativeHttpClient
-    def initialize(maxRetryTimes=0)
+    def initialize(maxRetryTimes=5)
       @maxRetryTimes=maxRetryTimes;
       @logger = Logger.new(STDOUT);
     end
@@ -26,13 +26,20 @@ module JPushApiRubyClient
       while retryTimes>@maxRetryTimes
         begin
           response=_sendRequest(url,content,method,authCode)
-        rescue Exception
-          raise RuntimeError.new("connect error") if retryTimes<=@maxRetryTimes
-
+        rescue ReadTimeout=>e
+          
+        if retryTimes>@maxRetryTimes
+        raise RuntimeError.new("connect error")
+        else
+          @logger.debug("Retry again - " + (retryTimes + 1))
+          retryTimes=retryTimes+1;
+        end
+        
         end
       end
       return response
     end
+    private
 
     def _sendRequest(url,content,method,authCode)
       begin
@@ -48,18 +55,17 @@ module JPushApiRubyClient
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        http.open_timeout = 5;
+        #http.open_timeout = 5;
         http.read_timeout = 30;
         use_ssl=true
         if method=='POST'&&use_ssl == true
           req = Net::HTTP::Post.new(uri.path, initheader = header)
         req.body = content
         response = http.request(req)
-    
 
         elsif method=='GET'&&use_ssl == true
-         request = Net::HTTP::Get.new(uri.request_uri,initheader = header)
-          response = http.request(request)
+          request = Net::HTTP::Get.new(uri.request_uri,initheader = header)
+        response = http.request(request)
         end
         #if method=='POST'
         # @response= http.post(path,content,header);
@@ -72,7 +78,7 @@ module JPushApiRubyClient
         if code==200
           @logger.debug("Succeed to get response - 200 OK");
           if content!=nil
-          @logger.debug('Response Content -'+content);
+            @logger.debug('Response Content -'+content);
           end
         elsif code>200&&code<400
           @logger.warn('Normal response but unexpected - responseCode:'+code.to_s+',responseContent='+content);

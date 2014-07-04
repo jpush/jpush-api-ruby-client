@@ -1,8 +1,16 @@
 module JPushApiRubyClient
  class Options
     attr_accessor :sendno,:time_to_live,:override_msg_id,:apns_production;
-    def initialize
-       @apns_production=false;
+    def initialize(opts={})
+      if opts[:apns_production]!=nil
+       @apns_production=opts[:apns_production]
+      else
+        @apns_production=false
+      end
+       
+       @sendno=opts[:sendno]
+       @time_to_live=opts[:time_to_live]
+       @overrride_msg_id=opts[:override_msg_id]
     end
     def toJSON
         array={};
