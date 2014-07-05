@@ -1,4 +1,4 @@
-module JPushApiRubyClient
+module JPush
   class PushPayload
     attr_accessor :platform,:audience,:message,:options,:notification;
     

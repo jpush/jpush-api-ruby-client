@@ -4,7 +4,7 @@ require 'logger'
 require 'uri'
 require 'net/https'
 
-module JPushApiRubyClient
+module JPush
   class NativeHttpClient
     def initialize(maxRetryTimes=5)
       @maxRetryTimes=maxRetryTimes;

@@ -1,4 +1,4 @@
-  module JPushApiRubyClient
+  module JPush
   class AndroidNotification
     attr_accessor :alert,:title,:builder_id,:extras;
     

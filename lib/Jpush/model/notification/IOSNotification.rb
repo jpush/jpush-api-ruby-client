@@ -1,4 +1,4 @@
-module JPushApiRubyClient
+module JPush
   class IOSNotification
     attr_accessor :alert,:sound,:badge,:extras,:content_available;
     def initialize(opts={})

@@ -1,4 +1,4 @@
-module JPushApiRubyClient
+module JPush
 class WinphoneNotification
   attr_accessor :alert,:title,:_open_page,:extras;
   

@@ -4,7 +4,7 @@ require File.join(path, 'PushClient.rb')
 require File.join(path, 'ReportClient.rb')
 require File.join(path, 'util/ServiceHelper.rb')
 
-module JPushApiRubyClient
+module JPush
 =begin
 The global entrance of JPush API library.
 =end

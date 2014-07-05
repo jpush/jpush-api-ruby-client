@@ -1,4 +1,4 @@
- module JPushApiRubyClient
+ module JPush
   class Message
     attr_accessor :title,:msg_content,:content_type,:extras;
     def initialize(opts={})

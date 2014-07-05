@@ -6,7 +6,7 @@ class ReportFunctionTests < Test::Unit::TestCase
   AppKey = "7d431e42dfa6a6d693ac2d04";
   MasterSecret = "5e987ac6d2e04d95a9d8f0d1";
   def setup
-    @client=JPushApiRubyClient::JPushClient.new(AppKey, MasterSecret);
+    @client=JPush::JPushClient.new(AppKey, MasterSecret);
   end
   
   def testgetReceivedsFixed

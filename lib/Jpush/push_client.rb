@@ -1,7 +1,7 @@
 path= File.expand_path('../', __FILE__)
 require File.join(path, 'NativeHttpClient.rb')
 require 'json'
-module JPushApiRubyClient
+module JPush
 class PushClient
    @@PUSH_API_URL = 'https://api.jpush.cn/v3/push';
    @@_timeToLive = 60 * 60 * 24;

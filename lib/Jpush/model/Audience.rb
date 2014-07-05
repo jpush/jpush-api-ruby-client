@@ -1,4 +1,4 @@
-module JPushApiRubyClient
+module JPush
   class Audience
     attr_accessor  :tag,:tag_and, :_alias,:registration_id,:segment,:all;
     def initialize(opts={})

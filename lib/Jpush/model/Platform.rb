@@ -1,4 +1,4 @@
-module JPushApiRubyClient
+module JPush
   class Platform
     attr_accessor :android,:ios,:winphone;
     def initialize(opts={})

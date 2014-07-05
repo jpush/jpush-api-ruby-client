@@ -5,15 +5,15 @@ require './BaseRemoteTests.rb';
 require 'test/unit'
 class NotificationTests < Test::Unit::TestCase
   def setup
-    @client=JPushApiRubyClient::JPushClient.new(AppKey, MasterSecret);
+    @client=JPush::JPushClient.new(AppKey, MasterSecret);
   end
   
   def testsendNotification_android_title
-     @payload=JPushApiRubyClient::PushPayload.new
-    audience=JPushApiRubyClient::Audience.all
-    platform=JPushApiRubyClient::Platform.all
-    notification=JPushApiRubyClient::Notification.new
-    android= JPushApiRubyClient::AndroidNotification.new
+     @payload=JPush::PushPayload.new
+    audience=JPush::Audience.all
+    platform=JPush::Platform.all
+    notification=JPush::Notification.new
+    android= JPush::AndroidNotification.new
     android.alert='alert'
     android.title='title'
     notification.android=android
@@ -27,11 +27,11 @@ class NotificationTests < Test::Unit::TestCase
   end
   
   def testsendNotification_android_buildId
-         @payload=JPushApiRubyClient::PushPayload.new
-    audience=JPushApiRubyClient::Audience.all
-    platform=JPushApiRubyClient::Platform.all
-    notification=JPushApiRubyClient::Notification.new
-    android= JPushApiRubyClient::AndroidNotification.new
+         @payload=JPush::PushPayload.new
+    audience=JPush::Audience.all
+    platform=JPush::Platform.all
+    notification=JPush::Notification.new
+    android= JPush::AndroidNotification.new
     android.alert='alert'
     android.builder_id=100
     notification.android=android
@@ -45,11 +45,11 @@ class NotificationTests < Test::Unit::TestCase
   end
   
   def testsendNotification_android_extras
-         @payload=JPushApiRubyClient::PushPayload.new
-    audience=JPushApiRubyClient::Audience.all
-    platform=JPushApiRubyClient::Platform.all
-    notification=JPushApiRubyClient::Notification.new
-    android= JPushApiRubyClient::AndroidNotification.new
+         @payload=JPush::PushPayload.new
+    audience=JPush::Audience.all
+    platform=JPush::Platform.all
+    notification=JPush::Notification.new
+    android= JPush::AndroidNotification.new
     android.alert='alert'
       array={};
     array['key1']='value1'

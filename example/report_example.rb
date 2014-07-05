@@ -2,7 +2,7 @@ require 'jpush_api_ruby_client'
 
 master_secret='2b38ce69b1de2a7fa95706ea';
 app_key='dd1066407b044738b6479275';
-client=JPushApiRubyClient::JPushClient.new(app_key, master_secret);
+client=JPush::JPushClient.new(app_key, master_secret);
 logger = Logger.new(STDOUT);
 #getReceiveds
 result=client.getReportReceiveds('1942377665')

@@ -3,7 +3,7 @@ require File.join(path, 'NativeHttpClient.rb')
 require File.join(path, 'PushClient.rb')
 require 'json'
 
-module JPushApiRubyClient
+module JPush
   class ReportClient
     @@REPORT_HOST_NAME = "https://report.jpush.cn";
     @@REPORT_RECEIVE_PATH = "/v3/received";

@@ -1,4 +1,4 @@
-module JPushApiRubyClient
+module JPush
  class Options
     attr_accessor :sendno,:time_to_live,:override_msg_id,:apns_production;
     def initialize(opts={})

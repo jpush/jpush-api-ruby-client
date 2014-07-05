@@ -6,14 +6,14 @@ require 'test/unit'
 
 class MessageTests < Test::Unit::TestCase
   def setup
-    @client=JPushApiRubyClient::JPushClient.new(AppKey, MasterSecret);
+    @client=JPush::JPushClient.new(AppKey, MasterSecret);
   end
 
   def testsendMessageContentOnly
-    @payload=JPushApiRubyClient::PushPayload.new
-    audience=JPushApiRubyClient::Audience.all
-    platform=JPushApiRubyClient::Platform.all
-    message=JPushApiRubyClient::Message.new
+    @payload=JPush::PushPayload.new
+    audience=JPush::Audience.all
+    platform=JPush::Platform.all
+    message=JPush::Message.new
     message.msg_content=MSG_CONTENT
     @payload.audience=audience
     @payload.platform=platform
@@ -25,10 +25,10 @@ class MessageTests < Test::Unit::TestCase
   end
 
   def testsendMessageContentAndTitle
-  @payload=JPushApiRubyClient::PushPayload.new
-    audience=JPushApiRubyClient::Audience.all
-    platform=JPushApiRubyClient::Platform.all
-    message=JPushApiRubyClient::Message.new
+  @payload=JPush::PushPayload.new
+    audience=JPush::Audience.all
+    platform=JPush::Platform.all
+    message=JPush::Message.new
     message.msg_content=MSG_CONTENT
     message.content_type="content type"
     message.title="message title"
@@ -42,10 +42,10 @@ class MessageTests < Test::Unit::TestCase
   end
 
   def testsendMessageContentAndExtras
-  @payload=JPushApiRubyClient::PushPayload.new
-    audience=JPushApiRubyClient::Audience.all
-    platform=JPushApiRubyClient::Platform.all
-    message=JPushApiRubyClient::Message.new
+  @payload=JPush::PushPayload.new
+    audience=JPush::Audience.all
+    platform=JPush::Platform.all
+    message=JPush::Message.new
     message.msg_content=MSG_CONTENT
      array={};
     array['key1']='value1'

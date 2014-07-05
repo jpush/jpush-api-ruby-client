@@ -1,4 +1,4 @@
-module JPushApiRubyClient
+module JPush
   class Notification
     attr_accessor :alert,:android,:ios,:winphone
     
