@@ -6,8 +6,8 @@ require "jpush_api_ruby_client/version"
 Gem::Specification.new do |spec|
   spec.name          = "JPush"
   spec.version       = '0.0.4'
-  spec.authors       = ['Xian OuYang']
-  spec.email         = ['ouyangxian@gmail.com']
+  spec.authors       = ['JPush']
+  spec.email         = ['support@jpush.cn']
   spec.description   = "provide a ruby api gem for jpush https://www.jpush.cn"
   spec.summary       = "a ruby api client gem for jpush"
   spec.homepage      = "https://github.com/jpush/jpush-api-ruby-client"

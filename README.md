@@ -1,17 +1,16 @@
-# JpushApiRubyClient
+# Jpush Api Ruby Client
 
-JPush API Ruby 客户端
 
-GitHub from https://github.com/jpush/jpush-api-ruby-client
+##概述
+这是 JPush REST API 的 Java 版本封装开发包，是由极光推送官方提供的，一般支持最新的 API 功能。
 
-forked from https://github.com/lanrion/jpush_ruby_sdk
-感谢作者做的先期工作
+对应的 REST API 文档：<http://docs.jpush.cn/display/dev/REST+API>
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'jpush_api_ruby_client'
+    gem 'JPush'
 
 And then execute:
 
@@ -19,9 +18,6 @@ And then execute:
 
 Or install it yourself as:
 
-remote install
-
-    $ gem install jpush_api_ruby_client
 
 local install
 
@@ -29,14 +25,40 @@ local install
     $ gem install jpush_api_ruby_client -l
 
 
-##Example
+##使用样例
+###推送样例
+> 以下片断来自项目代码里的文件：example/push_example.rb
+```ruby
+require 'JPush'
+master_secret='2b38ce69b1de2a7fa95706ea';
+app_key='dd1066407b044738b6479275';
+client=JPush::JPushClient.new(app_key, master_secret);
 
- Detailes refer to [Example](https://github.com/jpush/jpush-api-ruby-client/blob/master/example/client_example.rb)
+logger = Logger.new(STDOUT);
+#send broadcast
+payload1 =JPush::PushPayload.new(
+platform: JPush::Platform.all,
+audience: JPush::Audience.all,
+notification: JPush::Notification.new(alert: 'alert meassage')
+).check
+result = client.sendPush(payload1);
+ logger.debug("Got result  " + result)
+```
+### 统计获取样例
+> 以下片断来自项目代码里的文件：example/report_example.rb
+```ruby
+require 'JPush'
 
-## Usage
-
- Detailes refer to [Doc](http://rubydoc.info/gems/jpush_api_ruby_client/index)
-
+master_secret='2b38ce69b1de2a7fa95706ea';
+app_key='dd1066407b044738b6479275';
+client=JPush::JPushClient.new(app_key, master_secret);
+logger = Logger.new(STDOUT);
+#getReceiveds
+result=client.getReportReceiveds('1942377665')
+ logger.debug("Got result - " + result)
+```
+##单元测试
+运行test文件夹的.rb文件
 ## Contributing
 
 1. Fork it

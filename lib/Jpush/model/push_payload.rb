@@ -1,4 +1,9 @@
+
 module JPush
+=begin
+  The object you should build for sending a push.
+  @param platform audience must be set
+=end
   class PushPayload
     attr_accessor :platform,:audience,:message,:options,:notification;
     
@@ -60,7 +65,7 @@ module JPush
            return true
          end
     end
-    
+   #Check if the length is too long
     def isGlobalExceed
       if @notification.to_s.bytesize+@message.to_s.bytesize>1200
         return false
