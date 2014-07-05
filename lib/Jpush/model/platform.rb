@@ -39,7 +39,7 @@ module JPush
     end
 
     def self.all
-      pl=JPushApiRubyClient::Platform.new
+      pl=JPush::Platform.new
       pl.ios=true
       pl.android=true
       pl.winphone=true

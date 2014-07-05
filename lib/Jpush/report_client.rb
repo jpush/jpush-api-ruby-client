@@ -1,6 +1,6 @@
 path= File.expand_path('../', __FILE__)
-require File.join(path, 'NativeHttpClient.rb')
-require File.join(path, 'PushClient.rb')
+require File.join(path, 'http_client.rb')
+require File.join(path, 'push_client.rb')
 require 'json'
 
 module JPush
@@ -10,7 +10,7 @@ module JPush
     @@REPORT_USER_PATH = "/v3/users";
     @@REPORT_MESSAGE_PATH = "/v3/messages";
     def initialize(maxRetryTimes)
-      @httpclient=JPushApiRubyClient::NativeHttpClient.new(maxRetryTimes);
+      @httpclient=JPush::NativeHttpClient.new(maxRetryTimes);
     end
 
     def getReceiveds(msg_ids,authcode)

@@ -1,5 +1,4 @@
-require 'jpush_api_ruby_client'
-
+require 'JPush'
 require 'test/unit'
 
 class PushPayLoadTest <Test::Unit::TestCase

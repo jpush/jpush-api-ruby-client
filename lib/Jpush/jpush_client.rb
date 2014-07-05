@@ -1,7 +1,7 @@
 path= File.expand_path('../', __FILE__)
-require File.join(path, 'NativeHttpClient.rb')
-require File.join(path, 'PushClient.rb')
-require File.join(path, 'ReportClient.rb')
+require File.join(path, 'http_client.rb')
+require File.join(path, 'push_client.rb')
+require File.join(path, 'report_client.rb')
 require File.join(path, 'util/ServiceHelper.rb')
 
 module JPush
@@ -29,8 +29,8 @@ appKey The KEY of one application on JPush.
       end
      end
       @masterSecret=masterSecret;
-      @pushClient=JPushApiRubyClient::PushClient.new(maxRetryTimes=maxRetryTimes);
-      @reportClient=JPushApiRubyClient::ReportClient.new(maxRetryTimes=maxRetryTimes);
+      @pushClient=JPush::PushClient.new(maxRetryTimes=maxRetryTimes);
+      @reportClient=JPush::ReportClient.new(maxRetryTimes=maxRetryTimes);
       @authcode=ServiceHelper.getAuthorizationBase64(appkey,masterSecret);
     end
 

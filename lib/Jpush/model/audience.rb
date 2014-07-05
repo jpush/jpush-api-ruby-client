@@ -43,7 +43,7 @@ module JPush
     end
 
     def self.all
-      au=JPushApiRubyClient::Audience.new
+      au=JPush::Audience.new
       au.all=true
       return au
     end
