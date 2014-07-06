@@ -4,7 +4,8 @@
 ##概述
 这是 JPush REST API 的 Java 版本封装开发包，是由极光推送官方提供的，一般支持最新的 API 功能。
 
-对应的 REST API 文档：<http://docs.jpush.cn/display/dev/REST+API>
+对应的 REST API 文档：<http://docs.jpush.cn/display/dev/REST+API>  
+
 [JPush Api Ruby Client Doc](http://www.rdoc.info/github/jpush/jpush-api-ruby-client/master/frames)
 
 ## Installation
