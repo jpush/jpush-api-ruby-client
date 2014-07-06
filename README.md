@@ -33,7 +33,6 @@ require 'JPush'
 master_secret='2b38ce69b1de2a7fa95706ea';
 app_key='dd1066407b044738b6479275';
 client=JPush::JPushClient.new(app_key, master_secret);
-
 logger = Logger.new(STDOUT);
 #send broadcast
 payload1 =JPush::PushPayload.new(
@@ -43,7 +42,7 @@ notification: JPush::Notification.new(alert: 'alert meassage')
 ).check
 result = client.sendPush(payload1);
  logger.debug("Got result  " + result)
-```
+``` 
 ### 统计获取样例
 > 以下片断来自项目代码里的文件：example/report_example.rb
 ```ruby
