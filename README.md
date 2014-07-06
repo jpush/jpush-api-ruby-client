@@ -1,10 +1,11 @@
-# Jpush Api Ruby Client
+# JPush Api Ruby Client
 
 
 ##概述
 这是 JPush REST API 的 Java 版本封装开发包，是由极光推送官方提供的，一般支持最新的 API 功能。
 
 对应的 REST API 文档：<http://docs.jpush.cn/display/dev/REST+API>
+[JPush Api Ruby Client Doc](http://www.rdoc.info/github/jpush/jpush-api-ruby-client/master/frames)
 
 ## Installation
 
@@ -43,11 +44,12 @@ notification: JPush::Notification.new(alert: 'alert meassage')
 result = client.sendPush(payload1);
  logger.debug("Got result  " + result)
 ``` 
-### 统计获取样例
+
+###统计获取样例
 > 以下片断来自项目代码里的文件：example/report_example.rb
+
 ```ruby
 require 'JPush'
-
 master_secret='2b38ce69b1de2a7fa95706ea';
 app_key='dd1066407b044738b6479275';
 client=JPush::JPushClient.new(app_key, master_secret);
@@ -56,6 +58,7 @@ logger = Logger.new(STDOUT);
 result=client.getReportReceiveds('1942377665')
  logger.debug("Got result - " + result)
 ```
+
 ##单元测试
 运行test文件夹的.rb文件
 ## Contributing
