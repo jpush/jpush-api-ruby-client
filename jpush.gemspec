@@ -1,11 +1,10 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "jpush/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "jpush"
-  spec.version       = JPushApiRubyClient::VERSION
+  spec.version       = "3.1.0"
   spec.authors       = ['JPush Offical']
   spec.email         = ['support@jpush.cn']
   spec.description   = "JPush's officially supported Ruby client library for accessing JPush APIs. http://jpush.cn"
