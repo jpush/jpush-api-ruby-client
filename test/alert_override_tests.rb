@@ -1,4 +1,4 @@
-require 'JPush'
+require 'jpush'
 require './base_remote_tests.rb';
 
 require 'test/unit'

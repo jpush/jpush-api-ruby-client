@@ -1,4 +1,4 @@
-require 'JPush'
+require 'jpush'
 
 require 'test/unit'
 
