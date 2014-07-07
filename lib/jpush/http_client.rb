@@ -27,14 +27,14 @@ module JPush
         begin
           response=_sendRequest(url,content,method,authCode)
         rescue ReadTimeout=>e
-          
-        if retryTimes>@maxRetryTimes
-        raise RuntimeError.new("connect error")
-        else
-          @logger.debug("Retry again - " + (retryTimes + 1))
+
+          if retryTimes>@maxRetryTimes
+            raise RuntimeError.new("connect error")
+          else
+            @logger.debug("Retry again - " + (retryTimes + 1))
           retryTimes=retryTimes+1;
-        end
-        
+          end
+
         end
       end
       return response
@@ -52,10 +52,11 @@ module JPush
         #url=url+content;
 
         uri  = URI.parse(url)
+
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        #http.open_timeout = 5;
+        http.open_timeout = 5;
         http.read_timeout = 30;
         use_ssl=true
         if method=='POST'&&use_ssl == true
@@ -101,10 +102,11 @@ module JPush
           @logger.error("Unexpected response.");
           end
         end
-      rescue Exception => ex
-        p ex
+      rescue SocketError => ex
+        raise SocketError.new("socket build error")
       end
       return response
     end
   end
 end
+
