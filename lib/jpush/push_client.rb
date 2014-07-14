@@ -1,5 +1,6 @@
 path= File.expand_path('../', __FILE__)
 require File.join(path, 'http_client.rb')
+require File.join(path, 'model/push_result.rb')
 require 'json'
 
 =begin
@@ -20,7 +21,10 @@ module JPush
 =end
     def sendPush(payload,autoCode)
       json_data = JSON.generate(payload.toJSON)
-      return @httpclient.sendPsot(@@PUSH_API_URL,json_data,autoCode)
+      result = JPush::PushResult.new
+      wrapper = @httpclient.sendPsot(@@PUSH_API_URL,json_data,autoCode)
+      result.fromResponse(wrapper)
+      return result
     end
 
   end

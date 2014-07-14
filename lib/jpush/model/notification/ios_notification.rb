@@ -47,7 +47,7 @@ module JPush
 
     def self.build(opts = {})
       ios=JPush::IOSNotification.new(opts)
-      if opts.alert != nil
+      if ios.alert == nil
         raise ArgumentError.new('the alert should be setted')
       end
       if ios.to_s.bytesize > 220

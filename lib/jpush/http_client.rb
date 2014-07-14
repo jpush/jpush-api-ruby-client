@@ -1,3 +1,5 @@
+path =  File.expand_path('../', __FILE__)
+require File.join(path, 'response_wrapper.rb')
 require 'net/http'
 require 'json'
 require 'logger'
@@ -21,7 +23,7 @@ module JPush
     private
 
     def sendRequest(url,content,method,authCode)
-      response = _sendRequest(url,content,method,authCode)
+      wrapper = _sendRequest(url,content,method,authCode)
       retryTimes = 0;
       while retryTimes>@maxRetryTimes
         begin
@@ -37,7 +39,7 @@ module JPush
 
         end
       end
-      return response
+      return wrapper
     end
     private
 
@@ -66,7 +68,7 @@ module JPush
 
         elsif method == 'GET'&&use_ssl == true
           request = Net::HTTP::Get.new(uri.request_uri,initheader = header)
-        response = http.request(request)
+          response = http.request(request)
         end
         #if method == 'POST'
         # @response = http.post(path,content,header);
@@ -75,7 +77,14 @@ module JPush
         # end
         code = response.code;
         code = Integer(code)
-
+        wrapper=JPush::ResponseWrapper.new
+        wrapper.code=code
+        wrapper.responseContent=response.body
+        #headers = response.header.to_hash
+        #quota = headers['X-Rate-Limit-Limit']
+        #remaining = headers['X-Rate-Limit-Remaining']
+        #reset = headers['X-Rate-Limit-Reset']
+        #reswaper.setRateLimit(Integer(quota), Integer(remaining), Integer(reset))
         if code == 200
           @logger.debug("Succeed to get response - 200 OK");
           if content != nil
@@ -88,18 +97,24 @@ module JPush
           case code
           when 400
             @logger.error("Your request params is invalid. Please check them according to error message.");
+            wrapper.setErrorObject();
           when 401
             @logger.error("Authentication failed! Please check authentication params according to docs.");
+            wrapper.setErrorObject();
           when 403
             @logger.error("Request is forbidden! Maybe your appkey is listed in blacklist?");
+            wrapper.setErrorObject();
           when 410
             @logger.error("Request resource is no longer in service. Please according to notice on official website.");
+            wrapper.setErrorObject();
           when 429
             @logger.error("Too many requests! Please review your appkey's request quota.");
+            wrapper.setErrorObject();
           when 501..504
             @logger.error("Seems encountered server error. Maybe JPush is in maintenance? Please retry later.");
           else
           @logger.error("Unexpected response.");
+          
           end
         end
       rescue SocketError => ex

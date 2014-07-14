@@ -32,13 +32,13 @@ module JPush
 
     def self.build(opts = {})
       options = JPush::Options.new(opts)
-      if options.sendo != nil&&options.sendo < 0
+      if options.sendno != nil&&options.sendno < 0
         raise ArgumentError.new('sendno should be greater than 0.')
       end
-      if options.overrideMsgId != nil&&options.overrideMsgId < 0
+      if options.override_msg_id != nil&&options.override_msg_id < 0
         raise ArgumentError.new(' override_msg_id should be greater than 0.')
       end
-      if options.timeToLive != nil&&options.timeToLive < 0
+      if options.time_to_live != nil&&options.time_to_live < 0
         raise ArgumentError.new('time_to_live should be greater than 0.')
       end
       return options

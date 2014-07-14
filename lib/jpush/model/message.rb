@@ -27,7 +27,7 @@ module JPush
 
     def self.build(opts = {})
       message = JPush::Message.new(opts)
-      if nil == @msg_content
+      if nil == message.msg_content
         raise ArgumentError.new('msgContent should be set')
       end
     end

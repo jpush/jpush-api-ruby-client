@@ -38,24 +38,24 @@ appKey The KEY of one application on JPush.
     # @param pushPayload payload object of a push.
     # @return JSON data.
     def sendPush(payload)
-      response = @pushClient.sendPush(payload,@authcode);
-      return  response.body
+      result = @pushClient.sendPush(payload,@authcode);
+      return  result
     end
 
     #Get received report.
     # @param msgIds 100 msgids to batch getting is supported.
     # @return JSON data.
     def getReportReceiveds(msgIds)
-      response = @reportClient.getReceiveds(msgIds,@authcode)
-      return response.body;
+      result = @reportClient.getReceiveds(msgIds,@authcode)
+      return result
     end
 
     #Get message report.
     # @param msgIds 100 msgids to batch getting is supported.
     # @return JSON data.
     def getReportMessages(msgIds)
-      response =  @reportClient.getMessages(msgIds,@authcode)
-      return response.body;
+      result =  @reportClient.getMessages(msgIds,@authcode)
+      return result
     end
 
     #Get user report.
@@ -64,8 +64,8 @@ appKey The KEY of one application on JPush.
     #@duration
     # @return JSON data.
     def getReportUsers(timeUnit,start,duration)
-      response =  @reportClient.getUsers(timeUnit,start,duration,@authcode)
-      return response.body;
+      result =  @reportClient.getUsers(timeUnit,start,duration,@authcode)
+      return result
     end
 
   end

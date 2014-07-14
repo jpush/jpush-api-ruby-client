@@ -6,7 +6,11 @@ The object you should build for sending a push.
   class PushPayload
     attr_accessor :platform,:audience,:message,:options,:notification;
     def initialize(opts = {})
-      
+      @platform = opts[:platform];
+      @audience = opts[:audience]
+      @message = opts[:message]
+      @options = opts[:options]
+      @notification = opts[:notification]
     end
 
     def toJSON
