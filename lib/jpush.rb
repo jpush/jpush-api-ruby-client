@@ -15,4 +15,6 @@ module JPush
   autoload :IOSNotification,'jpush/model/notification/ios_notification'
   autoload :WinphoneNotification,'jpush/model/notification/winphone_notification'
   autoload :Notification,'jpush/model/notification/notification'
+  autoload :PushResult, 'jpush/model/push_result'
+  autoload :ReceivedsResult, 'jpush/model/receiveds_result'
 end
