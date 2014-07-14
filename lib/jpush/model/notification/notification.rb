@@ -1,45 +1,34 @@
 module JPush
   class Notification
     attr_accessor :alert,:android,:ios,:winphone
-    
-    def initialize(opts={})
-      @alert=opts[:alert]
-      @android=opts[:android]
-      @ios=opts[:ios]
-      @winphone=opts[:winphone]
+    def initialize(opts = {})
+      @alert = opts[:alert]
+      @android = opts[:android]
+      @ios = opts[:ios]
+      @winphone = opts[:winphone]
     end
+
     def toJSON
-      array={}
-      if @alert!=nil&&alert.lstrip.length>0
-        array['alert']=@alert
+      array = {}
+      if @alert != nil&&alert.lstrip.length>0
+        array['alert'] = @alert
       end
-      if @android!=nil
-        array['android']=@android.toJSON
+      if @android != nil
+        array['android'] = @android.toJSON
       end
-      if @ios!=nil
-        array['ios']=@ios.toJSON
+      if @ios != nil
+        array['ios'] = @ios.toJSON
       end
-      if @winphone!=nil
-        array['winphone']=@winphone.toJSON
+      if @winphone != nil
+        array['winphone'] = @winphone.toJSON
       end
 
       return array
     end
 
-    def check
- 
-      if @android!=nil
-
-      @android.check
-      end
-      if @ios!=nil
-      @ios.check
-      end
-      if @winphone!=nil
-
-      @winphone.check
-      end
-
+    def self.build(opts = {})
+      notification=JPush::Notification.new(opts)
     end
+    
   end
 end

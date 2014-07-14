@@ -1,60 +1,60 @@
 module JPush
   class IOSNotification
     attr_accessor :alert,:sound,:badge,:extras,:content_available;
-    def initialize(opts={})
-      if opts[:badge]!=nil
-        @badge=opts[:badge]
+    def initialize(opts = {})
+      if opts[:badge] != nil
+        @badge = opts[:badge]
       else
-        @badge=1
+        @badge = 1
       end
-      if opts[:sound]!=nil
-        @sound=opts[:sound]
+      if opts[:sound] != nil
+        @sound = opts[:sound]
       else
-        @sound=''
+        @sound = ''
       end
-      @alert=opts[:alert]
-      @extras=opts[:extras]
-      @content_available=opts[:content_available]
-
+      @alert = opts[:alert]
+      @extras = opts[:extras]
+      @content_available = opts[:content_available]
     end
 
     def toJSON
-      array={};
-      if @alert!=nil then
-        array['alert']=@alert;
+      array = {};
+      if @alert != nil then
+        array['alert'] = @alert;
       end
-      if @sound!=nil&&@sound!=false then
-        array['sound']=@sound;
+      if @sound != nil&&@sound != false then
+        array['sound'] = @sound;
       end
-      if @badge!=nil&&@badge!=false then
-        array['badge']=@badge;
+      if @badge != nil&&@badge != false then
+        array['badge'] = @badge;
       end
-      if @extras!=nil then
-        array['extras']=@extras;
+      if @extras != nil then
+        array['extras'] = @extras;
       end
-      if @content_available==nil then
-        array['content-available']=content_available;
+      if @content_available != nil then
+        array['content-available'] = content_available;
       end
       return array
     end
 
     def disableSound
-      @sound=false
+      @sound = false
     end
 
     def disableBadge
-      @badge=false
+      @badge = false
     end
 
-    def check
-      if @alert==nil
+    def self.build(opts = {})
+      ios=JPush::IOSNotification.new(opts)
+      if opts.alert != nil
         raise ArgumentError.new('the alert should be setted')
       end
-      if self.to_s.bytesize>220
+      if ios.to_s.bytesize > 220
         raise ArgumentError.new('ios notfication‘s size is longer than 220 ')
       end
+      return ios
     end
-    
-    
+
   end
 end

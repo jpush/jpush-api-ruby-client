@@ -6,8 +6,8 @@ require 'net/https'
 
 module JPush
   class NativeHttpClient
-    def initialize(maxRetryTimes=5)
-      @maxRetryTimes=maxRetryTimes;
+    def initialize(maxRetryTimes = 5)
+      @maxRetryTimes = maxRetryTimes;
       @logger = Logger.new(STDOUT);
     end
 
@@ -21,18 +21,18 @@ module JPush
     private
 
     def sendRequest(url,content,method,authCode)
-      response=_sendRequest(url,content,method,authCode)
-      retryTimes=0;
+      response = _sendRequest(url,content,method,authCode)
+      retryTimes = 0;
       while retryTimes>@maxRetryTimes
         begin
-          response=_sendRequest(url,content,method,authCode)
-        rescue ReadTimeout=>e
+          response = _sendRequest(url,content,method,authCode)
+        rescue ReadTimeout =>e
 
           if retryTimes>@maxRetryTimes
             raise RuntimeError.new("connect error")
           else
             @logger.debug("Retry again - " + (retryTimes + 1))
-          retryTimes=retryTimes+1;
+          retryTimes = retryTimes+1;
           end
 
         end
@@ -43,46 +43,46 @@ module JPush
 
     def _sendRequest(url,content,method,authCode)
       begin
-        header={};
-        header['User-Agent']='JPush-API-Ruby-Client';
-        header['Connection']='Keep-Alive';
-        header['Charset']='UTF-8';
-        header['Content-Type']='application/json';
-        header['Authorization']=authCode
-        #url=url+content;
+        header = {};
+        header['User-Agent'] = 'JPush-API-Ruby-Client';
+        header['Connection'] = 'Keep-Alive';
+        header['Charset'] = 'UTF-8';
+        header['Content-Type'] = 'application/json';
+        header['Authorization'] = authCode
+        #url = url+content;
 
-        uri  = URI.parse(url)
+        uri = URI.parse(url)
 
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         http.open_timeout = 5;
         http.read_timeout = 30;
-        use_ssl=true
-        if method=='POST'&&use_ssl == true
+        use_ssl = true
+        if method == 'POST'&&use_ssl == true
           req = Net::HTTP::Post.new(uri.path, initheader = header)
         req.body = content
         response = http.request(req)
 
-        elsif method=='GET'&&use_ssl == true
+        elsif method == 'GET'&&use_ssl == true
           request = Net::HTTP::Get.new(uri.request_uri,initheader = header)
         response = http.request(request)
         end
-        #if method=='POST'
-        # @response= http.post(path,content,header);
-        #elsif method=='GET'
-        # @response= http.get2(path,content,header);
+        #if method == 'POST'
+        # @response = http.post(path,content,header);
+        #elsif method == 'GET'
+        # @response = http.get2(path,content,header);
         # end
-        code=response.code;
-        code=Integer(code)
+        code = response.code;
+        code = Integer(code)
 
-        if code==200
+        if code == 200
           @logger.debug("Succeed to get response - 200 OK");
-          if content!=nil
+          if content != nil
             @logger.debug('Response Content -'+content);
           end
         elsif code>200&&code<400
-          @logger.warn('Normal response but unexpected - responseCode:'+code.to_s+',responseContent='+content);
+          @logger.warn('Normal response but unexpected - responseCode:'+code.to_s+',responseContent = '+content);
         else
           @logger.error("Got error response - responseCode:" + code.to_s + ", responseContent:" + content);
           case code
