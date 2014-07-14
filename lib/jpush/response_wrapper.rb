@@ -21,8 +21,16 @@ module JPush
       @logger.debug("JPush API Rate Limiting params - quota:" + quota + ", remaining:" + remaining + ", reset:" + reset)
     end
     
+    def setResponseContent(content)
+       @responseContent = content
+    end
+    
+    def getResponseContent
+      return @responseContent
+    end
+    
     def setErrorObject
-      @error=JSON.parse responseContent
+      @error = JSON.parse @responseContent
     end
   end
 end

@@ -6,10 +6,11 @@ module JPush
       @isOk = false
     end
     def fromResponse(wrapper)
-      if wrapeper.code!=200
+      if wrapper.code != 200
         raise RuntimeError.new("response error")
       end
-      hash = JSON.parse(wrapper.responseContent)
+      content = wrapper.getResponseContent
+      hash = JSON.parse(content)
       @sendno = hash['sendno']
       @msg_id = hash['msg_id']
       @isOk = true

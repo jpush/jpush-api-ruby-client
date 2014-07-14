@@ -26,7 +26,7 @@ notification: JPush::Notification.build(
     extras: {"key1" => "value1", "key2" => "value2"}))
 )
 result = client.sendPush(payload1);
-logger.debug("Got result  " + result)
+logger.debug("Got result  " + result.to_s)
 
 #send android WithExtrasMessage
 payload1 = JPush::PushPayload.build(

@@ -79,7 +79,7 @@ module JPush
         code = Integer(code)
         wrapper=JPush::ResponseWrapper.new
         wrapper.code=code
-        wrapper.responseContent=response.body
+        wrapper.setResponseContent(response.body)
         #headers = response.header.to_hash
         #quota = headers['X-Rate-Limit-Limit']
         #remaining = headers['X-Rate-Limit-Remaining']
@@ -120,7 +120,7 @@ module JPush
       rescue SocketError => ex
         raise SocketError.new("socket build error")
       end
-      return response
+      return wrapper
     end
   end
 end
