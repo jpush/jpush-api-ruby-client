@@ -1,6 +1,6 @@
 module JPush
   class Audience
-    attr_accessor  :tag,:tag_and, :_alias,:registration_id,:segment,:all;
+    attr_accessor  :tag,:tag_and, :_alias,:registration_id,:segment,:all
     def initialize(opts = {})
       @all = false
       @tag = opts[:tag]
@@ -12,34 +12,34 @@ module JPush
 
     def toJSON
       if @all == true then
-        return 'all';
+        return 'all'
       end
-      array = {};
+      array = {}
       if @tag != nil then
         if @tag.class != Array
           raise ArgumentError.new('tag is not Array')
         end
-        array['tag'] = @tag;
+        array['tag'] = @tag
       end
       if @_alias != nil then
         if @_alias.class != Array
           raise ArgumentError.new('alias is not Array')
         end
-        array['alias'] = @_alias;
+        array['alias'] = @_alias
       end
       if @tag_and != nil  then
         if @tag_and.class != Array
           raise ArgumentError.new('tag_end is not Array')
         end
-        array['tag_and'] = @tag_and;
+        array['tag_and'] = @tag_and
       end
       if @registration_id != nil then
         if @registration_id.class != Array
           raise ArgumentError.new('registration_id is not Array')
         end
-        array['registration_id'] = @registration_id;
+        array['registration_id'] = @registration_id
       end
-      return array;
+      return array
     end
 
     def self.all

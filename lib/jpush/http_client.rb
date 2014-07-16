@@ -9,22 +9,22 @@ require 'net/https'
 module JPush
   class NativeHttpClient
     def initialize(maxRetryTimes = 5)
-      @maxRetryTimes = maxRetryTimes;
-      @logger = Logger.new(STDOUT);
+      @maxRetryTimes = maxRetryTimes
+      @logger = Logger.new(STDOUT)
     end
 
     def sendPsot(url,content,authCode)
-      return sendRequest(url,content,'POST',authCode);
+      return sendRequest(url,content,'POST',authCode)
     end
 
     def sendGet(url,content,authCode)
-      return sendRequest(url,content,'GET',authCode);
+      return sendRequest(url,content,'GET',authCode)
     end
     private
 
     def sendRequest(url,content,method,authCode)
       wrapper = _sendRequest(url,content,method,authCode)
-      retryTimes = 0;
+      retryTimes = 0
       while retryTimes>@maxRetryTimes
         begin
           response = _sendRequest(url,content,method,authCode)
@@ -34,7 +34,7 @@ module JPush
             raise RuntimeError.new("connect error")
           else
             @logger.debug("Retry again - " + (retryTimes + 1))
-          retryTimes = retryTimes+1;
+          retryTimes = retryTimes+1
           end
 
         end
@@ -45,21 +45,21 @@ module JPush
 
     def _sendRequest(url,content,method,authCode)
       begin
-        header = {};
-        header['User-Agent'] = 'JPush-API-Ruby-Client';
-        header['Connection'] = 'Keep-Alive';
-        header['Charset'] = 'UTF-8';
-        header['Content-Type'] = 'application/json';
+        header = {}
+        header['User-Agent'] = 'JPush-API-Ruby-Client'
+        header['Connection'] = 'Keep-Alive'
+        header['Charset'] = 'UTF-8'
+        header['Content-Type'] = 'application/json'
         header['Authorization'] = authCode
-        #url = url+content;
+        #url = url+content
 
         uri = URI.parse(url)
 
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        http.open_timeout = 5;
-        http.read_timeout = 30;
+        http.open_timeout = 5
+        http.read_timeout = 30
         use_ssl = true
         if method == 'POST'&&use_ssl == true
           req = Net::HTTP::Post.new(uri.path, initheader = header)
@@ -71,11 +71,11 @@ module JPush
           response = http.request(request)
         end
         #if method == 'POST'
-        # @response = http.post(path,content,header);
+        # @response = http.post(path,content,header)
         #elsif method == 'GET'
-        # @response = http.get2(path,content,header);
+        # @response = http.get2(path,content,header)
         # end
-        code = response.code;
+        code = response.code
         code = Integer(code)
         wrapper=JPush::ResponseWrapper.new
         wrapper.code=code
@@ -86,34 +86,34 @@ module JPush
         #reset = headers['X-Rate-Limit-Reset']
         #reswaper.setRateLimit(Integer(quota), Integer(remaining), Integer(reset))
         if code == 200
-          @logger.debug("Succeed to get response - 200 OK");
+          @logger.debug("Succeed to get response - 200 OK")
           if content != nil
-            @logger.debug('Response Content -'+content);
+            @logger.debug('Response Content -'+response.body)
           end
         elsif code>200&&code<400
-          @logger.warn('Normal response but unexpected - responseCode:'+code.to_s+',responseContent = '+content);
+          @logger.warn('Normal response but unexpected - responseCode:'+code.to_s+',responseContent = '+response.body)
         else
-          @logger.error("Got error response - responseCode:" + code.to_s + ", responseContent:" + content);
+          @logger.error("Got error response - responseCode:" + code.to_s + ", responseContent:" + response.body)
           case code
           when 400
-            @logger.error("Your request params is invalid. Please check them according to error message.");
-            wrapper.setErrorObject();
+            @logger.error("Your request params is invalid. Please check them according to error message.")
+            wrapper.setErrorObject()
           when 401
-            @logger.error("Authentication failed! Please check authentication params according to docs.");
-            wrapper.setErrorObject();
+            @logger.error("Authentication failed! Please check authentication params according to docs.")
+            wrapper.setErrorObject()
           when 403
-            @logger.error("Request is forbidden! Maybe your appkey is listed in blacklist?");
-            wrapper.setErrorObject();
+            @logger.error("Request is forbidden! Maybe your appkey is listed in blacklist?")
+            wrapper.setErrorObject()
           when 410
-            @logger.error("Request resource is no longer in service. Please according to notice on official website.");
-            wrapper.setErrorObject();
+            @logger.error("Request resource is no longer in service. Please according to notice on official website.")
+            wrapper.setErrorObject()
           when 429
-            @logger.error("Too many requests! Please review your appkey's request quota.");
-            wrapper.setErrorObject();
+            @logger.error("Too many requests! Please review your appkey's request quota.")
+            wrapper.setErrorObject()
           when 501..504
-            @logger.error("Seems encountered server error. Maybe JPush is in maintenance? Please retry later.");
+            @logger.error("Seems encountered server error. Maybe JPush is in maintenance? Please retry later.")
           else
-          @logger.error("Unexpected response.");
+          @logger.error("Unexpected response.")
           
           end
         end

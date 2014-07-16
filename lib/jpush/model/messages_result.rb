@@ -1,4 +1,5 @@
 require 'json'
+
 module JPush
   class MessagesResult
     

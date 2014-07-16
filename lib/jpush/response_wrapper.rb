@@ -2,7 +2,7 @@ module JPush
   class ResponseWrapper
     attr_accessor :rateLimitQuota,:rateLimitRemaining,:rateLimitReset,:code, :error, :responseContent
     def initialize()
-      @logger = Logger.new(STDOUT);
+      @logger = Logger.new(STDOUT)
     end
 
     def setRateLimit(quota,remaining,reset)

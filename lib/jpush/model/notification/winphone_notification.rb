@@ -1,6 +1,6 @@
 module JPush
   class WinphoneNotification
-    attr_accessor :alert,:title,:_open_page,:extras;
+    attr_accessor :alert,:title,:_open_page,:extras
     def initialize(opts = {})
       @alert = opts[:alert]
       @title = opts[:title]
@@ -9,18 +9,18 @@ module JPush
     end
 
     def toJSON
-      array = {};
+      array = {}
       if @alert != nil then
-        array['alert'] = @alert;
+        array['alert'] = @alert
       end
       if @title != nil then
-        array['title'] = @title;
+        array['title'] = @title
       end
       if @_open_page != nil then
-        array['_open_page'] = @_open_page;
+        array['_open_page'] = @_open_page
       end
       if @extras != nil then
-        array['extras'] = @extras;
+        array['extras'] = @extras
       end
       return array
     end

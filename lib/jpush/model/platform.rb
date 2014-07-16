@@ -1,11 +1,11 @@
 module JPush
   class Platform
-    attr_accessor :android,:ios,:winphone;
+    attr_accessor :android,:ios,:winphone
     def initialize(opts = {})
       if opts[:android] != nil
         @android = opts[:android]
       else
-        @android = false;
+        @android = false
       end
       if opts[:ios] != nil
         @ios = opts[:ios]
@@ -21,7 +21,7 @@ module JPush
 
     def toJSON
       if @android ==true&&@ios ==true&&@winphone ==true
-        return 'all';
+        return 'all'
       else
         array = Array.new
         if @android ==true then
@@ -34,7 +34,7 @@ module JPush
           array.push('winphone')
         end
       end
-      return array;
+      return array
     end
 
     def self.all

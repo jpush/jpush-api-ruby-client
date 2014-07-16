@@ -4,9 +4,9 @@ The object you should build for sending a push.
 @param platform audience must be set
 =end
   class PushPayload
-    attr_accessor :platform,:audience,:message,:options,:notification;
+    attr_accessor :platform,:audience,:message,:options,:notification
     def initialize(opts = {})
-      @platform = opts[:platform];
+      @platform = opts[:platform]
       @audience = opts[:audience]
       @message = opts[:message]
       @options = opts[:options]
@@ -14,21 +14,21 @@ The object you should build for sending a push.
     end
 
     def toJSON
-      array = {};
+      array = {}
       if @platform != nil then
-        array['platform'] = @platform.toJSON;
+        array['platform'] = @platform.toJSON
       end
       if @audience != nil then
-        array['audience'] = @audience.toJSON;
+        array['audience'] = @audience.toJSON
       end
       if @message != nil then
-        array['message'] = @message.toJSON;
+        array['message'] = @message.toJSON
       end
       if @options != nil then
-        array['options'] = @options.toJSON;
+        array['options'] = @options.toJSON
       end
       if @notification != nil then
-        array['notification'] = @notification.toJSON;
+        array['notification'] = @notification.toJSON
       end
       return array
     end
@@ -45,7 +45,7 @@ The object you should build for sending a push.
       if payload.notification.to_s.bytesize + payload.message.to_s.bytesize > 1200
         raise ArgumentError.new('notfication and message‘s size is longer than 1200 ')
       end
-      return payload;
+      return payload
     end
 
     #used only the ios nitification is not nil

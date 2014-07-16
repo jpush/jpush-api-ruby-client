@@ -16,29 +16,29 @@ appKey The KEY of one application on JPush.
 =end
     def initialize(appkey,masterSecret,maxRetryTimes = 5)
       begin
-        @logger = Logger.new(STDOUT);
+        @logger = Logger.new(STDOUT)
         if appkey.class == String&&appkey.length == 24 then
-          @appkey = appkey;
+          @appkey = appkey
         else
-          @logger.error('appkey is format error ; ');
+          @logger.error('appkey is format error  ')
         end
         if masterSecret.class == String&&masterSecret.length == 24 then
-          @masterSecret = masterSecret;
+          @masterSecret = masterSecret
         else
           @logger.error('masterSecret is format error')
         end
       end
-      @masterSecret = masterSecret;
-      @pushClient = JPush::PushClient.new(maxRetryTimes = maxRetryTimes);
-      @reportClient = JPush::ReportClient.new(maxRetryTimes = maxRetryTimes);
-      @authcode = ServiceHelper.getAuthorizationBase64(appkey,masterSecret);
+      @masterSecret = masterSecret
+      @pushClient = JPush::PushClient.new(maxRetryTimes = maxRetryTimes)
+      @reportClient = JPush::ReportClient.new(maxRetryTimes = maxRetryTimes)
+      @authcode = ServiceHelper.getAuthorizationBase64(appkey,masterSecret)
     end
 
     # Send a push with object.
     # @param pushPayload payload object of a push.
     # @return JSON data.
     def sendPush(payload)
-      result = @pushClient.sendPush(payload,@authcode);
+      result = @pushClient.sendPush(payload,@authcode)
       return  result
     end
 

@@ -1,6 +1,6 @@
 module JPush
   class Options
-    attr_accessor :sendno,:time_to_live,:override_msg_id,:apns_production;
+    attr_accessor :sendno,:time_to_live,:override_msg_id,:apns_production
     def initialize(opts = {})
       if opts[:apns_production] != nil
         @apns_production = opts[:apns_production]
@@ -9,25 +9,29 @@ module JPush
       end
 
       @sendno = opts[:sendno]
+      if opts[:time_to_live]!=nil
       @time_to_live = opts[:time_to_live]
+      else
+      @time_to_live=86400
+      end
       @overrride_msg_id = opts[:override_msg_id]
     end
 
     def toJSON
-      array = {};
+      array = {}
       if @sendno != nil then
-        array['sendno'] = @sendno;
+        array['sendno'] = @sendno
       end
       if @time_to_live != nil then
-        array['time_to_live'] = @time_to_live;
+        array['time_to_live'] = @time_to_live
       end
       if @override_msg_id != nil then
-        array['override_msg_id'] = @override_msg_id;
+        array['override_msg_id'] = @override_msg_id
       end
       if @apns_production != nil then
-        array['apns_production'] = @apns_production;
+        array['apns_production'] = @apns_production
       end
-      return array;
+      return array
     end
 
     def self.build(opts = {})
