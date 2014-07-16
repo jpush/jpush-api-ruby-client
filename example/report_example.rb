@@ -7,12 +7,12 @@ logger = Logger.new(STDOUT)
 
 #getReceiveds
 result = client.getReportReceiveds('1942377665')
-logger.debug("Got result - " + result)
+logger.debug("Got result - " + result.toJSON)
 
 #getMessages
-result = client.getReportMessages('1942377665')
-logger.debug("Got result - " + result)
+#result = client.getReportMessages('1942377665')
+#logger.debug("Got result - " + result)
 
 #getUsers
-result = client.getReportUsers('DAY',"2014-06-10",'3')
-logger.debug("Got result - " + result)
+#result = client.getReportUsers('DAY',"2014-06-10",'3')
+#logger.debug("Got result - " + result)

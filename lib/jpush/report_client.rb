@@ -16,9 +16,9 @@ module JPush
     def getReceiveds(msg_ids,authcode)
       msg_ids = checkMsgids(msg_ids)
       @url = @@REPORT_HOST_NAME+@@REPORT_RECEIVE_PATH+'?msg_ids='+msg_ids
-      result = JPush::PushResult.new
+      result = JPush::ReceivedsResult.new
       wrapper = @httpclient.sendGet(@url,nil,authcode)
-      result.fromResponse(wrapper)
+      return result.fromResponse(wrapper)
     end
 
     def getMessages(msg_ids,authcode)
@@ -37,7 +37,6 @@ module JPush
         raise ArgumentError.new('msgIds param is required')
       end
       msg_ids = msg_ids.split.join('').to_s
-      puts msg_ids
       return msg_ids
     end
 

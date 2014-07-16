@@ -16,7 +16,7 @@ class ReportFunctionTests < Test::Unit::TestCase
   def testgetReceivedsFixed2
     result = @client.getReportReceiveds("1613113584,   ,1229760629,  ")
   end
-  
+=begin 
   def testgetMessagesTest
      result = @client.getReportMessages("1613113584")
   end
@@ -36,4 +36,5 @@ class ReportFunctionTests < Test::Unit::TestCase
   def getUserTest3
     result = @client.getReportUsers('HOUR', "2014-05-10 06", 10)
   end
+=end
 end
