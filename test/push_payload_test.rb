@@ -53,6 +53,6 @@ class PushPayLoadTest <Test::Unit::TestCase
         msg_content:  "message content test",
         title: "message title test",
         content_type: "message content type test",
-        extras: {"key1" =>"value1", "key2" =>"value2"}))      
+        extras: {"key1" => "value1", "key2" => "value2"}))      
   end
 end

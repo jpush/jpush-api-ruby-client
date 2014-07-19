@@ -3,7 +3,7 @@ require 'jpush'
 require './base_remote_tests.rb'
 
 require 'test/unit'
-class AudienceTests <Test::Unit::TestCase
+class AudienceTests < Test::Unit::TestCase
     def setup
     @client = JPush::JPushClient.new(AppKey, MasterSecret)
   end
