@@ -1,10 +1,10 @@
 module JPush
   class ResponseWrapper
-    attr_accessor :rateLimitQuota,:rateLimitRemaining,:rateLimitReset,:code, :error, :responseContent
+    attr_accessor :rateLimitQuota, :rateLimitRemaining, :rateLimitReset, :code, :error, :responseContent
     def initialize()
+
       @logger = Logger.new(STDOUT)
     end
-
     def setRateLimit(quota, remaining, reset)
       if quota.class != Fixnum
         raise ArgumentError.new('quota is not FIXnum')

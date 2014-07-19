@@ -13,6 +13,7 @@ module JPush
       @httpclient=JPush::NativeHttpClient.new(maxRetryTimes)
     end
 
+
     def getReceiveds(msg_ids, authcode)
       msg_ids = checkMsgids(msg_ids)
       @url = @@REPORT_HOST_NAME + @@REPORT_RECEIVE_PATH + '?msg_ids=' + msg_ids

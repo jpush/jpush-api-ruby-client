@@ -14,6 +14,7 @@ Create a JPush Client.
 masterSecret API access secret of the appKey.
 appKey The KEY of one application on JPush.
 =end
+
     def initialize(appkey, masterSecret, maxRetryTimes = 5)
       begin
         @logger = Logger.new(STDOUT)
@@ -24,6 +25,7 @@ appKey The KEY of one application on JPush.
         end
         if masterSecret.class == String && masterSecret.length == 24 then
           @masterSecret = masterSecret
+
         else
           @logger.error('masterSecret is format error')
         end
@@ -63,6 +65,7 @@ appKey The KEY of one application on JPush.
     #@param start is a string for example 2014-06-10
     #@duration
     # @return JSON data.
+
     def getReportUsers(timeUnit, start, duration)
       result =  @reportClient.getUsers(timeUnit, start, duration, @authcode)
       return result

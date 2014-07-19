@@ -72,3 +72,4 @@ payload1 = JPush::PushPayload.build(
 result = client.sendPush(payload1)
 logger.debug("Got result  " +  result.toJSON)
 
+

@@ -9,6 +9,7 @@ module JPush
       end
 
       @sendno = opts[:sendno]
+
       if opts[:time_to_live] != nil
       @time_to_live = opts[:time_to_live]
       else

@@ -34,9 +34,8 @@ module JPush
             raise RuntimeError.new("connect error")
           else
             @logger.debug("Retry again - " + (retryTimes + 1))
-          retryTimes = retryTimes + 1
+            retryTimes = retryTimes + 1
           end
-
         end
       end
       return wrapper
@@ -45,6 +44,7 @@ module JPush
 
     def _sendRequest(url, content, method, authCode)
       begin
+
         header = {}
         header['User-Agent'] = 'JPush-API-Ruby-Client'
         header['Connection'] = 'Keep-Alive'
@@ -52,12 +52,11 @@ module JPush
         header['Content-Type'] = 'application/json'
         header['Authorization'] = authCode
         #url = url+content
-
         uri = URI.parse(url)
-
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
         http.open_timeout = 5
         http.read_timeout = 30
         use_ssl = true
@@ -65,7 +64,6 @@ module JPush
           req = Net::HTTP::Post.new(uri.path, initheader = header)
         req.body = content
         response = http.request(req)
-
         elsif method == 'GET' && use_ssl == true
           request = Net::HTTP::Get.new(uri.request_uri, initheader = header)
           response = http.request(request)
@@ -113,8 +111,7 @@ module JPush
           when 501..504
             @logger.error("Seems encountered server error. Maybe JPush is in maintenance? Please retry later.")
           else
-          @logger.error("Unexpected response.")
-          
+          @logger.error("Unexpected response.")    
           end
         end
       rescue SocketError => ex
