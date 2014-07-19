@@ -1,6 +1,6 @@
 module JPush
   class Options
-    attr_accessor :sendno,:time_to_live,:override_msg_id,:apns_production
+    attr_accessor :sendno, :time_to_live, :override_msg_id, :apns_production
     def initialize(opts = {})
       if opts[:apns_production] != nil
         @apns_production = opts[:apns_production]
@@ -9,10 +9,10 @@ module JPush
       end
 
       @sendno = opts[:sendno]
-      if opts[:time_to_live]!=nil
+      if opts[:time_to_live] != nil
       @time_to_live = opts[:time_to_live]
       else
-      @time_to_live=86400
+      @time_to_live = 86400
       end
       @overrride_msg_id = opts[:override_msg_id]
     end

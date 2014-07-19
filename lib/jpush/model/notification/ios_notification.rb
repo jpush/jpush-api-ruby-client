@@ -1,6 +1,6 @@
 module JPush
   class IOSNotification
-    attr_accessor :alert,:sound,:badge,:extras,:content_available
+    attr_accessor :alert, :sound, :badge, :extras, :content_available
     def initialize(opts = {})
       if opts[:badge] != nil
         @badge = opts[:badge]
@@ -22,10 +22,10 @@ module JPush
       if @alert != nil then
         array['alert'] = @alert
       end
-      if @sound != nil&&@sound != false then
+      if @sound != nil && @sound != false then
         array['sound'] = @sound
       end
-      if @badge != nil&&@badge != false then
+      if @badge != nil && @badge != false then
         array['badge'] = @badge
       end
       if @extras != nil then
@@ -46,7 +46,7 @@ module JPush
     end
 
     def self.build(opts = {})
-      ios=JPush::IOSNotification.new(opts)
+      ios = JPush::IOSNotification.new(opts)
       if ios.alert == nil
         raise ArgumentError.new('the alert should be setted')
       end

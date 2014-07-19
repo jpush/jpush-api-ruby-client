@@ -1,6 +1,6 @@
 module JPush
   class Audience
-    attr_accessor  :tag,:tag_and, :_alias,:registration_id,:segment,:all
+    attr_accessor  :tag, :tag_and, :_alias, :registration_id, :segment, :all
     def initialize(opts = {})
       @all = false
       @tag = opts[:tag]
@@ -51,12 +51,12 @@ module JPush
     def self.build(opts = {})
       audience = JPush::Audience.new(opts)
       if audience.all == true
-        if audience.tag != nil||audience._alias != nil||audience.tag_and != nil||audience.registration_id != nil
+        if audience.tag != nil || audience._alias != nil || audience.tag_and != nil || audience.registration_id != nil
           raise ArgumentError.new('If audience is all, no any other audience may be set.')
         end
       end
       if audience.all == false
-        if audience.tag == nil&&audience._alias == nil&&audience.tag_and == nil&&audience.registration_id == nil
+        if audience.tag == nil && audience._alias == nil && audience.tag_and == nil && audience.registration_id == nil
           raise ArgumentError.new('No any audience target is set.')
         end
       end

@@ -4,7 +4,7 @@ The object you should build for sending a push.
 @param platform audience must be set
 =end
   class PushPayload
-    attr_accessor :platform,:audience,:message,:options,:notification
+    attr_accessor :platform, :audience, :message, :options, :notification
     def initialize(opts = {})
       @platform = opts[:platform]
       @audience = opts[:audience]
@@ -34,11 +34,11 @@ The object you should build for sending a push.
     end
 
     def self.build(opts = {})
-      payload=JPush::PushPayload.new(opts)
-      if payload.audience == nil||payload.platform == nil
+      payload = JPush::PushPayload.new(opts)
+      if payload.audience == nil || payload.platform == nil
         raise ArgumentError.new(' audience and platform both should be set.')
       end
-      if payload.notification == nil&&payload.message == nil
+      if payload.notification == nil && payload.message == nil
         raise ArgumentError.new('notification or message should be set at least one')
       end
 

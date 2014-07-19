@@ -5,7 +5,7 @@ module JPush
       @logger = Logger.new(STDOUT)
     end
 
-    def setRateLimit(quota,remaining,reset)
+    def setRateLimit(quota, remaining, reset)
       if quota.class != Fixnum
         raise ArgumentError.new('quota is not FIXnum')
       end

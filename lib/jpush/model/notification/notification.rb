@@ -1,6 +1,6 @@
 module JPush
   class Notification
-    attr_accessor :alert,:android,:ios,:winphone
+    attr_accessor :alert, :android, :ios, :winphone
     def initialize(opts = {})
       @alert = opts[:alert]
       @android = opts[:android]
@@ -10,7 +10,7 @@ module JPush
 
     def toJSON
       array = {}
-      if @alert != nil&&alert.lstrip.length>0
+      if @alert != nil && alert.lstrip.length > 0
         array['alert'] = @alert
       end
       if @android != nil
@@ -27,7 +27,7 @@ module JPush
     end
 
     def self.build(opts = {})
-      notification=JPush::Notification.new(opts)
+      notification = JPush::Notification.new(opts)
     end
     
   end

@@ -13,28 +13,28 @@ module JPush
       @logger = Logger.new(STDOUT)
     end
 
-    def sendPsot(url,content,authCode)
-      return sendRequest(url,content,'POST',authCode)
+    def sendPost(url, content, authCode)
+      return sendRequest(url, content, 'POST', authCode)
     end
 
-    def sendGet(url,content,authCode)
-      return sendRequest(url,content,'GET',authCode)
+    def sendGet(url, content, authCode)
+      return sendRequest(url, content, 'GET', authCode)
     end
     private
 
-    def sendRequest(url,content,method,authCode)
-      wrapper = _sendRequest(url,content,method,authCode)
+    def sendRequest(url, content, method, authCode)
+      wrapper = _sendRequest(url, content, method, authCode)
       retryTimes = 0
-      while retryTimes>@maxRetryTimes
+      while retryTimes > @maxRetryTimes
         begin
-          response = _sendRequest(url,content,method,authCode)
+          response = _sendRequest(url, content, method, authCode)
         rescue ReadTimeout =>e
 
           if retryTimes>@maxRetryTimes
             raise RuntimeError.new("connect error")
           else
             @logger.debug("Retry again - " + (retryTimes + 1))
-          retryTimes = retryTimes+1
+          retryTimes = retryTimes + 1
           end
 
         end
@@ -43,7 +43,7 @@ module JPush
     end
     private
 
-    def _sendRequest(url,content,method,authCode)
+    def _sendRequest(url, content, method, authCode)
       begin
         header = {}
         header['User-Agent'] = 'JPush-API-Ruby-Client'
@@ -61,13 +61,13 @@ module JPush
         http.open_timeout = 5
         http.read_timeout = 30
         use_ssl = true
-        if method == 'POST'&&use_ssl == true
+        if method == 'POST' && use_ssl == true
           req = Net::HTTP::Post.new(uri.path, initheader = header)
         req.body = content
         response = http.request(req)
 
-        elsif method == 'GET'&&use_ssl == true
-          request = Net::HTTP::Get.new(uri.request_uri,initheader = header)
+        elsif method == 'GET' && use_ssl == true
+          request = Net::HTTP::Get.new(uri.request_uri, initheader = header)
           response = http.request(request)
         end
         #if method == 'POST'
@@ -77,8 +77,8 @@ module JPush
         # end
         code = response.code
         code = Integer(code)
-        wrapper=JPush::ResponseWrapper.new
-        wrapper.code=code
+        wrapper = JPush::ResponseWrapper.new
+        wrapper.code = code
         wrapper.setResponseContent(response.body)
         #headers = response.header.to_hash
         #quota = headers['X-Rate-Limit-Limit']
@@ -88,10 +88,10 @@ module JPush
         if code == 200
           @logger.debug("Succeed to get response - 200 OK")
           if content != nil
-            @logger.debug('Response Content -'+response.body)
+            @logger.debug('Response Content -' + response.body)
           end
-        elsif code>200&&code<400
-          @logger.warn('Normal response but unexpected - responseCode:'+code.to_s+',responseContent = '+response.body)
+        elsif code > 200 && code < 400
+          @logger.warn('Normal response but unexpected - responseCode:' + code.to_s + ',responseContent = ' + response.body)
         else
           @logger.error("Got error response - responseCode:" + code.to_s + ", responseContent:" + response.body)
           case code

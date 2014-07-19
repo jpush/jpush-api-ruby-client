@@ -1,6 +1,6 @@
 module JPush
   class WinphoneNotification
-    attr_accessor :alert,:title,:_open_page,:extras
+    attr_accessor :alert, :title, :_open_page, :extras
     def initialize(opts = {})
       @alert = opts[:alert]
       @title = opts[:title]
@@ -26,7 +26,7 @@ module JPush
     end
 
     def self.build(opts = {})
-      winphone=JPush::WinphoneNotification.new(opts)
+      winphone = JPush::WinphoneNotification.new(opts)
       if winphone.alert == nil
         raise ArgumentError.new('winphone the alert should be setted')
       end

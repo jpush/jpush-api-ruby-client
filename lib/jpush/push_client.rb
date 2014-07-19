@@ -22,7 +22,7 @@ module JPush
     def sendPush(payload,autoCode)
       json_data = JSON.generate(payload.toJSON)
       result = JPush::PushResult.new
-      wrapper = @httpclient.sendPsot(@@PUSH_API_URL,json_data,autoCode)
+      wrapper = @httpclient.sendPost(@@PUSH_API_URL, json_data, autoCode)
       result.fromResponse(wrapper)
       return result
     end

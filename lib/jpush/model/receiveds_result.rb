@@ -19,7 +19,7 @@ module JPush
       hash = JSON.parse(content)
       i = 0
       @list = []
-      while i<hash.length
+      while i < hash.length
         re = JPush::Receiveds.new
         re.msg_id = hash[i]['msg_id']
         re.ios_apns_sent = hash[i]['ios_apns_sent']
@@ -34,9 +34,9 @@ module JPush
     def toJSON
       array = []
       i = 0
-      while i<@list.length
+      while i < @list.length
         array.push @list[i].toJSON
-        i = i+1
+        i = i + 1
       end
       return array.to_json
     end

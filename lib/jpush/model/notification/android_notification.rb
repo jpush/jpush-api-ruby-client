@@ -1,6 +1,6 @@
 module JPush
   class AndroidNotification
-    attr_accessor :alert,:title,:builder_id,:extras
+    attr_accessor :alert, :title, :builder_id, :extras
     def initialize(opts = {})
       @alert = opts[:alert]
       @title = opts[:title]
@@ -27,7 +27,7 @@ module JPush
     end
 
     def self.build(opts = {})
-      android=JPush::AndroidNotification.new(opts)
+      android = JPush::AndroidNotification.new(opts)
       if android.alert == nil
         raise ArgumentError.new('android the alert should be setted')
       end
