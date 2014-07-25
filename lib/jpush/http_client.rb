@@ -57,7 +57,7 @@ module JPush
 
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        #http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         http.open_timeout = 5
         http.read_timeout = 30
         use_ssl = true
