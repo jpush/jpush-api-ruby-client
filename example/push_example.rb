@@ -52,7 +52,7 @@ logger.debug("Got result  " +  result.toJSON)
 #send ios WithExtrasMessageANDoptions
 payload1 = JPush::PushPayload.build(
   platform: JPush::Platform.all,
-  audience: JPush::Audience.all,
+  audience: JPush::Audience.all,#audience: JPush::Audience.build{ _alias : "your alias"}
   notification: JPush::Notification.build(
     alert: 'alert meassage',
     android: JPush::IOSNotification.build(
@@ -71,4 +71,30 @@ payload1 = JPush::PushPayload.build(
     apns_production: true))
 result = client.sendPush(payload1)
 logger.debug("Got result  " +  result.toJSON)
-
+#sendByTag
+payload = JPush::PushPayload.build(
+  platform: JPush::Platform.all,
+  notification: JPush::Notification.build(
+    alert: 'alert'),
+  audience: JPush::Audience.build(
+    tag: ["tag1"]))
+res = client.sendPush(payload)
+logger.debug("Got result  " +  res.toJSON)
+#sendByTagAnd
+payload = JPush::PushPayload.build(
+  platform: JPush::Platform.all,
+  notification: JPush::Notification.build(
+    alert: 'alert'),
+  audience: JPush::Audience.build(
+    tag_and: ["tag1"]))
+res = client.sendPush(payload)
+logger.debug("Got result  " +  res.toJSON)
+#sendByAlias
+payload = JPush::PushPayload.build(
+  platform: JPush::Platform.all,
+  notification: JPush::Notification.build(
+    alert: 'alert'),
+  audience: JPush::Audience.build(
+    _alias: ["alias1"]))
+res = client.sendPush(payload)
+logger.debug("Got result  " +  res.toJSON)
