@@ -56,8 +56,8 @@ payload1 = JPush::PushPayload.build(
   notification: JPush::Notification.build(
     alert: 'alert meassage',
     ios: JPush::IOSNotification.build(
-      alert: "android notification alert test",
-      title: "android notification title test",
+      alert: "ios notification alert test",
+      title: "ios notification title test",
       badge: 1,
       sound: "happy",
       extras: {"key1" => "value1", "key2" => "value2"})),
