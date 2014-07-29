@@ -55,7 +55,7 @@ payload1 = JPush::PushPayload.build(
   audience: JPush::Audience.all,#audience: JPush::Audience.build{ _alias : "your alias"}
   notification: JPush::Notification.build(
     alert: 'alert meassage',
-    android: JPush::IOSNotification.build(
+    ios: JPush::IOSNotification.build(
       alert: "android notification alert test",
       title: "android notification title test",
       badge: 1,
