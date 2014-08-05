@@ -43,14 +43,14 @@ The object you should build for sending a push.
       end
 
       if payload.notification.to_s.bytesize + payload.message.to_s.bytesize > 1200
-        raise ArgumentError.new('notfication and message‘s size is longer than 1200 ')
+        raise ArgumentError.new('notfication and message size is longer than 1200 ')
       end
       return payload
     end
 
     #used only the ios nitification is not nil
     def isIOSExceedLength
-      if @notification.ios..to_s.bytesize > 220
+      if @notification.ios.to_s.bytesize > 220
       return false
       else
       return true

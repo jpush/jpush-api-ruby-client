@@ -27,7 +27,8 @@ module JPush
     end
 
     def self.build(opts = {})
-      notification = JPush::Notification.new(opts)
+      notification=JPush::Notification.new(opts)
+      return notification
     end
     
   end

@@ -25,12 +25,12 @@ module JPush
     def sendRequest(url, content, method, authCode)
       wrapper = _sendRequest(url, content, method, authCode)
       retryTimes = 0
-      while retryTimes > @maxRetryTimes
+      while retryTimes < @maxRetryTimes
         begin
           response = _sendRequest(url, content, method, authCode)
         rescue ReadTimeout =>e
 
-          if retryTimes>@maxRetryTimes
+          if retryTimes > @maxRetryTimes
             raise RuntimeError.new("connect error")
           else
             @logger.debug("Retry again - " + (retryTimes + 1))
@@ -55,8 +55,7 @@ module JPush
         uri = URI.parse(url)
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
+        #http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         http.open_timeout = 5
         http.read_timeout = 30
         use_ssl = true

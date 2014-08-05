@@ -51,7 +51,7 @@ module JPush
         raise ArgumentError.new('the alert should be setted')
       end
       if ios.to_s.bytesize > 220
-        raise ArgumentError.new('ios notfication‘s size is longer than 220 ')
+        raise ArgumentError.new('ios notfication size is longer than 220 ')
       end
       return ios
     end
