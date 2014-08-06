@@ -18,7 +18,7 @@ module JPush
       @quota = quota
       @remaining = remaining
       @reset = reset
-      @logger.debug("JPush API Rate Limiting params - quota:" + quota + ", remaining:" + remaining + ", reset:" + reset)
+      @logger.debug("JPush API Rate Limiting params - quota:" + quota.to_s + ", remaining:" + remaining.to_s + ", reset:" + reset.to_s)
     end
     
     def setResponseContent(content)

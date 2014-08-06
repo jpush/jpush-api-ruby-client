@@ -28,8 +28,8 @@ module JPush
       while retryTimes < @maxRetryTimes
         begin
           response = _sendRequest(url, content, method, authCode)
-        rescue ReadTimeout =>e
-
+          break
+        rescue 
           if retryTimes > @maxRetryTimes
             raise RuntimeError.new('connect error')
           else
@@ -77,11 +77,12 @@ module JPush
         wrapper = JPush::ResponseWrapper.new
         wrapper.code = code
         wrapper.setResponseContent(response.body)
-        #headers = response.header.to_hash
-        #quota = headers['X-Rate-Limit-Limit']
-        #remaining = headers['X-Rate-Limit-Remaining']
-        #reset = headers['X-Rate-Limit-Reset']
-        #reswaper.setRateLimit(Integer(quota), Integer(remaining), Integer(reset))
+        headers = response.header.to_hash
+        quota = response['X-Rate-Limit-Limit']
+        remaining = response['X-Rate-Limit-Remaining']
+        reset = response['X-Rate-Limit-Reset']
+
+        wrapper.setRateLimit(Integer(quota), Integer(remaining), Integer(reset))
         if code == 200
           @logger.debug('Succeed to get response - 200 OK')
           if content != nil
