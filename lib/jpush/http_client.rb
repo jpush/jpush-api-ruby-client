@@ -31,9 +31,9 @@ module JPush
         rescue ReadTimeout =>e
 
           if retryTimes > @maxRetryTimes
-            raise RuntimeError.new("connect error")
+            raise RuntimeError.new('connect error')
           else
-            @logger.debug("Retry again - " + (retryTimes + 1))
+            @logger.debug('Retry again - ' + (retryTimes + 1))
             retryTimes = retryTimes + 1
           end
         end
@@ -83,38 +83,38 @@ module JPush
         #reset = headers['X-Rate-Limit-Reset']
         #reswaper.setRateLimit(Integer(quota), Integer(remaining), Integer(reset))
         if code == 200
-          @logger.debug("Succeed to get response - 200 OK")
+          @logger.debug('Succeed to get response - 200 OK')
           if content != nil
             @logger.debug('Response Content -' + response.body)
           end
         elsif code > 200 && code < 400
           @logger.warn('Normal response but unexpected - responseCode:' + code.to_s + ',responseContent = ' + response.body)
         else
-          @logger.error("Got error response - responseCode:" + code.to_s + ", responseContent:" + response.body)
+          @logger.error('Got error response - responseCode:' + code.to_s + ', responseContent:' + response.body)
           case code
           when 400
-            @logger.error("Your request params is invalid. Please check them according to error message.")
+            @logger.error('Your request params is invalid. Please check them according to error message.')
             wrapper.setErrorObject()
           when 401
-            @logger.error("Authentication failed! Please check authentication params according to docs.")
+            @logger.error('Authentication failed! Please check authentication params according to docs.')
             wrapper.setErrorObject()
           when 403
-            @logger.error("Request is forbidden! Maybe your appkey is listed in blacklist?")
+            @logger.error('Request is forbidden! Maybe your appkey is listed in blacklist?')
             wrapper.setErrorObject()
           when 410
-            @logger.error("Request resource is no longer in service. Please according to notice on official website.")
+            @logger.error('Request resource is no longer in service. Please according to notice on official website.')
             wrapper.setErrorObject()
           when 429
-            @logger.error("Too many requests! Please review your appkey's request quota.")
+            @logger.error('Too many requests! Please review your appkey request quota.')
             wrapper.setErrorObject()
           when 501..504
-            @logger.error("Seems encountered server error. Maybe JPush is in maintenance? Please retry later.")
+            @logger.error('Seems encountered server error. Maybe JPush is in maintenance? Please retry later.')
           else
-          @logger.error("Unexpected response.")    
+          @logger.error('Unexpected response.')    
           end
         end
       rescue SocketError => ex
-        raise SocketError.new("socket build error")
+        raise SocketError.new('socket build error')
       end
       return wrapper
     end

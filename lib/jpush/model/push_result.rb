@@ -12,7 +12,7 @@ module JPush
         logger.error('Error response from JPush server. Should review and fix it. ')
         logger.info('HTTP Status:',wrapper.code)
         logger.info('Error Message',wrapper.error)
-        raise RuntimeError.new("response error")
+        raise RuntimeError.new('response error')
       end
       content = wrapper.getResponseContent
       hash = JSON.parse(content)

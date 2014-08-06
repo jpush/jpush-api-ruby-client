@@ -16,7 +16,7 @@ module JPush
       if @msg_content != nil then
         array['msg_content'] = @msg_content
       end
-      if @content != nil then
+      if @content_type != nil then
         array['content_type'] = @content_type
       end
       if @extras != nil then
