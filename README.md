@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/jpush.svg)](http://badge.fury.io/rb/jpush)
+
 # JPush API Ruby Client
 
 ##概述
