@@ -1,4 +1,6 @@
 [![Gem Version](https://badge.fury.io/rb/jpush.svg)](https://rubygems.org/gems/jpush)
+[![Gem Downloads](http://ruby-gem-downloads-badge.herokuapp.com/jpush)](https://rubygems.org/gems/jpush)
+
 
 # JPush API Ruby Client
 
