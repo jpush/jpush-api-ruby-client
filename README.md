@@ -1,4 +1,4 @@
-[![Gem Version](https://badge.fury.io/rb/jpush.svg)](http://badge.fury.io/rb/jpush)
+[![Gem Version](https://badge.fury.io/rb/jpush.svg)](https://rubygems.org/gems/jpush)
 
 # JPush API Ruby Client
 
