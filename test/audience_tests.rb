@@ -80,8 +80,9 @@ class AudienceTests < Test::Unit::TestCase
         alert: 'alert'),
       audience: JPush::Audience.build(
         tag_and: TAG2))
-    res = @client.sendPush(@payload)
-    assert(res.isok, message = "")
+    assert_raises(ArgumentError, message = "ArgumentError") {
+      res = @client.sendPush(@payload)
+    }
   end
   
   def testsendByAliasMore
