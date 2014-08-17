@@ -33,7 +33,7 @@ module JPush
           if retryTimes > @maxRetryTimes
             raise RuntimeError.new('connect error')
           else
-            @logger.debug('Retry again - ' + (retryTimes + 1))
+            @logger.debug('Retry again - ' + (retryTimes + 1).to_s)
             retryTimes = retryTimes + 1
           end
         end
