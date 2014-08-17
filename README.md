@@ -43,8 +43,8 @@ client = JPush::JPushClient.new(app_key, master_secret);
 logger = Logger.new(STDOUT);
 
 payload =JPush::PushPayload.new(platform: JPush::Platform.all,
-	audience: JPush::Audience.all,
-	notification: JPush::Notification.new(alert: 'alert meassage')
+    audience: JPush::Audience.all,
+    notification: JPush::Notification.new(alert: 'alert meassage')
 ).check
 
 result = client.sendPush(payload);
