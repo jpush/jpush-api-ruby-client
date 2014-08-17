@@ -8,7 +8,7 @@ require "rake/testtask"
 #  test.test_files = Dir[ "test/base_remote_tests.rb" ]  
 #  test.verbose = true  
 #end
-task :default => welcome
+task :default => :welcome
  task :welcome do
     puts "Hi This is JPush api ruby client"
   end
