@@ -1,4 +1,10 @@
 require "bundler/gem_tasks"
-require 'rspec/core/rake_task'
-task :default => :spec
-RSpec::Core::RakeTask.new
+require "rubygems"  
+require "rake"  
+require "rake/testtask"  
+task :default => [:test]  
+Rake::TestTask.new do |test|  
+  test.libs << "test"  
+  test.test_files = Dir[ "test/*.rb" ]  
+  test.verbose = true  
+end  
