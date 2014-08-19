@@ -64,7 +64,7 @@ module JPush
           req.body = content
           response = http.request(req)
         elsif method == 'GET' && use_ssl == true
-          request = Net::HTTP::Get.new(uri, initheader = header)
+          request = Net::HTTP::Get.new(uri.request_uri, initheader = header)
           response = http.request(request)
         end
         #if method == 'POST'
