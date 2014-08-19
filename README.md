@@ -76,5 +76,5 @@ logger.debug("Got result - " + result)
 
 ##单元测试
 
-运行test文件夹的.rb文件
+$ rake
 
