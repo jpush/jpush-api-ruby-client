@@ -23,11 +23,10 @@ module JPush
     private
 
     def sendRequest(url, content, method, authCode)
-      wrapper = _sendRequest(url, content, method, authCode)
       retryTimes = 0
       while retryTimes < @maxRetryTimes
         begin
-          response = _sendRequest(url, content, method, authCode)
+          wrapper = _sendRequest(url, content, method, authCode)
           break
         rescue 
           if retryTimes > @maxRetryTimes
