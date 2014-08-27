@@ -9,6 +9,8 @@
 
 这是 JPush REST API 的 Ruby 版本封装开发包，是由极光推送官方提供的，一般支持最新的 API 功能。
 
+gem : (https://rubygems.org/gems/jpush)
+
 对应的 REST API 文档：<http://docs.jpush.cn/display/dev/REST+API>  
 
 [JPush API Ruby Client Doc](http://www.rdoc.info/github/jpush/jpush-api-ruby-client/master/frames)
