@@ -14,23 +14,23 @@ module JPush
     end
 
 
-    def getReceiveds(msg_ids, authcode)
+    def getReceiveds(msg_ids)
       msg_ids = checkMsgids(msg_ids)
       @url = @@REPORT_HOST_NAME + @@REPORT_RECEIVE_PATH + '?msg_ids=' + msg_ids
       result = JPush::ReceivedsResult.new
-      wrapper = @httpclient.sendGet(@url, nil, authcode)
+      wrapper = @httpclient.sendGet(@url, nil)
       return result.fromResponse(wrapper)
     end
 
-    def getMessages(msg_ids, authcode)
+    def getMessages(msg_ids)
       msg_ids = checkMsgids(msg_ids)
       @url = @@REPORT_HOST_NAME + @@REPORT_MESSAGE_PATH + '?msg_ids=' + msg_ids
-      return @httpclient.sendGet(@url, nil, authcode)
+      return @httpclient.sendGet(@url, nil)
     end
 
-    def getUsers(timeUnit, start, duration, authcode)
+    def getUsers(timeUnit, start, duration)
       @url = @@REPORT_HOST_NAME + @@REPORT_USER_PATH + '?time_unit=' + timeUnit + '&start=' + start + '&duration=' + duration.to_s
-      return @httpclient.sendGet(@url, nil, authcode)
+      return @httpclient.sendGet(@url, nil)
     end
 
     def checkMsgids(msg_ids)

@@ -15,25 +15,25 @@ module JPush
       @@proxy_port = opts[:proxy_port]
     end
 
-    def sendPost(url, content, authCode)
-      return sendRequest(url, content, 'POST', authCode)
+    def sendPost(url, content)
+      return sendRequest(url, content, 'POST')
     end
 
-    def sendGet(url, content, authCode)
-      return sendRequest(url, content, 'GET', authCode)
+    def sendGet(url, content)
+      return sendRequest(url, content, 'GET')
     end
     
-    def sendDelete(url, content, authCode)
-      return sendRequest(url, content, 'DELETE', authCode)
+    def sendDelete(url, content)
+      return sendRequest(url, content, 'DELETE')
     end
     
     private
 
-    def sendRequest(url, content, method, authCode)
+    def sendRequest(url, content, method)
       retryTimes = 0
       while retryTimes < @maxRetryTimes
         begin
-          wrapper = _sendRequest(url, content, method, authCode)
+          wrapper = _sendRequest(url, content, method)
           break
         rescue 
           if retryTimes > @maxRetryTimes
@@ -48,7 +48,7 @@ module JPush
     end
     private
 
-    def _sendRequest(url, content, method, authCode)
+    def _sendRequest(url, content, method)
       begin
 
         header = {}
@@ -56,7 +56,7 @@ module JPush
         header['Connection'] = 'Keep-Alive'
         header['Charset'] = 'UTF-8'
         header['Content-Type'] = 'application/json'
-        header['Authorization'] = authCode
+        header['Authorization'] = $authcode
         #url = url+content
         uri = URI.parse(url)
 

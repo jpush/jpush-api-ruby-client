@@ -14,7 +14,6 @@ Create a JPush Client.
 masterSecret API access secret of the appKey.
 appKey The KEY of one application on JPush.
 =end
-
     def initialize(appkey, masterSecret, maxRetryTimes = 5)
       begin
         @logger = Logger.new(STDOUT)
@@ -33,14 +32,15 @@ appKey The KEY of one application on JPush.
       @masterSecret = masterSecret
       @pushClient = JPush::PushClient.new(maxRetryTimes = maxRetryTimes)
       @reportClient = JPush::ReportClient.new(maxRetryTimes = maxRetryTimes)
-      @authcode = ServiceHelper.getAuthorizationBase64(appkey, masterSecret)
+      @deviceClient = JPush::DeviceClient.new(maxRetryTimes = maxRetryTimes)
+      $authcode = ServiceHelper.getAuthorizationBase64(appkey, masterSecret)
     end
 
     # Send a push with object.
     # @param pushPayload payload object of a push.
     # @return JSON data.
     def sendPush(payload)
-      result = @pushClient.sendPush(payload, @authcode)
+      result = @pushClient.sendPush(payload)
       return  result
     end
 
@@ -48,7 +48,7 @@ appKey The KEY of one application on JPush.
     # @param msgIds 100 msgids to batch getting is supported.
     # @return JSON data.
     def getReportReceiveds(msgIds)
-      result = @reportClient.getReceiveds(msgIds, @authcode)
+      result = @reportClient.getReceiveds(msgIds)
       return result
     end
 
@@ -56,7 +56,7 @@ appKey The KEY of one application on JPush.
     # @param msgIds 100 msgids to batch getting is supported.
     # @return JSON data.
     def getReportMessages(msgIds)
-      result =  @reportClient.getMessages(msgIds, @authcode)
+      result =  @reportClient.getMessages(msgIds)
       return result
     end
 
@@ -65,11 +65,73 @@ appKey The KEY of one application on JPush.
     #@param start is a string for example 2014-06-10
     #@duration
     # @return JSON data.
-
     def getReportUsers(timeUnit, start, duration)
-      result =  @reportClient.getUsers(timeUnit, start, duration, @authcode)
+      result =  @reportClient.getUsers(timeUnit, start, duration)
       return result
     end
 
+     # Get user profile
+     #@param registration_id
+     #Response Data  
+         #{
+     #  "tags": ["tag1", "tag2"],
+     #  "alias": "alias1"  }
+    def getUserProfile(registration_id)
+      return @deviceClient.getUserProfile(registration_id)
+    end
+=begin
+  Update user device profile
+  @param registration_id
+  @param tagAlias
+=end
+    def updateUserDeviceProfile(registration_id, tagAlias)
+      return @deviceClient.updateUserDeviceProfile(registration_id, tagAlias);
+    end
+=begin
+  Appkey Tag List
+=end
+    def getAppkeyTagList()
+      return @deviceClient.getAppkeyTagList
+    end
+=begin
+  User Exists In Tag
+  @param tag_value
+  @param registration_id
+=end
+    def userExistsInTag(tag_value, registration_id)
+      return @deviceClient.userExistsInTag
+    end
+=begin
+ Tag Adding or Removing Users 
+ @param tag_value
+ @param registration_ids
+=end
+    def  tagAddingOrRemovingUsers(tag_value, registration_ids)
+      return @deviceClient.tagAddingOrRemovingUsers(tag_value, registration_ids)
+    end
+=begin
+  Tag Delete
+  @param tag_value
+  @param platform default is all
+=end
+    def tagDelete(tag_value, platform = JPush::Platform.all)
+      return @deviceClient.tagDelete(tag_value, platform)
+    end
+=begin
+  get alias uids
+  @param alias_value
+  @param platform default is all
+=end
+    def getAliasUids(alias_value, platform = JPush::Platform.all)
+      return @deviceClient.getAliasUids(alias_value, platform)
+    end
+=begin
+ Alias Delete
+ @param alias_value
+ @param  platform
+=end
+    def aliasDelete(alias_value, platform = JPush::Platform.all)
+      return @deviceClient.aliasDelete(alias_value, platform)
+    end
   end
 end

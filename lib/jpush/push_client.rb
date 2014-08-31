@@ -19,10 +19,10 @@ module JPush
 @param payload is the instance of PushPayload
 @autoCode
 =end
-    def sendPush(payload,autoCode)
+    def sendPush(payload)
       json_data = JSON.generate(payload.toJSON)
       result = JPush::PushResult.new
-      wrapper = @httpclient.sendPost(@@PUSH_API_URL, json_data, autoCode)
+      wrapper = @httpclient.sendPost(@@PUSH_API_URL, json_data)
       result.fromResponse(wrapper)
       return result
     end
