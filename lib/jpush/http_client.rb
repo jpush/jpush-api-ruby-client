@@ -8,9 +8,11 @@ require 'net/https'
 
 module JPush
   class NativeHttpClient
-    def initialize(maxRetryTimes = 5)
+    def initialize(maxRetryTimes = 5, opts = {})
       @maxRetryTimes = maxRetryTimes
       @logger = Logger.new(STDOUT)
+      @@proxy_addr = opts[:proxy_addr]
+      @@proxy_port = opts[:proxy_port]
     end
 
     def sendPost(url, content, authCode)
@@ -20,20 +22,24 @@ module JPush
     def sendGet(url, content, authCode)
       return sendRequest(url, content, 'GET', authCode)
     end
+    
+    def sendDelete(url, content, authCode)
+      return sendRequest(url, content, 'DELETE', authCode)
+    end
+    
     private
 
     def sendRequest(url, content, method, authCode)
-      wrapper = _sendRequest(url, content, method, authCode)
       retryTimes = 0
       while retryTimes < @maxRetryTimes
         begin
-          response = _sendRequest(url, content, method, authCode)
+          wrapper = _sendRequest(url, content, method, authCode)
           break
         rescue 
           if retryTimes > @maxRetryTimes
             raise RuntimeError.new('connect error')
           else
-            @logger.debug('Retry again - ' + (retryTimes + 1))
+            @logger.debug('Retry again - ' + (retryTimes + 1).to_s)
             retryTimes = retryTimes + 1
           end
         end
@@ -53,19 +59,22 @@ module JPush
         header['Authorization'] = authCode
         #url = url+content
         uri = URI.parse(url)
-        http = Net::HTTP.new(uri.host, uri.port)
+
+        http = Net::HTTP.new(uri.host, uri.port, @@proxy_addr, @@proxy_port)
         http.use_ssl = true
-        #http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        http.open_timeout = 5
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        http.open_timeout = 30
         http.read_timeout = 30
         use_ssl = true
         if method == 'POST' && use_ssl == true
           req = Net::HTTP::Post.new(uri.path, initheader = header)
-        req.body = content
-        response = http.request(req)
+          req.body = content
+          response = http.request(req)
         elsif method == 'GET' && use_ssl == true
           request = Net::HTTP::Get.new(uri.request_uri, initheader = header)
           response = http.request(request)
+        elsif  method == 'DELETE' && use_ssl == true
+          response = http.delete(uri.path, initheader = header)
         end
         #if method == 'POST'
         # @response = http.post(path,content,header)

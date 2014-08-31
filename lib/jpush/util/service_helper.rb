@@ -4,7 +4,8 @@ class ServiceHelper
   
   def self.getAuthorizationBase64(appKey, masterSecret)
      encodeKey = appKey + ":" + masterSecret
-     return @@BASIC_PREFIX + " " + Base64.strict_encode64(encodeKey)
-
+     value = @@BASIC_PREFIX + " " + Base64.encode64(encodeKey)
+     value.gsub!("\n", '')
+     return value
   end
 end

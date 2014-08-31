@@ -12,22 +12,22 @@ class MessageTests < Test::Unit::TestCase
 
   def testsendMessageContentOnly
     @payload = JPush::PushPayload.build(
-      audience: JPush::Audience.all,
-      platform: JPush::Platform.all,
-      message: JPush::Message.build(
-        msg_content: MSG_CONTENT))
+      :audience=> JPush::Audience.all,
+      :platform=> JPush::Platform.all,
+      :message=> JPush::Message.build(
+        :msg_content=> MSG_CONTENT))
     res = @client.sendPush(@payload)
     assert(res.isok, message = "")
   end
 
   def testsendMessageContentAndTitle
     @payload = JPush::PushPayload.build(
-      audience: JPush::Audience.all,
-      platform: JPush::Platform.all,
-      message: JPush::Message.build(
-        msg_content: MSG_CONTENT,
-        content_type: "content type",
-        title: "message title"))
+      :audience=> JPush::Audience.all,
+      :platform=> JPush::Platform.all,
+      :message=> JPush::Message.build(
+        :msg_content=> MSG_CONTENT,
+        :content_type=> "content type",
+        :title=> "message title"))
     res = @client.sendPush(@payload)
     assert(res.isok, message = "")
   end
@@ -38,11 +38,11 @@ class MessageTests < Test::Unit::TestCase
     array['key2'] = 'value2'
     array['key3'] = 'value3'
     @payload = JPush::PushPayload.build(
-      audience: JPush::Audience.all,
-      platform: JPush::Platform.all,
-      message: JPush::Message.build(
-        msg_content: MSG_CONTENT,
-        extras: array))
+      :audience=> JPush::Audience.all,
+      :platform=> JPush::Platform.all,
+      :message=> JPush::Message.build(
+        :msg_content=> MSG_CONTENT,
+        :extras=> array))
     res = @client.sendPush(@payload)
     assert(res.isok, message = "")
   end
