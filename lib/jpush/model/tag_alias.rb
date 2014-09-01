@@ -27,10 +27,10 @@ module JPush
       hash = {}
       tags = {}
       if @add != nil
-        tag['add'] = @add
+        tags['add'] = @add
       end
       if @remove != nill
-        tag['remove'] = @remove
+        tags['remove'] = @remove
       end
       if @alias != nil
         hash['alias'] = @alias
@@ -69,7 +69,7 @@ module JPush
     
     def self.build(opts = {})
       tagAlias = JPush::TagAlias.new(opts)
-      return platform
+      return tagAlias
     end
   end
 end

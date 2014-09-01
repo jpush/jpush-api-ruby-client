@@ -17,4 +17,8 @@ module JPush
   autoload :Notification,'jpush/model/notification/notification'
   autoload :PushResult, 'jpush/model/push_result'
   autoload :ReceivedsResult, 'jpush/model/receiveds_result'
+  autoload :DeviceClient, 'jpush/device_client'
+  autoload :TagManager, 'jpush/model/tag_manager'
+  autoload :TagAlias, 'jpush/model/tag_alias'
+  autoload :UserProfile, 'jpush/model/user_profile'
 end
