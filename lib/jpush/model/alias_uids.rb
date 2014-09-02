@@ -1,3 +1,5 @@
+require 'json'
+
 module JPush
   class AliasUids
      attr_accessor :registration_ids, :isok

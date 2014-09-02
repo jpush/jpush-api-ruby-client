@@ -114,7 +114,7 @@ appKey The KEY of one application on JPush.
   @param tag_value
   @param platform default is all
 =end
-    def tagDelete(tag_value, platform = JPush::Platform.all)
+    def tagDelete(tag_value, platform = nil)
       return @deviceClient.tagDelete(tag_value, platform)
     end
 =begin
@@ -122,7 +122,7 @@ appKey The KEY of one application on JPush.
   @param alias_value
   @param platform default is all
 =end
-    def getAliasUids(alias_value, platform = JPush::Platform.all)
+    def getAliasUids(alias_value, platform = nil)
       return @deviceClient.getAliasUids(alias_value, platform)
     end
 =begin
@@ -130,7 +130,7 @@ appKey The KEY of one application on JPush.
  @param alias_value
  @param  platform
 =end
-    def aliasDelete(alias_value, platform = JPush::Platform.all)
+    def aliasDelete(alias_value, platform = nil)
       return @deviceClient.aliasDelete(alias_value, platform)
     end
   end

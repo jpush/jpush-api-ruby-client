@@ -46,7 +46,7 @@ class DeviceClientTests < Test::Unit::TestCase
   end
   
   def testgetAliasUids
-    reslut = @client.getAliasUids('alias')
+    result = @client.getAliasUids('alias')
     assert(result.isok, message = 'response error')
   end
   

@@ -2,7 +2,6 @@
   AppKey ="dd1066407b044738b6479275"
   MasterSecret = "2b38ce69b1de2a7fa95706ea"
 
-  CONTENT_TYPE_JSON = "application/json"
 
   SUCCEED_RESULT_CODE = 0
   LACK_OF_PARAMS = 1002

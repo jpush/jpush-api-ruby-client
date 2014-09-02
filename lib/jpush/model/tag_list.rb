@@ -1,3 +1,5 @@
+require 'json'
+
 module JPush
   class TagList
      attr_accessor :tags, :isok

@@ -1,3 +1,5 @@
+require 'json'
+
 module JPush
   class ExistResult
      attr_accessor :result, :isok
