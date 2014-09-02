@@ -1,8 +1,7 @@
-require 'json'
-
 module JPush
-  class UserProfile
-    attr_accessor :tags, :alias, :isok
+  class TagList
+     attr_accessor :tags, :isok
+     
     def initialize
       @isok=false
     end
@@ -17,7 +16,6 @@ module JPush
       content = wrapper.getResponseContent
       hash = JSON.parse(content)
       @tags = hash['tags']
-      @alias = hash['alias']
       @isok=true
       return self
     end
@@ -25,8 +23,8 @@ module JPush
     def toJSON
       array={}
       array['tags'] = @tags
-      array['alias'] = @alias
       return array.to_json
     end
+    
   end
 end

@@ -18,7 +18,7 @@ module JPush
 
     def getUserProfile(registration_id)
       result = JPush::UserProfile.new
-      url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id
+      url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id + '/'
       wrapper = @httpclient.sendGet(url, nil)
       result.fromResponse(wrapper)
       return result
@@ -26,24 +26,30 @@ module JPush
 
     def updateUserDeviceProfile(registration_id, tagAlias)
       json_data = JSON.generate(tagAlias.toJSON)
-      url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id
-      return @httpclient.sendPost(url, json_data, autoCode)
+      url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id + '/'
+      return @httpclient.sendPost(url, json_data)
     end
 
     def getAppkeyTagList()
       url = @@DEVICE_HOST_NAME + @@TAG_PATH_LIST
-      return @httpclient.sendGet(url, nil)
+      tag_list = JPush::TagList.new
+      wrapper =  @httpclient.sendGet(url, nil)
+      tag_list.fromResponse(wrapper)
+      return wrapper
     end
 
     def userExistsInTag(tag_value, registration_id)
+      result = JPush::ExistResult.new
       url = @@DEVICE_HOST_NAME + '/v3/tag/' + tag_value + '/exist?registration_id=' + registration_id
-      return @httpclient.sendGet(url, nil)
+      wrapper = @httpclient.sendGet(url, nil)
+      result.fromResponse(wrapper)
+      return wrapper
     end
     
-    def  tagAddingOrRemovingUsers(tag_value, registration_ids)
-      json_data = JSON.generate(registration_ids.toJSON)
+    def  tagAddingOrRemovingUsers(tag_value, tagManager)
+      json_data = JSON.generate(tagManager.toJSON)
       url = @@DEVICE_HOST_NAME + 'v3/tag/' + tag_value
-      return @httpclient.sendPost(url, json_data, autoCode)
+      return @httpclient.sendPost(url, json_data)
     end
     
     def tagDelete(tag_value, platform)
@@ -54,8 +60,11 @@ module JPush
     
     def getAliasUids(alias_value, platform)
       json_platform = JSON.generate(platform.toJSON)
+      aliasUids = JPush::AliasUids.new
       url = @@DEVICE_HOST_NAME + '/v3/alias/' + alias_value + '?platform=' + json_platform
-      return @httpclient.sendGet(url, nil)
+      wrapper = @httpclient.sendGet(url, nil)
+      aliasUids.fromResponse(wrapper)
+      return aliasUids
     end
     
     def aliasDelete(alias_value, platform)

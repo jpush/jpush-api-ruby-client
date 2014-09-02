@@ -21,4 +21,7 @@ module JPush
   autoload :TagManager, 'jpush/model/tag_manager'
   autoload :TagAlias, 'jpush/model/tag_alias'
   autoload :UserProfile, 'jpush/model/user_profile'
+  autoload :ExistResult, 'jpush/model/exist_result'
+  autoload :TagList, 'jpush/model/tag_list'
+  autoload :AliasUids, 'jpush/model/alias_uids'
 end

@@ -87,11 +87,14 @@ module JPush
         wrapper.code = code
         wrapper.setResponseContent(response.body)
         headers = response.header.to_hash
+        if response['X-Rate-Limit-Limit'] == nil
+        else
         quota = response['X-Rate-Limit-Limit']
         remaining = response['X-Rate-Limit-Remaining']
         reset = response['X-Rate-Limit-Reset']
-
         wrapper.setRateLimit(Integer(quota), Integer(remaining), Integer(reset))
+        end
+        
         if code == 200
           @logger.debug('Succeed to get response - 200 OK')
           if content != nil
