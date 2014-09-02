@@ -99,7 +99,7 @@ appKey The KEY of one application on JPush.
   @param registration_id
 =end
     def userExistsInTag(tag_value, registration_id)
-      return @deviceClient.userExistsInTag
+      return @deviceClient.userExistsInTag(tag_value, registration_id)
     end
 =begin
  Tag Adding or Removing Users 

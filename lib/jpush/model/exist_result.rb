@@ -1,4 +1,5 @@
 require 'json'
+require 'logger'
 
 module JPush
   class ExistResult
@@ -11,12 +12,12 @@ module JPush
       if wrapper.code != 200
         logger = Logger.new(STDOUT)
         logger.error('Error response from JPush server. Should review and fix it. ')
-        logger.info('HTTP Status:',wrapper.code)
-        logger.info('Error Message',wrapper.error)
-        raise RuntimeError.new('response error')
+        logger.info('HTTP Status:' + wrapper.code.to_s)
+        logger.info('Error Message:' + wrapper.error.to_s)
+        raise RuntimeError.new(wrapper.getResponseContent)
       end
       content = wrapper.getResponseContent
-      hash = JSON.parse(content)
+      hash = content.to_json
       @result = hash['result']
       @isok=true
       return self

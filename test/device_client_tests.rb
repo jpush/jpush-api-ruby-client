@@ -27,14 +27,14 @@ class DeviceClientTests < Test::Unit::TestCase
   end
   
   def testuserExistsInTag
-    result = @client.userExistsInTag('tag3', '0900e8d85ef')
+    result = @client.userExistsInTag('tag1', '0a04ad7d8b4')
     assert(result.isok, message = 'response error')
   end
   
   
   def testtagAddingOrRemovingUsers
-    add = ["registration_id_1_to_add", "registration_id_2_to_add"]
-    remove = ["registration_id_1_to_remove", "registration_id_2_to_remove"]
+    add = ["0900e8d85ef"]
+    remove = ["0900e8d85ef"]
     tagManager = JPush::TagManager.build(:add=> add, :remove=> remove)
     result = @client.tagAddingOrRemovingUsers('tag4', tagManager)
     assert(result.code == 200, message = 'response error')
@@ -46,7 +46,7 @@ class DeviceClientTests < Test::Unit::TestCase
   end
   
   def testgetAliasUids
-    result = @client.getAliasUids('alias')
+    result = @client.getAliasUids('alias1','android,ios')
     assert(result.isok, message = 'response error')
   end
   

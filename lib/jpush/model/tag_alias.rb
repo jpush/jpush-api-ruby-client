@@ -29,7 +29,7 @@ module JPush
       if @add != nil
         tags['add'] = @add
       end
-      if @remove != nill
+      if @remove != nil
         tags['remove'] = @remove
       end
       if @alias != nil

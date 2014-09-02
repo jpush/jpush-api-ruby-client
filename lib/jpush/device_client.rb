@@ -35,20 +35,20 @@ module JPush
       tag_list = JPush::TagList.new
       wrapper =  @httpclient.sendGet(url, nil)
       tag_list.fromResponse(wrapper)
-      return wrapper
+      return tag_list
     end
 
     def userExistsInTag(tag_value, registration_id)
       result = JPush::ExistResult.new
-      url = @@DEVICE_HOST_NAME + '/v3/tag/' + tag_value + '/exist?registration_id=' + registration_id + '/'
+      url = @@DEVICE_HOST_NAME + '/v3/tag/' + tag_value + '/exist?registration_id=' + registration_id 
       wrapper = @httpclient.sendGet(url, nil)
       result.fromResponse(wrapper)
-      return wrapper
+      return result
     end
     
     def  tagAddingOrRemovingUsers(tag_value, tagManager)
       json_data = JSON.generate(tagManager.toJSON)
-      url = @@DEVICE_HOST_NAME + 'v3/tag/' + tag_value + '/'
+      url = @@DEVICE_HOST_NAME + '/v3/tag/' + tag_value + '/'
       return @httpclient.sendPost(url, json_data)
     end
     
@@ -56,7 +56,7 @@ module JPush
 
       url = @@DEVICE_HOST_NAME + '/v3/tag/' + tag_value 
       if platform != nil
-        url = url + '?platform=' + platform + '/'
+        url = url + '?platform=' + platform 
       else
         url = url + '/'
       end
@@ -78,9 +78,9 @@ module JPush
     end
     
     def aliasDelete(alias_value, platform)
-      url = @@DEVICE_HOST_NAME + '/v3/alias/' + tag_value
+      url = @@DEVICE_HOST_NAME + '/v3/alias/' + alias_value
       if platform != nil
-        url = url + '?platform=' + platform + '/'
+        url = url + '?platform=' + platform 
       else
         url = url + '/'
       end

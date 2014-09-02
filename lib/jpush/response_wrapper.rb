@@ -31,6 +31,7 @@ module JPush
     
     def setErrorObject
       @error = JSON.parse @responseContent
+      @error = @error['error']
     end
   end
 end

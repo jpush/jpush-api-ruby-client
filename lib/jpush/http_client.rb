@@ -35,7 +35,8 @@ module JPush
         begin
           wrapper = _sendRequest(url, content, method)
           break
-        rescue 
+        rescue Exception=> ex
+        puts ex.class
           if retryTimes > @maxRetryTimes
             raise RuntimeError.new('connect error')
           else

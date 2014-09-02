@@ -27,11 +27,11 @@ module JPush
       if @add != nil
         registration_ids['add'] = @add
       end
-      if @remove != nill
+      if @remove != nil
         registration_ids['remove'] = @remove
       end
 
-      hash['registration_ids'] = tags
+      hash['registration_ids'] = registration_ids
       return hash
     end
     
