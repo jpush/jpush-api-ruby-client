@@ -24,5 +24,5 @@ module JPush
   autoload :ExistResult, 'jpush/model/exist_result'
   autoload :TagListResult, 'jpush/model/tag_list_result'
   autoload :AliasUidsResult, 'jpush/model/alias_uids_result'
-  autoload :ApiConnectionException, 'jpush/model/api_connection_exception'
+  autoload :ApiConnectionException, 'jpush/api_connection_exception'
 end
