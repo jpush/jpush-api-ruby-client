@@ -1,6 +1,5 @@
 path= File.expand_path('../', __FILE__)
 require File.join(path, 'http_client.rb')
-require File.join(path, 'model/tag_list.rb')
 require 'json'
 
 =begin
@@ -69,7 +68,7 @@ module JPush
       end
       puts url
       wrapper = @httpclient.sendGet(url, nil)
-      aliasUids.fromResponse(wrapper)
+      aliasUidsResult.fromResponse(wrapper)
       return aliasUidsResult
     end
     
