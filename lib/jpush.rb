@@ -20,8 +20,8 @@ module JPush
   autoload :DeviceClient, 'jpush/device_client'
   autoload :TagManager, 'jpush/model/tag_manager'
   autoload :TagAlias, 'jpush/model/tag_alias'
-  autoload :UserProfile, 'jpush/model/user_profile'
+  autoload :UserProfileResult, 'jpush/model/user_profile_result'
   autoload :ExistResult, 'jpush/model/exist_result'
-  autoload :TagList, 'jpush/model/tag_list'
-  autoload :AliasUids, 'jpush/model/alias_uids'
+  autoload :TagListResult, 'jpush/model/tag_list_result'
+  autoload :AliasUidsResult, 'jpush/model/alias_uids_result'
 end

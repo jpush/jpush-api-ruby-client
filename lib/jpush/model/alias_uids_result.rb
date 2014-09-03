@@ -1,7 +1,7 @@
 require 'json'
 
 module JPush
-  class AliasUids
+  class AliasUidsResult
      attr_accessor :registration_ids, :isok
      
     def initialize

@@ -17,7 +17,7 @@ module JPush
     end
 
     def getUserProfile(registration_id)
-      result = JPush::UserProfile.new
+      result = JPush::UserProfileResult.new
       url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id + '/'
       wrapper = @httpclient.sendGet(url, nil)
       result.fromResponse(wrapper)
@@ -32,7 +32,7 @@ module JPush
 
     def getAppkeyTagList()
       url = @@DEVICE_HOST_NAME + @@TAG_PATH_LIST + '/'
-      tag_list = JPush::TagList.new
+      tag_list = JPush::TagListResult.new
       wrapper =  @httpclient.sendGet(url, nil)
       tag_list.fromResponse(wrapper)
       return tag_list
@@ -54,35 +54,29 @@ module JPush
     
     def tagDelete(tag_value, platform)
 
-      url = @@DEVICE_HOST_NAME + '/v3/tag/' + tag_value 
+      url = @@DEVICE_HOST_NAME + '/v3/tag/' + tag_value  + '/'
       if platform != nil
         url = url + '?platform=' + platform 
-      else
-        url = url + '/'
       end
       return @httpclient.sendDelete(url, nil)
     end
     
     def getAliasUids(alias_value, platform)
-      aliasUids = JPush::AliasUids.new
-      url = @@DEVICE_HOST_NAME + '/v3/alias/' + alias_value
+      aliasUidsResult = JPush::AliasUidsResult.new
+      url = @@DEVICE_HOST_NAME + '/v3/alias/' + alias_value   + '/'
       if platform != nil
         url = url + '?platform=' + platform + '/'
-      else
-        url = url + '/'
       end
       puts url
       wrapper = @httpclient.sendGet(url, nil)
       aliasUids.fromResponse(wrapper)
-      return aliasUids
+      return aliasUidsResult
     end
     
     def aliasDelete(alias_value, platform)
-      url = @@DEVICE_HOST_NAME + '/v3/alias/' + alias_value
+      url = @@DEVICE_HOST_NAME + '/v3/alias/' + alias_value   + '/'
       if platform != nil
         url = url + '?platform=' + platform 
-      else
-        url = url + '/'
       end
       return @httpclient.sendDelete(url, nil)
     end
