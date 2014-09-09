@@ -8,16 +8,16 @@ class DeviceClientTests < Test::Unit::TestCase
     @client = JPush::JPushClient.new(AppKey, MasterSecret)
   end
   
-  def testGetUserProfile
-    result = @client.getUserProfile('0900e8d85ef')
+  def testGetDeviceTagAlias
+    result = @client.getDeviceTagAlias('0900e8d85ef')
     assert(result.isok, message = 'response error')
   end
   
-  def testupdateUserDeviceProfile()
+  def testupdateDeviceTagAlias()
     add = ['tag1', 'tag2'];
     remove = ['tag3', 'tag4'];
     tagAlias = JPush::TagAlias.build(:add=> add, :remove=> remove, :alias=> 'alias1')
-    result = @client.updateUserDeviceProfile('0900e8d85ef', tagAlias)
+    result = @client.updateDeviceTagAlias('0900e8d85ef', tagAlias)
     assert(result.code == 200, message = 'response error')
   end
   

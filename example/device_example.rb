@@ -6,14 +6,14 @@ client = JPush::JPushClient.new(app_key, master_secret)
 
 logger = Logger.new(STDOUT)
 # Get user profile
-user_profile = client.getUserProfile('0900e8d85ef')
+user_profile = client.getDeviceTagAlias('0900e8d85ef')
 logger.debug("Got result  " + user_profile.toJSON)
 
 # Update user device profile
 add = ['tag1', 'tag2'];
 remove = ['tag3', 'tag4'];
 tagAlias = JPush::TagAlias.build(:add=> add, :remove=> remove, :alias=> 'alias1')
-result = client.updateUserDeviceProfile('0900e8d85ef', tagAlias)
+result = client.updateDeviceTagAlias('0900e8d85ef', tagAlias)
 logger.debug("Got result  " + result.code.to_s)
 
 # Appkey Tag List

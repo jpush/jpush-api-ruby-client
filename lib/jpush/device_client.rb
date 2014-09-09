@@ -15,15 +15,15 @@ module JPush
       @httpclient = JPush::NativeHttpClient.new(maxRetryTimes)
     end
 
-    def getUserProfile(registration_id)
-      result = JPush::UserProfileResult.new
+    def getDeviceTagAlias(registration_id)
+      result = JPush::TagAliasResult.new
       url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id + '/'
       wrapper = @httpclient.sendGet(url, nil)
       result.fromResponse(wrapper)
       return result
     end
 
-    def updateUserDeviceProfile(registration_id, tagAlias)
+    def updateDeviceTagAlias(registration_id, tagAlias)
       json_data = JSON.generate(tagAlias.toJSON)
       url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id + '/'
       return @httpclient.sendPost(url, json_data)

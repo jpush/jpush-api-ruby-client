@@ -76,7 +76,7 @@ appKey The KEY of one application on JPush.
          #{
      #  "tags": ["tag1", "tag2"],
      #  "alias": "alias1"  }
-    def getUserProfile(registration_id)
+    def getDeviceTagAlias(registration_id)
       return @deviceClient.getUserProfile(registration_id)
     end
 =begin
