@@ -1,7 +1,7 @@
 require 'json'
 
 module JPush
-  class UserProfileResult
+  class TagAliasResult
     attr_accessor :tags, :alias, :isok
     def initialize
       @isok=false
