@@ -77,15 +77,15 @@ appKey The KEY of one application on JPush.
      #  "tags": ["tag1", "tag2"],
      #  "alias": "alias1"  }
     def getDeviceTagAlias(registration_id)
-      return @deviceClient.getUserProfile(registration_id)
+      return @deviceClient.getDeviceTagAlias(registration_id)
     end
 =begin
   Update user device profile
   @param registration_id
   @param tagAlias
 =end
-    def updateUserDeviceProfile(registration_id, tagAlias)
-      return @deviceClient.updateUserDeviceProfile(registration_id, tagAlias);
+    def updateDeviceTagAlias(registration_id, tagAlias)
+      return @deviceClient.updateDeviceTagAlias(registration_id, tagAlias);
     end
 =begin
   Appkey Tag List
