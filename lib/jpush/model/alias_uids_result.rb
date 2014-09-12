@@ -25,7 +25,7 @@ module JPush
     def toJSON
       array={}
       array['registration_ids'] = @registration_ids
-      return array.to_json
+      return array
     end
     
   end

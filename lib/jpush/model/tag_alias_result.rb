@@ -26,7 +26,7 @@ module JPush
       array={}
       array['tags'] = @tags
       array['alias'] = @alias
-      return array.to_json
+      return array
     end
   end
 end

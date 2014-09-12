@@ -25,7 +25,7 @@ module JPush
     def toJSON
       array={}
       array['tags'] = @tags
-      return array.to_json
+      return array
     end
     
   end

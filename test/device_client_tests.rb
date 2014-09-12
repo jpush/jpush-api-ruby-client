@@ -8,19 +8,52 @@ class DeviceClientTests < Test::Unit::TestCase
   def setup
     @client = JPush::JPushClient.new(AppKey, MasterSecret)
   end
-
-  def testgetDeviceTagAlias
-    result = @client.getDeviceTagAlias('0900e8d85ef')
-    assert(result.isok, message = 'response error')
+  
+  def testAll
+    updateDeviceTagAlias
+    getDeviceTagAlias
+    updateDeviceTagAlias_clear
+    getetDeviceTagAlias_cleard
+    tagAddingOrRemovingUsers
+    userExistsInTag
+    getAppkeyTagList
+    tagDelete
+    getAliasUids_1
+    getAliasUids_2
+    aliasDelete
+    getAppkeyTagList
+    updateDeviceTagAlias
   end
-
+  def getDeviceTagAlias
+    result = @client.getDeviceTagAlias('0900e8d85ef')
+    json = result.toJSON
+    tag = ["tag1","tag2"]
+    assert(result.isok, message = 'response error')
+    assert(json['tags'].eql?(tag), message = 'response error')
+    assert_equal('alias1', json['alias'], message = 'resonpse error');
+  end
+  
+  def updateDeviceTagAlias_clear
+    tagAlias = JPush::TagAlias.clear;
+    result = @client.updateDeviceTagAlias('0900e8d85ef', tagAlias)
+  end
+  
+  def getetDeviceTagAlias_cleard
+    result = @client.getDeviceTagAlias('0900e8d85ef')
+    json = result.toJSON
+    tag = ["tag1","tag2"]
+    assert(result.isok, message = 'response error')
+    assert(json['tags'].size == 0, message = 'response error')
+    assert_equal(nil, json['alias'], message = 'resonpse error');
+  end
+  
   def testgetDeviceTagAlias_fail
     assert_raises(JPush::ApiConnectionException, message = "ApiConnectionException") {
       result = @client.getDeviceTagAlias('123123123213')
     }
   end
 
-  def testupdateDeviceTagAlias()
+  def updateDeviceTagAlias()
     add = ['tag1', 'tag2'];
     remove = ['tag3', 'tag4'];
     tagAlias = JPush::TagAlias.build(:add=> add, :remove=> remove, :alias=> 'alias1')
@@ -28,17 +61,17 @@ class DeviceClientTests < Test::Unit::TestCase
     assert(result.code == 200, message = 'response error')
   end
 
-  def testgetAppkeyTagList
+  def getAppkeyTagList
     result = @client.getAppkeyTagList
     assert(result.isok, message = 'response error')
   end
 
-  def testuserExistsInTag
+  def userExistsInTag
     result = @client.userExistsInTag('tag1', '0a04ad7d8b4')
     assert(result.isok, message = 'response error')
   end
 
-  def testtagAddingOrRemovingUsers
+  def tagAddingOrRemovingUsers
     add = ["0900e8d85ef"]
     remove = ["0900e8d85ef"]
     tagManager = JPush::TagManager.build(:add=> add, :remove=> remove)
@@ -46,22 +79,27 @@ class DeviceClientTests < Test::Unit::TestCase
     assert(result.code == 200, message = 'response error')
   end
 
-  def testtagDelete
+  def tagDelete
     result = @client.tagDelete("tag12312312")
     assert(result.code == 200, message = 'response error')
   end
 
-  def testgetAliasUids
+  def getAliasUids_1
     result = @client.getAliasUids('alias1','android,ios')
     assert(result.isok, message = 'response error')
   end
 
-  def testaliasDelete
+  def getAliasUids_2
+    result = @client.getAliasUids('alias1', nil)
+    assert(result.isok, message = 'response error')
+  end
+  
+  def aliasDelete
     result = @client.aliasDelete('alias4')
     assert(result.code == 200, message = 'response error')
   end
 
-  def testtagAddingOrRemovingUsers_fail
+  def tagAddingOrRemovingUsers_fail
     add = ['0900e8d85ef', '123123123']
     remove = ["0a04ad7d8b4"]
     tagManager = JPush::TagManager.build(:add=> add, :remove=> remove)

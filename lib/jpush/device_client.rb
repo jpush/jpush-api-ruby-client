@@ -25,7 +25,7 @@ module JPush
 
     def updateDeviceTagAlias(registration_id, tagAlias)
       json_data = JSON.generate(tagAlias.toJSON)
-      url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id + '/'
+      url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id 
       return @httpclient.sendPost(url, json_data)
     end
 
@@ -47,7 +47,6 @@ module JPush
     
     def  tagAddingOrRemovingUsers(tag_value, tagManager)
       json_data = JSON.generate(tagManager.toJSON)
-      puts json_data
       url = @@DEVICE_HOST_NAME + '/v3/tag/' + tag_value + '/'
       return @httpclient.sendPost(url, json_data)
     end
@@ -67,7 +66,6 @@ module JPush
       if platform != nil
         url = url + '?platform=' + platform + '/'
       end
-      puts url
       wrapper = @httpclient.sendGet(url, nil)
       aliasUidsResult.fromResponse(wrapper)
       return aliasUidsResult
