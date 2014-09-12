@@ -47,6 +47,7 @@ module JPush
     
     def  tagAddingOrRemovingUsers(tag_value, tagManager)
       json_data = JSON.generate(tagManager.toJSON)
+      puts json_data
       url = @@DEVICE_HOST_NAME + '/v3/tag/' + tag_value + '/'
       return @httpclient.sendPost(url, json_data)
     end

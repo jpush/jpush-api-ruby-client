@@ -1,4 +1,4 @@
-path= File.expand_path('../', __FILE__)
+path = File.expand_path('../', __FILE__)
 require File.join(path, 'http_client.rb')
 require File.join(path, 'model/push_result.rb')
 require 'json'

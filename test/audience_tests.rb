@@ -80,7 +80,7 @@ class AudienceTests < Test::Unit::TestCase
         :alert=> 'alert'),
       :audience=> JPush::Audience.build(
         :tag_and=> TAG2))
-    assert_raises(ArgumentError, message = "ArgumentError") {
+    assert_raises(JPush::ApiConnectionException, message = "ApiConnectionException") {
       res = @client.sendPush(@payload)
     }
   end
