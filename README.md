@@ -76,6 +76,28 @@ result = client.getReportReceiveds('1942377665')
 logger.debug("Got result - " + result)
 ```
 
+###device 样例
+
+> 以下片断来自项目代码里的文件：example/device_example.rb
+
+```ruby
+require 'jpush'
+
+master_secret = '2b38ce69b1de2a7fa95706ea'
+app_key = 'dd1066407b044738b6479275'
+client = JPush::JPushClient.new(app_key, master_secret)
+logger = Logger.new(STDOUT)
+# Get user profile
+user_profile = client.getDeviceTagAlias('0900e8d85ef')
+logger.debug("Got result " + user_profile.toJSON)
+# Update Device Tag Alias
+add = ['tag1', 'tag2'];
+remove = ['tag3', 'tag4'];
+tagAlias = JPush::TagAlias.build(:add=> add, :remove=> remove, :alias=> 'alias1')
+result = client.updateDeviceTagAlias('0900e8d85ef', tagAlias)
+logger.debug("Got result " + result.code.to_s)
+```
+
 ##单元测试
 
 $ rake
