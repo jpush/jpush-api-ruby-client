@@ -5,7 +5,7 @@ app_key = 'dd1066407b044738b6479275'
 client = JPush::JPushClient.new(app_key, master_secret)
 
 logger = Logger.new(STDOUT)
-# Get user profile
+# Get user Device Tag Alias
 user_profile = client.getDeviceTagAlias('0900e8d85ef')
 logger.debug("Got result  " + user_profile.toJSON)
 
