@@ -9,7 +9,7 @@ logger = Logger.new(STDOUT)
 user_profile = client.getDeviceTagAlias('0900e8d85ef')
 logger.debug("Got result  " + user_profile.toJSON)
 
-# Update user device profile
+# Update user device tag alias
 add = ['tag1', 'tag2'];
 remove = ['tag3', 'tag4'];
 tagAlias = JPush::TagAlias.build(:add=> add, :remove=> remove, :alias=> 'alias1')
