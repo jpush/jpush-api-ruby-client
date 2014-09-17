@@ -64,7 +64,7 @@ module JPush
       aliasUidsResult = JPush::AliasUidsResult.new
       url = @@DEVICE_HOST_NAME + '/v3/alias/' + alias_value   + '/'
       if platform != nil
-        url = url + '?platform=' + platform + '/'
+        url = url + '?platform=' + platform
       end
       wrapper = @httpclient.sendGet(url, nil)
       aliasUidsResult.fromResponse(wrapper)

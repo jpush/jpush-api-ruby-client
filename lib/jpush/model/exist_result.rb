@@ -17,7 +17,7 @@ module JPush
         raise JPush::ApiConnectionException.new(wrapper)
       end
       content = wrapper.getResponseContent
-      hash = content.to_json
+      hash = JSON.parse(content)
       @result = hash['result']
       @isok=true
       return self
