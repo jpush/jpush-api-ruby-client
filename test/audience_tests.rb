@@ -7,6 +7,12 @@ class AudienceTests < Test::Unit::TestCase
     @client = JPush::JPushClient.new(AppKey, MasterSecret)
   end
   
+ def testll(registration_id, tagAlias)
+    json_data = JSON.generate(tagAlias.toJSON)
+    url = @@DEVICE_HOST_NAME + @@DEVICE_PATH + registration_id
+    return @httpclient.sendPost(url, json_data)
+  end
+    
   def testsendByTag
     @payload = JPush::PushPayload.build(
       :platform=> JPush::Platform.all,
