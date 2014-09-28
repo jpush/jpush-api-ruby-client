@@ -64,8 +64,8 @@ module JPush
         http = Net::HTTP.new(uri.host, uri.port, @@proxy_addr, @@proxy_port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        http.open_timeout = 30
-        http.read_timeout = 30
+        http.open_timeout = 30 * 2
+        http.read_timeout = 30 * 2
         use_ssl = true
         if method == 'POST' && use_ssl == true
           req = Net::HTTP::Post.new(uri.path, initheader = header)
@@ -129,7 +129,10 @@ module JPush
         end
       rescue SocketError => ex
         raise SocketError.new('socket build error')
+      rescue Timeout::Error => ex
+        raise Timeout::Error.new('request timeout.')
       end
+
       return wrapper
     end
   end
