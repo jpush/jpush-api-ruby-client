@@ -100,5 +100,5 @@ logger.debug("Got result " + result.code.to_s)
 
 ##单元测试
 
-$ rake
+$ rake 
 
