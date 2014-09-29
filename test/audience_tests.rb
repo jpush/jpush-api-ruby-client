@@ -7,14 +7,6 @@ class AudienceTests < Test::Unit::TestCase
     @client = JPush::JPushClient.new(AppKey, MasterSecret)
   end
   
-  def testa
-    result = @client.getDeviceTagAlias('0900e8d85ef')
-    json = result.toJSON
-    tag = ["tag1","tag2"]
-    assert(result.isok, message = 'response error')
-    assert(json['tags'].eql?(tag), message = 'response error')
-    assert_equal('alias1', json['alias'], message = 'resonpse error');
-  end
   def testsendByTag
     @payload = JPush::PushPayload.build(
       :platform=> JPush::Platform.all,
