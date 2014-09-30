@@ -1,7 +1,7 @@
 require 'jpush'
 
 path =  File.expand_path('../', __FILE__)
-require File.join(path, 'base_remote_tests.rb')
+require File.join(path, 'remote/base_remote_tests.rb')
 require 'test/unit'
 
 class DeviceClientTests < Test::Unit::TestCase
