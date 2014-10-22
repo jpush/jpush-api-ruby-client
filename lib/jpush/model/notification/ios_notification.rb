@@ -1,6 +1,6 @@
 module JPush
   class IOSNotification
-    attr_accessor :alert, :sound, :badge, :extras, :content_available
+    attr_accessor :alert, :sound, :badge, :extras, :content_available, :category
     def initialize(opts = {})
       if opts[:badge] != nil
         @badge = opts[:badge]
@@ -15,6 +15,7 @@ module JPush
       @alert = opts[:alert]
       @extras = opts[:extras]
       @content_available = opts[:content_available]
+      @category = opts[:category]
     end
 
     def toJSON
@@ -32,7 +33,10 @@ module JPush
         array['extras'] = @extras
       end
       if @content_available != nil then
-        array['content-available'] = content_available
+        array['content-available'] = @content_available
+      end
+      if @category != nil then
+        array['category'] = @category
       end
       return array
     end

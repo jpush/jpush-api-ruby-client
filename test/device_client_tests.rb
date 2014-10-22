@@ -31,8 +31,9 @@ class DeviceClientTests < Test::Unit::TestCase
     result = @client.getDeviceTagAlias('0900e8d85ef')
     json = result.toJSON
     tag = ["tag1","tag2"]
+    tmp = json['tags'] & tag ;
     assert(result.isok, message = 'response error')
-    assert(json['tags'].eql?(tag), message = 'response error')
+    assert(tmp.eql?(tag), message = 'response error')
     assert_equal('alias1', json['alias'], message = 'resonpse error');
   end
 
