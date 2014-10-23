@@ -1,7 +1,14 @@
 # coding: utf-8
+require 'rubygems'
+require 'rake'
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
+PKG_FILES = FileList[
+'lib/*.rb',
+'lib/jpush/*.rb',
+'lib/jpush/**/*.rb',
+'lib/jpush/model/notification/*.rb'
+]
 Gem::Specification.new do |spec|
   spec.name          = "jpush"
   spec.version       = "3.1.1"
@@ -12,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/jpush/jpush-api-ruby-client"
   spec.license       = "GNU"
 
-  spec.files         = `git ls-files`.split($/)
+  spec.files         = PKG_FILES 
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
