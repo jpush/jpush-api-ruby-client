@@ -25,4 +25,6 @@ module JPush
   autoload :TagListResult, 'jpush/model/tag_list_result'
   autoload :AliasUidsResult, 'jpush/model/alias_uids_result'
   autoload :ApiConnectionException, 'jpush/api_connection_exception'
+  autoload :GetMessagesResult, 'jpush/model/get_messages_result'
+  autoload :UserResult, 'jpush/model/user_result'
 end

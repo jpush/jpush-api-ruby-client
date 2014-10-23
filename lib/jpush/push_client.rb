@@ -10,6 +10,7 @@ timeToLive If not present, the default is 86400(s) (one day).
 module JPush
   class PushClient
     @@PUSH_API_URL = 'https://api.jpush.cn/v3/push'
+    @@VALIDATE = '/validate'
     @@_timeToLive = 60 * 60 * 24
     def initialize(maxRetryTimes)
       @httpclient = JPush::NativeHttpClient.new(maxRetryTimes)
@@ -17,7 +18,6 @@ module JPush
 
 =begin
 @param payload is the instance of PushPayload
-@autoCode
 =end
     def sendPush(payload)
       json_data = JSON.generate(payload.toJSON)
@@ -27,5 +27,19 @@ module JPush
       return result
     end
 
+=begin
+The API is used only to verify push call whether can succeed,
+lies in the difference with the push of API: not to send any message to user.
+@param payload is the instance of PushPayload
+=end
+    def validate(payload)
+      json_data = JSON.generate(payload.toJSON)
+      result = JPush::PushResult.new
+      wrapper = @httpclient.sendPost(@@PUSH_API_URL + @@VALIDATE, json_data)
+      result.fromResponse(wrapper)
+      return result
+    end
+    
+    
   end
 end

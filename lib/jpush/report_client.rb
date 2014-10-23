@@ -25,12 +25,16 @@ module JPush
     def getMessages(msg_ids)
       msg_ids = checkMsgids(msg_ids)
       @url = @@REPORT_HOST_NAME + @@REPORT_MESSAGE_PATH + '?msg_ids=' + msg_ids
-      return @httpclient.sendGet(@url, nil)
+      result = JPush::GetMessagesResult.new
+      wrapper = @httpclient.sendGet(@url, nil)
+      return result.fromResponse(wrapper)
     end
 
     def getUsers(timeUnit, start, duration)
       @url = @@REPORT_HOST_NAME + @@REPORT_USER_PATH + '?time_unit=' + timeUnit + '&start=' + start + '&duration=' + duration.to_s
-      return @httpclient.sendGet(@url, nil)
+      result = JPush::UserResult.new
+      wrapper = @httpclient.sendGet(@url, nil)
+      return result.fromResponse(wrapper)
     end
 
     def checkMsgids(msg_ids)

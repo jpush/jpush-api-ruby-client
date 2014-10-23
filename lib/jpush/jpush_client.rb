@@ -44,6 +44,11 @@ appKey The KEY of one application on JPush.
       return  result
     end
 
+    def validate(payload)
+      result = @pushClient.validate(payload)
+      return result
+    end
+
     #Get received report.
     # @param msgIds 100 msgids to batch getting is supported.
     # @return JSON data.
@@ -70,65 +75,72 @@ appKey The KEY of one application on JPush.
       return result
     end
 
-     # Get user profile
-     #@param registration_id
-     #Response Data  
-         #{
-     #  "tags": ["tag1", "tag2"],
-     #  "alias": "alias1"  }
+    # Get user profile
+    #@param registration_id
+    #Response Data
+    #{
+    #  "tags": ["tag1", "tag2"],
+    #  "alias": "alias1"  }
     def getDeviceTagAlias(registration_id)
       return @deviceClient.getDeviceTagAlias(registration_id)
     end
+
 =begin
-  Update user device profile
-  @param registration_id
-  @param tagAlias
+Update user device profile
+@param registration_id
+@param tagAlias
 =end
     def updateDeviceTagAlias(registration_id, tagAlias)
       return @deviceClient.updateDeviceTagAlias(registration_id, tagAlias);
     end
+
 =begin
-  Appkey Tag List
+Appkey Tag List
 =end
     def getAppkeyTagList()
       return @deviceClient.getAppkeyTagList
     end
+
 =begin
-  User Exists In Tag
-  @param tag_value
-  @param registration_id
+User Exists In Tag
+@param tag_value
+@param registration_id
 =end
     def userExistsInTag(tag_value, registration_id)
       return @deviceClient.userExistsInTag(tag_value, registration_id)
     end
+
 =begin
- Tag Adding or Removing Users 
- @param tag_value
- @param registration_ids
+Tag Adding or Removing Users
+@param tag_value
+@param registration_ids
 =end
     def  tagAddingOrRemovingUsers(tag_value, registration_ids)
       return @deviceClient.tagAddingOrRemovingUsers(tag_value, registration_ids)
     end
+
 =begin
-  Tag Delete
-  @param tag_value
-  @param platform default is all
+Tag Delete
+@param tag_value
+@param platform default is all
 =end
     def tagDelete(tag_value, platform = nil)
       return @deviceClient.tagDelete(tag_value, platform)
     end
+
 =begin
-  get alias uids
-  @param alias_value
-  @param platform default is all
+get alias uids
+@param alias_value
+@param platform default is all
 =end
     def getAliasUids(alias_value, platform = nil)
       return @deviceClient.getAliasUids(alias_value, platform)
     end
+
 =begin
- Alias Delete
- @param alias_value
- @param  platform
+Alias Delete
+@param alias_value
+@param  platform
 =end
     def aliasDelete(alias_value, platform = nil)
       return @deviceClient.aliasDelete(alias_value, platform)

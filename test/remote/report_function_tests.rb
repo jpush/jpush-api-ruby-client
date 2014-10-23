@@ -11,30 +11,37 @@ class ReportFunctionTests < Test::Unit::TestCase
   
   def testgetReceivedsFixed
     result = @client.getReportReceiveds("1613113584,1229760629,1174658841,1174658641")
+    puts result.toJSON
   end
   
   def testgetReceivedsFixed2
     result = @client.getReportReceiveds("1613113584,   ,1229760629,  ")
+    puts result.toJSON
   end
-=begin 
+
   def testgetMessagesTest
      result = @client.getReportMessages("1613113584")
+     puts result.toJSON
   end
   
   def testgetMessagesTest2
      result = @client.getReportMessages("1613113584,   ,1229760629,  ")
+     puts result.toJSON
   end
   
   def testgetUsersTest
     result = @client.getReportUsers('MONTH', "2014-05", 1)
+    puts result.toJSON
   end
   
   def testgetUserTest2
     result = @client.getReportUsers('DAY', "2014-05-10", 5)
+    puts result.toJSON
   end
   
   def getUserTest3
     result = @client.getReportUsers('HOUR', "2014-05-10 06", 10)
+    puts result.toJSON
   end
-=end
+
 end
