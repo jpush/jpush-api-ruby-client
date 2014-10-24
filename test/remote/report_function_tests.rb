@@ -39,7 +39,7 @@ class ReportFunctionTests < Test::Unit::TestCase
     puts result.toJSON
   end
   
-  def getUserTest3
+  def testgetUserTest3
     result = @client.getReportUsers('HOUR', "2014-05-10 06", 10)
     puts result.toJSON
   end

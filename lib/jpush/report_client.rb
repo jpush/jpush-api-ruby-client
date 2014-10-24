@@ -33,6 +33,7 @@ module JPush
     def getUsers(timeUnit, start, duration)
       @url = @@REPORT_HOST_NAME + @@REPORT_USER_PATH + '?time_unit=' + timeUnit + '&start=' + start + '&duration=' + duration.to_s
       result = JPush::UserResult.new
+      puts @url
       wrapper = @httpclient.sendGet(@url, nil)
       return result.fromResponse(wrapper)
     end

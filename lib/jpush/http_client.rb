@@ -59,6 +59,7 @@ module JPush
         header['Content-Type'] = 'application/json'
         header['Authorization'] = $authcode
         #url = url+content
+        url.gsub!(/[^\w$&\-+.,\/:;=?@]/) { |x| x = format("%%%x", x[0]) }
         uri = URI.parse(url)
 
         http = Net::HTTP.new(uri.host, uri.port, @@proxy_addr, @@proxy_port)
