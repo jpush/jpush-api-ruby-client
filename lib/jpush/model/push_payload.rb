@@ -47,8 +47,8 @@ The object you should build for sending a push.
       end
       if payload.options == nil
         options = JPush::Options.build(
-        time_to_live: 86400,
-        apns_production: false)
+        time_to_live=> 86400,
+        apns_production=> false)
         payload.options = options
       end
       return payload
