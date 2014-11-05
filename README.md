@@ -19,7 +19,7 @@ gem : (https://rubygems.org/gems/jpush)
 
 Add this line to your application's Gemfile:
 
-    gem 'jpush'
+    gem 'jpush', :git => 'git://github.com/jpush/jpush-api-ruby-client.git'
 
 And then execute:
 
