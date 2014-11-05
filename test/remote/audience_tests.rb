@@ -68,7 +68,7 @@ class AudienceTests < Test::Unit::TestCase
       :notification=> JPush::Notification.build(
         :alert=> 'alert'),
       :audience=> JPush::Audience.build(
-       :tag_and=> TagAndMore))
+       :tag_and=> TAG2))
     res = @client.sendPush(@payload)
     assert(res.isok, message = "")
   end

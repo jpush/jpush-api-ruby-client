@@ -19,7 +19,7 @@ gem : (https://rubygems.org/gems/jpush)
 
 Add this line to your application's Gemfile:
 
-    gem 'JPush'
+    gem 'jpush'
 
 And then execute:
 
