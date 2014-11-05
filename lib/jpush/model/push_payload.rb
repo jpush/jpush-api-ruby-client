@@ -9,7 +9,7 @@ The object you should build for sending a push.
       @platform = opts[:platform]
       @audience = opts[:audience]
       @message = opts[:message]
-      @options = opts[:options]
+      @options = opts[:options] || JPush::Options.new
       @notification = opts[:notification]
     end
 
