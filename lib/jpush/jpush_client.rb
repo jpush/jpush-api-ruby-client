@@ -40,11 +40,13 @@ appKey The KEY of one application on JPush.
     # @param pushPayload payload object of a push.
     # @return JSON data.
     def sendPush(payload)
+      @currentClient = @pushClient
       result = @pushClient.sendPush(payload)
       return  result
     end
 
     def validate(payload)
+      @currentClient = @pushClient
       result = @pushClient.validate(payload)
       return result
     end
@@ -53,6 +55,7 @@ appKey The KEY of one application on JPush.
     # @param msgIds 100 msgids to batch getting is supported.
     # @return JSON data.
     def getReportReceiveds(msgIds)
+      @currentClient = @reportClient
       result = @reportClient.getReceiveds(msgIds)
       return result
     end
@@ -61,6 +64,7 @@ appKey The KEY of one application on JPush.
     # @param msgIds 100 msgids to batch getting is supported.
     # @return JSON data.
     def getReportMessages(msgIds)
+      @currentClient = @reportClient
       result =  @reportClient.getMessages(msgIds)
       return result
     end
@@ -71,6 +75,7 @@ appKey The KEY of one application on JPush.
     #@duration
     # @return JSON data.
     def getReportUsers(timeUnit, start, duration)
+      @currentClient = @reportClient
       result =  @reportClient.getUsers(timeUnit, start, duration)
       return result
     end
@@ -82,6 +87,7 @@ appKey The KEY of one application on JPush.
     #  "tags": ["tag1", "tag2"],
     #  "alias": "alias1"  }
     def getDeviceTagAlias(registration_id)
+      @currentClient = @deviceClient
       return @deviceClient.getDeviceTagAlias(registration_id)
     end
 
@@ -91,6 +97,7 @@ Update user device profile
 @param tagAlias
 =end
     def updateDeviceTagAlias(registration_id, tagAlias)
+      @currentClient = @deviceClient
       return @deviceClient.updateDeviceTagAlias(registration_id, tagAlias);
     end
 
@@ -98,6 +105,7 @@ Update user device profile
 Appkey Tag List
 =end
     def getAppkeyTagList()
+      @currentClient = @deviceClient
       return @deviceClient.getAppkeyTagList
     end
 
@@ -107,6 +115,7 @@ User Exists In Tag
 @param registration_id
 =end
     def userExistsInTag(tag_value, registration_id)
+      @currentClient = @deviceClient
       return @deviceClient.userExistsInTag(tag_value, registration_id)
     end
 
@@ -116,6 +125,7 @@ Tag Adding or Removing Users
 @param registration_ids
 =end
     def  tagAddingOrRemovingUsers(tag_value, registration_ids)
+      @currentClient = @deviceClient
       return @deviceClient.tagAddingOrRemovingUsers(tag_value, registration_ids)
     end
 
@@ -125,6 +135,7 @@ Tag Delete
 @param platform default is all
 =end
     def tagDelete(tag_value, platform = nil)
+      @currentClient = @deviceClient
       return @deviceClient.tagDelete(tag_value, platform)
     end
 
@@ -134,6 +145,7 @@ get alias uids
 @param platform default is all
 =end
     def getAliasUids(alias_value, platform = nil)
+      @currentClient = @deviceClient
       return @deviceClient.getAliasUids(alias_value, platform)
     end
 
@@ -143,7 +155,15 @@ Alias Delete
 @param  platform
 =end
     def aliasDelete(alias_value, platform = nil)
+      @currentClient = @deviceClient
       return @deviceClient.aliasDelete(alias_value, platform)
+    end
+
+=begin
+fetch response code and response body or errors
+=end
+    def response_wrapper
+      @currentClient.instance_variable_get(:@httpclient).response_wrapper
     end
   end
 end

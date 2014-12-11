@@ -39,7 +39,6 @@ lies in the difference with the push of API: not to send any message to user.
       result.fromResponse(wrapper)
       return result
     end
-    
-    
+
   end
 end
