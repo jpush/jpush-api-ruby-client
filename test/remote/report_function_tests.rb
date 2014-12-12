@@ -3,8 +3,8 @@ require 'jpush'
 require 'test/unit'
 
 class ReportFunctionTests < Test::Unit::TestCase
-  AppKey = "7d431e42dfa6a6d693ac2d04"
-  MasterSecret = "5e987ac6d2e04d95a9d8f0d1"
+  AppKey = "e5c0d34f58732cf09b2d4d74"
+  MasterSecret = "4cdda6d3c8b029941dbc5cb3"
   def setup
     @client = JPush::JPushClient.new(AppKey, MasterSecret)
   end
