@@ -1,6 +1,6 @@
 
   AppKey ='dd1066407b044738b6479275'
-  MasterSecret = '2b38ce69b1de2a7fa95706ea'
+  MasterSecret = '6b135be0037a5c1e693c3dfa'
 
 
   SUCCEED_RESULT_CODE = 0

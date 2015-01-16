@@ -67,6 +67,7 @@ class DeviceClientTests < Test::Unit::TestCase
     remove = ['tag3', 'tag4'];
     tagAlias = JPush::TagAlias.build(:add=> add, :remove=> remove, :alias=> 'alias1')
     result = @client.updateDeviceTagAlias('0900e8d85ef', tagAlias)
+	puts result.getResponseContent()
     assert(result.code == 200, message = 'response error')
   end
 
