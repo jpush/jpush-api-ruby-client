@@ -11,7 +11,7 @@ PKG_FILES = FileList[
 ]
 Gem::Specification.new do |spec|
   spec.name          = "jpush"
-  spec.version       = "3.1.1"
+  spec.version       = "3.2.1"
   spec.authors       = ['JPush Offical']
   spec.email         = ['support@jpush.cn']
   spec.description   = "JPush's officially supported Ruby client library for accessing JPush APIs. http://jpush.cn"
