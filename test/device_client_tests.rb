@@ -44,7 +44,7 @@ class DeviceClientTests < Test::Unit::TestCase
 
   def getAliasDeviceList_1
     result = @client.getAliasUids('alias1','android,ios')
-    assert(result.registration_ids[0] == '0900e8d85ef', message = 'response error')
+    assert(result.registration_ids[0] == '0a04ad7d8b4', message = 'response error')
   end
 
   def getetDeviceTagAlias_cleard
