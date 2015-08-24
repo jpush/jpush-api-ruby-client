@@ -56,7 +56,7 @@ The object you should build for sending a push.
 
     #used only the ios nitification is not nil
     def isIOSExceedLength
-      if @notification.ios.to_s.bytesize > 220
+      if @notification.toJSON.ios.to_s.bytesize > 220
       return false
       else
       return true
@@ -65,7 +65,7 @@ The object you should build for sending a push.
 
     #Check if the length is too long
     def isGlobalExceed
-      if @notification.to_s.bytesize + @message.to_s.bytesize > 1200
+      if @notification.toJSON.to_s.bytesize + @message.toJSON.to_s.bytesize > 1200
       return false
       else
       return true
