@@ -8,6 +8,8 @@ require 'net/https'
 
 module JPush
   class NativeHttpClient
+    attr_reader :response_wrapper
+
     def initialize(maxRetryTimes = 5, opts = {})
       @maxRetryTimes = maxRetryTimes
       @logger = Logger.new(STDOUT)
@@ -22,11 +24,11 @@ module JPush
     def sendGet(url, content)
       return sendRequest(url, content, 'GET')
     end
-    
+
     def sendDelete(url, content)
       return sendRequest(url, content, 'DELETE')
     end
-    
+
     private
 
     def sendRequest(url, content, method)
@@ -96,7 +98,7 @@ module JPush
         reset = response['X-Rate-Limit-Reset']
         wrapper.setRateLimit(Integer(quota), Integer(remaining), Integer(reset))
         end
-        
+
         if code == 200
           @logger.debug('Succeed to get response - 200 OK')
           if content != nil
@@ -125,13 +127,13 @@ module JPush
           when 501..504
             @logger.error('Seems encountered server error. Maybe JPush is in maintenance? Please retry later.')
           else
-          @logger.error('Unexpected response.')    
+          @logger.error('Unexpected response.')
           end
         end
       rescue SocketError => ex
         raise SocketError.new('socket build error')
       end
-      return wrapper
+      return @response_wrapper = wrapper
     end
   end
 end
