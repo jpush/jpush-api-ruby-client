@@ -74,6 +74,21 @@ module Jpush
         assert_equal '200', response.code
       end
 
+      def test_http_basic_auth
+        stub_request(:get, 'https://jpush:hello@test.com/')
+
+        assert_raises Exception do
+          Http.new(:get, @test_url).send_request
+        end
+
+        assert_raises Exception do
+          Http.new(:get, @test_url).basic_auth('jpush', 'jpush').send_request
+        end
+
+        response = Http.new(:get, @test_url).basic_auth('jpush', 'hello').send_request
+        assert_equal '200', response.code
+      end
+
     end
   end
 end
