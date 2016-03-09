@@ -4,4 +4,7 @@ require 'jpush'
 require 'minitest/autorun'
 
 class Jpush::Test < MiniTest::Test
+  def assert_true(statement)
+    assert_equal true, statement
+  end
 end
