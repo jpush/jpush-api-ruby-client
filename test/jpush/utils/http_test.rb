@@ -1,4 +1,4 @@
-require 'webmock/minitest'
+require 'test_helper'
 
 module Jpush
   module Utils
@@ -16,7 +16,7 @@ module Jpush
         end
       end
 
-      def test_http
+      def test_http_request
         stub_request(:get, 'http://test.com/')
 
         response = Http.new(:get, 'http://test.com/').send_request
@@ -45,20 +45,12 @@ module Jpush
           to_return(body: 'Hello JPush', status: [ 222, 'Hello' ], headers: { 'content-type': 'jpush' })
 
         assert_raises Exception do
-          response = Http.new(:get, @test_url).send_request
+          Http.new(:get, @test_url).send_request
         end
 
         stub_request(:get, @test_url)
         response = Http.new(:get, @test_url).send_request
         assert_equal '200', response.code
-
-        assert_raises Exception do
-          Http.new(:post, @test_url).send_request
-        end
-
-        assert_raises Exception do
-          Http.new(:get, @test_url, params: { p: 'q' }).send_request
-        end
 
         response = Http.new(:get, @test_url, params: { p: 'p' } ).send_request
         assert_equal '222', response.code
@@ -76,14 +68,6 @@ module Jpush
 
       def test_http_basic_auth
         stub_request(:get, 'https://jpush:hello@test.com/')
-
-        assert_raises Exception do
-          Http.new(:get, @test_url).send_request
-        end
-
-        assert_raises Exception do
-          Http.new(:get, @test_url).basic_auth('jpush', 'jpush').send_request
-        end
 
         response = Http.new(:get, @test_url).basic_auth('jpush', 'hello').send_request
         assert_equal '200', response.code

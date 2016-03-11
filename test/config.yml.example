@@ -1,0 +1,8 @@
+app_key: 'APP_KEY'
+master_secret: 'MASTER_SECRET'
+registration_ids:
+  common: 'COMMON_ID'
+  android: 'ANDROID_ID'
+  ios: 'IOS_ID'
+tags:
+  common: 'COMMON_TAG'
