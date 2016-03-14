@@ -18,6 +18,7 @@ $test_app_key = conf[:app_key]
 $test_master_secret = conf[:master_secret]
 
 $test_common_registration_id = conf[:registration_ids][:common]
+$test_common2_registration_id = conf[:registration_ids][:common2]
 $test_android_registration_id = conf[:registration_ids][:android]
 $test_ios_registration_id = conf[:registration_ids][:ios]
 

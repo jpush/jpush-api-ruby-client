@@ -34,7 +34,7 @@ module Jpush
 
         def prepare_request(method, body)
           request = HTTP_VERB_MAP[method].new @uri
-          request.set_form_data(body) unless body.nil?
+          request.body = body.to_json unless body.nil?
           request
         end
 

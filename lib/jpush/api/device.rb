@@ -38,6 +38,40 @@ module Jpush
         Http::Client.get(url)
       end
 
+      # POST /v3/tags/{tag_value}
+      # 为一个标签添加或者删除设备。
+      def update(tag_value, add: nil, remove: nil)
+        url = base_url + tag_value
+        body = {
+          registration_ids: {
+            add: [add].flatten.compact,
+            remove: [remove].flatten.compact
+          }
+        }
+        add_count = body[:registration_ids][:add].count
+        remove_count = body[:registration_ids][:remove].count
+        if add_count > 1000 || remove_count > 1000
+          raise "too much registration ids"
+        end
+        Http::Client.post(url, body: body)
+      end
+
+      # 下面两个方法接受一个参数,其类型为数组或字符串
+      def add_devices(tag_value, registration_ids)
+        update(tag_value, add: registration_ids)
+      end
+
+      def remove_devices(tag_value, registration_ids)
+        update(tag_value, remove: registration_ids)
+      end
+
+      # DELETE /v3/tags/{tag_value}
+      # 删除一个标签，以及标签与设备之间的关联关系
+      def delete(tag_value)
+        url = base_url + tag_value
+        Http::Client.delete(url)
+      end
+
       private
 
         def base_url
