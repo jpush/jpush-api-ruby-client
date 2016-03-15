@@ -12,5 +12,9 @@ module Jpush
       return Api::Tag
     end
 
+    def aliases
+      return Api::Alias
+    end
+
   end
 end

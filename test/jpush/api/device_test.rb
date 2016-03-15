@@ -2,7 +2,6 @@ require 'test_helper'
 
 module Jpush
   module Api
-
     class DeviceTest < Jpush::Test
 
       def setup
@@ -27,173 +26,141 @@ module Jpush
         assert_equal 7002, body['error']['code']
       end
 
-    end
+      def test_add_and_remove_tags
+        body = JSON.parse(@devices.show($test_common2_registration_id).body)
+        assert_true !body['tags'].include?($test_common_tag)
 
+        response = @devices.add_tags($test_common2_registration_id, $test_common_tag)
+        assert_equal '200', response.code
 
-    class TagTest < Jpush::Test
+        body = JSON.parse(@devices.show($test_common2_registration_id).body)
+        assert_true body['tags'].include?($test_common_tag)
 
-      def setup
+        response = @devices.remove_tags($test_common2_registration_id, $test_common_tag)
+        assert_equal '200', response.code
+
+        body = JSON.parse(@devices.show($test_common2_registration_id).body)
+        assert_true !body['tags'].include?($test_common_tag)
+      end
+
+      def test_add_invalid_tag_value
         @tags = @@jPush.tags
-      end
 
-      def test_list
-        response = @tags.list
-        assert_equal '200', response.code
-
-        body = JSON.parse(response.body)
-        assert_equal 1, body.length
-        assert_true body.has_key?('tags')
-        assert_instance_of(Array, body['tags'])
-      end
-
-      def test_tag_has_device_with_blank_tag_value
-        response = @tags.has_device?('', $test_common_registration_id)
-        assert_equal '404', response.code
-      end
-
-      def test_tag_has_device_with_invalid_device
-        response = @tags.has_device?($test_common_tag, 'INVALID_REGISTRATION_ID')
-        assert_equal '400', response.code
-
-        body = JSON.parse(response.body)
-        assert_equal 7002, body['code']
-
-        # It should be like this, but the correct format is on its way
-        # assert_equal 7002, body['error']['code']
-      end
-
-      def test_tag_has_device_with_invalid_tag_value
-        response = @tags.has_device?('INVALID_TAG', $test_common_registration_id)
-        assert_equal '200', response.code
-
-        body = JSON.parse(response.body)
-        assert_true body.has_key?('result')
-        assert_true !body['result']
-      end
-
-      def test_tag_has_device
-        response = @tags.has_device?($test_common_tag, $test_common_registration_id)
-        assert_equal '200', response.code
-
-        body = JSON.parse(response.body)
-        assert_true body.has_key?('result')
-        assert_true body['result']
-      end
-
-      def test_add_and_remove_devices
-        body = JSON.parse(@tags.has_device?($test_common_tag, $test_common2_registration_id).body)
-        assert_true !body['result']
-
-        response = @tags.add_devices($test_common_tag, $test_common2_registration_id)
-        assert_equal '200', response.code
-        body = response.body
-        assert_equal '200', body
-
-        body = JSON.parse(@tags.has_device?($test_common_tag, $test_common2_registration_id).body)
-        assert_true body['result']
-
-        response = @tags.remove_devices($test_common_tag, $test_common2_registration_id)
-        assert_equal '200', response.code
-        body = response.body
-        assert_equal '200', body
-
-        body = JSON.parse(@tags.has_device?($test_common_tag, $test_common2_registration_id).body)
-        assert_true !body['result']
-      end
-
-      def test_update_with_invalid_tag_value
         body = JSON.parse(@tags.list.body)
         before_tag_len = body['tags'].length
 
-        response = @tags.add_devices('INVALID_TAG', $test_common_registration_id)
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        assert_true !body['tags'].include?('INVALID_TAG')
+
+        response = @devices.add_tags($test_common_registration_id, 'INVALID_TAG')
+        assert_equal '200', response.code
+
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        assert_true body['tags'].include?('INVALID_TAG')
 
         body = JSON.parse(@tags.list.body)
         after_tag_len = body['tags'].length
-
-        body = JSON.parse(@tags.has_device?('INVALID_TAG', $test_common_registration_id).body)
-        assert_true body['result']
         assert_equal 1, after_tag_len - before_tag_len
-
-        response = @tags.remove_devices('INVALID_TAG', $test_common_registration_id)
-
-        body = JSON.parse(@tags.has_device?('INVALID_TAG', $test_common_registration_id).body)
-        assert_true !body['result']
 
         @tags.delete('INVALID_TAG')
 
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        assert_true !body['tags'].include?('INVALID_TAG')
+
         body = JSON.parse(@tags.list.body)
         final_tag_len = body['tags'].length
-        assert_equal before_tag_len, final_tag_len
+        assert_equal final_tag_len, before_tag_len
       end
 
-      def test_update_with_invalid_registration_id
-        response = @tags.add_devices($test_common_tag, 'INVALID_REGISTRATION_ID')
-        assert_equal '400', response.code
-
-        body = JSON.parse(response.body)
-        assert_equal 7002, body['code']
-
-        # It should be like this, but the correct format is on its way
-        # assert_equal 7002, body['error']['code']
-      end
-
-      def test_update_with_too_much_registration_id
-        registration_ids = (0..1000).to_a
-        assert_equal 1001, registration_ids.count
-        assert_raises Exception do
-          @tags.add_devices($test_common_tag, registration_ids)
-        end
-        assert_raises Exception do
-          @tags.remove_devices($test_common_tag, registration_ids)
-        end
-      end
-
-      def test_delete_tag_with_blank_tag_value
-        response = @tags.delete('')
-        assert_equal '400', response.code
-
-        body = JSON.parse(response.body)
-        assert_equal 7009, body['error']['code']
-      end
-
-      def test_delete_tag_with_invalid_tag_value
-        body = JSON.parse(@tags.list.body)
+      def test_remove_Invalid_tag_value
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
         before_tag_len = body['tags'].length
+        assert_true !body['tags'].include?('INVALID_TAG')
 
-        response = @tags.delete('INVALID_TAG')
+        response = @devices.remove_tags($test_common_registration_id, 'INVALID_TAG')
         assert_equal '200', response.code
 
-        body = JSON.parse(@tags.list.body)
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
         after_tag_len = body['tags'].length
-
+        assert_true !body['tags'].include?('INVALID_TAG')
         assert_equal before_tag_len, after_tag_len
       end
 
-      def test_delete_tag
-        body = JSON.parse(@tags.list.body)
-        before_tag_len = body['tags'].length
+      def test_clear_tags
+        body = JSON.parse(@devices.show($test_common2_registration_id).body)
+        assert_true !body['tags'].include?($test_common_tag)
+
+        @devices.add_tags($test_common2_registration_id, $test_common_tag)
+
+        body = JSON.parse(@devices.show($test_common2_registration_id).body)
         assert_true body['tags'].include?($test_common_tag)
 
-        response = @tags.delete($test_common_tag)
+        response = @devices.clear_tags($test_common2_registration_id)
         assert_equal '200', response.code
 
-        body = JSON.parse(@tags.list.body)
-        after_tag_len = body['tags'].length
+        body = JSON.parse(@devices.show($test_common2_registration_id).body)
         assert_true !body['tags'].include?($test_common_tag)
-        assert_equal 1, before_tag_len  - after_tag_len
+        assert_true body['tags'].empty?
+      end
 
-        @tags.add_devices($test_common_tag, $test_common_registration_id)
+      def test_update_alias
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        origin_alias = body['alias']
 
-        body = JSON.parse(@tags.list.body)
-        final_tag_len = body['tags'].length
-        assert_true body['tags'].include?($test_common_tag)
-        assert_equal before_tag_len, final_tag_len
+        response = @devices.update_alias($test_common_registration_id, 'JPUSH')
+        assert_equal '200', response.code
 
-        body = JSON.parse(@tags.has_device?($test_common_tag, $test_common_registration_id).body)
-        assert_true body['result']
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        assert_equal 'JPUSH', body['alias']
+
+        response = @devices.update_alias($test_common_registration_id, '')
+        assert_equal '200', response.code
+
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        assert_nil body['alias']
+
+        response = @devices.update_alias($test_common_registration_id, origin_alias)
+        assert_equal '200', response.code
+
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        assert_equal origin_alias, body['alias']
+      end
+
+      def test_update_mobile
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        origin_mobile = body['mobile']
+
+        response = @devices.update_mobile($test_common_registration_id, '13800138000')
+        assert_equal '200', response.code
+
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        assert_equal 13800138000, body['mobile']
+
+        response = @devices.update_mobile($test_common_registration_id, origin_mobile.to_s)
+        assert_equal '200', response.code
+
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        assert_equal origin_mobile, body['mobile']
+      end
+
+      def test_update_mobile_with_nil_value
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        origin_mobile = body['mobile']
+
+        response = @devices.update_mobile($test_common_registration_id, nil)
+        assert_equal '200', response.code
+
+        body = JSON.parse(@devices.show($test_common_registration_id).body)
+        updated_mobile = body['mobile']
+
+        assert_equal origin_mobile, updated_mobile
+      end
+
+      def test_device_status
+        # TODO
+        # need vip appKey
       end
 
     end
-
   end
 end
