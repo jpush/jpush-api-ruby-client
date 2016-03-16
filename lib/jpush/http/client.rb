@@ -1,24 +1,29 @@
+require_relative 'response'
+
 module Jpush
   module Http
     module Client
       extend self
 
       def get(url, params: nil)
-        Utils::Http.new(:get, url, params: params).
-          basic_auth(jpush_basic_auth[:user], jpush_basic_auth[:pass]).
-          send_request
+        send_request(:get, url, params: params)
       end
 
       def post(url, body:)
-        Utils::Http.new(:post, url, body: body).
-        basic_auth(jpush_basic_auth[:user], jpush_basic_auth[:pass]).
-        send_request
+        send_request(:post, url, body: body)
       end
 
       def delete(url, params: nil)
-        Utils::Http.new(:delete, url, params: params).
-        basic_auth(jpush_basic_auth[:user], jpush_basic_auth[:pass]).
-        send_request
+        send_request(:delete, url, params: params)
+      end
+
+      def send_request(method, url, params: nil, body: nil)
+        raw_response =
+          Utils::Http.new(method.to_sym, url, params: params, body: body).
+          basic_auth(jpush_basic_auth[:user], jpush_basic_auth[:pass]).
+          send_request
+        bool_error = !(raw_response.kind_of? Net::HTTPSuccess)
+        Response.new(raw_response.code, raw_response.body, bool_error)
       end
 
       private
