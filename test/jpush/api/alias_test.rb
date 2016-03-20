@@ -39,7 +39,8 @@ module Jpush
 
         @devices.update_alias($test_common_registration_id, test_alias)
         body = @aliases.show(test_alias).body
-        assert_true !body['registration_ids'].empty?
+        assert_false body['registration_ids'].empty?
+        assert_true body['registration_ids'].include?($test_common_registration_id)
 
         response = @aliases.delete(test_alias)
         assert 200, response.http_code
@@ -57,6 +58,9 @@ module Jpush
 
         response = @aliases.delete('INVALID_ALIAS')
         assert 200, response.http_code
+
+        body = @aliases.show('INVALID_ALIAS').body
+        assert_true body['registration_ids'].empty?
       end
 
     end

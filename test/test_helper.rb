@@ -5,7 +5,7 @@ require 'minitest/autorun'
 require 'webmock/minitest'
 require 'yaml'
 
-using Jpush::Utils::Helper
+using Jpush::Utils::Helper::ObjectExtensions
 
 conf =
   if File.exists? conf_file = File.expand_path('../config.yml', __FILE__)
@@ -35,6 +35,10 @@ class Jpush::Test < MiniTest::Test
 
   def assert_true(statement)
     assert_equal true, statement
+  end
+
+  def assert_false(statement)
+    assert_equal false, statement
   end
 
 end

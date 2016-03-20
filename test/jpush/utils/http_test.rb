@@ -11,7 +11,7 @@ module Jpush
       def test_new_http_client_with_invalid_http_verb
         stub_request(:any, @test_url)
 
-        assert_raises Exception do
+        assert_raises ArgumentError do
           Http.new(:http, @test_url)
         end
       end
