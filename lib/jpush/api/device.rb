@@ -1,11 +1,11 @@
-require 'jpush/utils/argument_check'
+require 'jpush/api/helper/argument_check'
 require 'jpush/http/client'
 
 module Jpush
   module Api
     module Device
       extend self
-      extend Utils::ArgumentCheck
+      extend Helper::ArgumentCheck
       using Utils::Helper::ObjectExtensions
 
       # GET /v3/devices/{registration_id}
@@ -96,7 +96,7 @@ module Jpush
 
     module Tag
       extend self
-      extend Utils::ArgumentCheck
+      extend Helper::ArgumentCheck
       using Utils::Helper::ObjectExtensions
 
       # GET /v3/tags/
@@ -173,7 +173,7 @@ module Jpush
 
     module Alias
       extend self
-      extend Utils::ArgumentCheck
+      extend Helper::ArgumentCheck
 
       # GET /v3/aliases/{alias_value}
       # 获取指定alias下的设备，最多输出10个
