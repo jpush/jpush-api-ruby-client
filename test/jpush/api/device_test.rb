@@ -130,33 +130,6 @@ module Jpush
         assert_true body['tags'].empty?
       end
 
-      def test_build_tags
-        assert_raises ArgumentError do
-          @devices.send(:build_tags, '')
-        end
-        assert_raises ArgumentError do
-          @devices.send(:build_tags, ' ')
-        end
-        assert_raises ArgumentError do
-          @devices.send(:build_tags, [])
-        end
-        assert_raises ArgumentError do
-          @devices.send(:build_tags, ['', ' ', '   ', [], [''], [' '], nil])
-        end
-
-        tags = @devices.send(:build_tags, ['tag1', 'tag2'])
-        assert_instance_of(Array, tags)
-        assert_equal 2, tags.length
-
-        tags = @devices.send(:build_tags, ['tag1', 'tag2', '', ' ', '   ', [], [''], [' '], nil])
-        assert_instance_of(Array, tags)
-        assert_equal 2, tags.length
-
-        tags = @devices.send(:build_tags, 'tag')
-        assert_instance_of(Array, tags)
-        assert_equal 1, tags.length
-      end
-
       def test_update_alias
         body = @devices.show($test_common_registration_id).body
         origin_alias = body['alias']

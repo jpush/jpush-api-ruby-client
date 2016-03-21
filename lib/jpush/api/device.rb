@@ -1,12 +1,11 @@
-require 'jpush/api/helper/argument_check'
+require 'jpush/api/helper/argument_helper'
 require 'jpush/http/client'
 
 module Jpush
   module Api
     module Device
       extend self
-      extend Helper::ArgumentCheck
-      using Utils::Helper::ObjectExtensions
+      extend Helper::ArgumentHelper
 
       # GET /v3/devices/{registration_id}
       # 获取当前设备的所有属性
@@ -70,22 +69,14 @@ module Jpush
       # 获取用户在线状态
       # POST /v3/devices/status/
       def status(registration_ids)
-        registration_ids = [registration_ids].flatten.compact.reject{ |id| id.blank? }.uniq
-        ensure_argument_not_blank('registration ids', registration_ids)
-        raise ArgumentError, "too much registration ids(<=1000)".titleize if registration_ids.length > 1000
+        registration_ids = build_registration_ids(registration_ids)
+        raise ArgumentError, "Too Much Registration Ids(<=1000)" if registration_ids.length > 1000
         url = base_url + 'status'
         body = { registration_ids: registration_ids }
         Http::Client.post(url, body: body)
       end
 
       private
-
-        def build_tags(tags)
-          # remove blank elements in tags array
-          tags = [tags].flatten.compact.reject{ |tag| tag.blank? }.uniq
-          ensure_argument_not_blank('tags', tags)
-          tags
-        end
 
         def base_url
           Config.settings[:device_api_host] + Config.settings[:api_version] + '/devices/'
@@ -96,8 +87,7 @@ module Jpush
 
     module Tag
       extend self
-      extend Helper::ArgumentCheck
-      using Utils::Helper::ObjectExtensions
+      extend Helper::ArgumentHelper
 
       # GET /v3/tags/
       # 获取当前应用的所有标签列表。
@@ -128,7 +118,7 @@ module Jpush
         devices_add_count = registration_ids[:add].nil? ? 0 : registration_ids[:add].count
         devices_remove_count = registration_ids[:remove].nil? ? 0 : registration_ids[:remove].count
         if devices_add_count > 1000 || devices_remove_count > 1000
-          raise ArgumentError, "too much registration ids(<=1000)".titleize
+          raise ArgumentError, "Too Much Registration Ids(<=1000)"
         end
 
         body = { registration_ids: registration_ids }
@@ -156,13 +146,6 @@ module Jpush
       end
 
       private
-
-        def build_registration_ids(ids)
-          # remove blank elements in registration_ids array
-          ids = [ids].flatten.compact.reject{ |id| id.blank? }.uniq
-          ensure_argument_not_blank('registration ids', ids)
-          ids
-        end
 
         def base_url
           Config.settings[:device_api_host] + Config.settings[:api_version] + '/tags/'
