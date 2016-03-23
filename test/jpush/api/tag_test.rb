@@ -108,17 +108,6 @@ module Jpush
         assert_equal 7002, response.error[:code]
       end
 
-      def test_update_with_too_much_registration_id
-        registration_ids = (0..1000).to_a
-        assert_equal 1001, registration_ids.count
-        assert_raises ArgumentError do
-          @tags.add_devices($test_common_tag, registration_ids)
-        end
-        assert_raises ArgumentError do
-          @tags.remove_devices($test_common_tag, registration_ids)
-        end
-      end
-
       def test_delete_tag_with_invalid_tag_value
         body = @tags.list.body
         before_tag_len = body['tags'].length

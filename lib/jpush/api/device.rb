@@ -20,6 +20,7 @@ module Jpush
       def update(registration_id, tags_add: nil, tags_remove: nil, clear_tags: false, alis: nil, mobile: nil)
         check_registration_id(registration_id)
         check_mobile(mobile) unless mobile.nil?
+        check_alias(alis) unless (alis.nil? || '' == alis)
         tags =
           if clear_tags
             ''
@@ -62,6 +63,10 @@ module Jpush
         update(registration_id, alis: alis)
       end
 
+      def delete_alias(registration_id)
+        update(registration_id, alis: '')
+      end
+
       def update_mobile(registration_id, mobile)
         update(registration_id, mobile: mobile)
       end
@@ -70,7 +75,6 @@ module Jpush
       # POST /v3/devices/status/
       def status(registration_ids)
         registration_ids = build_registration_ids(registration_ids)
-        raise ArgumentError, "Too Much Registration Ids(<=1000)" if registration_ids.length > 1000
         url = base_url + 'status'
         body = { registration_ids: registration_ids }
         Http::Client.post(url, body: body)
@@ -100,7 +104,7 @@ module Jpush
       # 查询某个设备是否在 tag 下
       def has_device?(tag_value, registration_id)
         check_registration_id(registration_id)
-        ensure_argument_not_blank('tag', tag_value)
+        check_tag(tag_value)
         url = base_url + "#{tag_value}/registration_ids/#{registration_id}"
         Http::Client.get(url)
       end
@@ -108,18 +112,12 @@ module Jpush
       # POST /v3/tags/{tag_value}
       # 为一个标签添加或者删除设备。
       def update(tag_value, devices_add: nil, devices_remove: nil)
-        ensure_argument_not_blank('tag', tag_value)
+        check_tag(tag_value)
 
         devices_add = build_registration_ids(devices_add) unless devices_add.nil?
         devices_remove = build_registration_ids(devices_remove) unless devices_remove.nil?
         registration_ids = { add: devices_add, remove: devices_remove }.reject{ |key, value| value.nil? }
         ensure_argument_not_blank('registration ids', registration_ids)
-
-        devices_add_count = registration_ids[:add].nil? ? 0 : registration_ids[:add].count
-        devices_remove_count = registration_ids[:remove].nil? ? 0 : registration_ids[:remove].count
-        if devices_add_count > 1000 || devices_remove_count > 1000
-          raise ArgumentError, "Too Much Registration Ids(<=1000)"
-        end
 
         body = { registration_ids: registration_ids }
         url = base_url + tag_value
@@ -140,7 +138,7 @@ module Jpush
       # DELETE /v3/tags/{tag_value}
       # 删除一个标签，以及标签与设备之间的关联关系
       def delete(tag_value)
-        ensure_argument_not_blank('tag', tag_value)
+        check_tag(tag_value)
         url = base_url + tag_value
         Http::Client.delete(url)
       end
@@ -161,7 +159,7 @@ module Jpush
       # GET /v3/aliases/{alias_value}
       # 获取指定alias下的设备，最多输出10个
       def show(alias_value)
-        ensure_argument_not_blank('alias', alias_value)
+        check_alias(alias_value)
         url = base_url + alias_value
         Http::Client.get(url)
       end
@@ -169,7 +167,7 @@ module Jpush
       # DELETE /v3/aliases/{alias_value}
       # 删除一个别名，以及该别名与设备的绑定关系
       def delete(alias_value)
-        ensure_argument_not_blank('alias', alias_value)
+        check_alias(alias_value)
         url = base_url + alias_value
         Http::Client.delete(url)
       end

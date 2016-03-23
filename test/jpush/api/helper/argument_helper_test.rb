@@ -34,6 +34,13 @@ module Jpush
           tags = @klass.build_tags('tag')
           assert_instance_of(Array, tags)
           assert_equal 1, tags.length
+
+          assert_raises ArgumentError do
+            @klass.build_tags(['tag1', 'tag2', 'tag3'], 2)
+          end
+
+          tags = @klass.build_tags(['tag1', 'tag2', 'tag3'], 3)
+          assert_instance_of(Array, tags)
         end
 
       end

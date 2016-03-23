@@ -21,6 +21,7 @@ module Jpush
 
         refine String do
           BLANK_RE = /\A[[:space:]]*\z/
+          WORD_RE = /\A[\p{han}a-zA-Z0-9_]+\z/u
 
           def titleize
             self.split(' ').map(&:capitalize).join(' ')
@@ -28,6 +29,10 @@ module Jpush
 
           def blank?
             BLANK_RE === self
+          end
+
+          def valid_word?
+            WORD_RE === self
           end
         end
 
