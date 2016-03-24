@@ -87,7 +87,7 @@ module Jpush
           assert_equal 18, str.bytesize
 
           assert_raises ArgumentError do
-            assert_nil @klass.ensure_string_not_over_bytesize('arg', str, 10)
+            @klass.ensure_string_not_over_bytesize('arg', str, 10)
           end
 
           assert_nil @klass.ensure_string_not_over_bytesize('arg', str, 18)
@@ -98,11 +98,33 @@ module Jpush
           array = ['极光推送', 'jpush', 'RANDOM_STRING'] # array_bytesize = 30
 
           assert_raises ArgumentError do
-            assert_nil @klass.ensure_array_not_over_bytesize('arg', array, 10)
+            @klass.ensure_array_not_over_bytesize('arg', array, 10)
           end
 
           assert_nil @klass.ensure_array_not_over_bytesize('arg', array, 30)
           assert_nil @klass.ensure_array_not_over_bytesize('arg', array, 40)
+        end
+
+        def test_ensure_hash_not_over_bytesize
+          hash = {jpush: '极光推送'}  # array_bytesize = 24
+
+          assert_raises ArgumentError do
+            @klass.ensure_hash_not_over_bytesize('arg', hash, 20)
+          end
+
+          assert_nil @klass.ensure_hash_not_over_bytesize('arg', hash, 24)
+          assert_nil @klass.ensure_hash_not_over_bytesize('arg', hash, 30)
+        end
+
+        def test_ensure_argument_type
+          assert_nil @klass.ensure_argument_type('arg', 1, Integer)
+          assert_nil @klass.ensure_argument_type('arg', 'jpush', String)
+          assert_nil @klass.ensure_argument_type('arg', :jpush, Symbol)
+          assert_nil @klass.ensure_argument_type('arg', ['jpush'], Array)
+          assert_nil @klass.ensure_argument_type('arg', {jpush: 'jpush'}, Hash)
+          assert_raises ArgumentError do
+            @klass.ensure_argument_type('arg', ['jpush'], String)
+          end
         end
 
       end

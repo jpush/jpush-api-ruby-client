@@ -49,15 +49,28 @@ module Jpush
           raise ArgumentError, errmsg.titleize unless word.valid_word?
         end
 
-        def ensure_string_not_over_bytesize(str_name, str_value, bytesize)
-          errmsg = "invalid #{str_name} ( expect its bytesize less than #{bytesize} byte )"
-          raise ArgumentError, errmsg.titleize if str_value.bytesize > bytesize
+        def ensure_string_not_over_bytesize(str_name, str, limit)
+          ensure_not_over_bytesize(str_name, str.bytesize, limit)
         end
 
-        def ensure_array_not_over_bytesize(array_name, array, bytesize)
-          errmsg = "invalid #{array_name} ( expect its bytesize less than #{bytesize} byte )"
+        def ensure_array_not_over_bytesize(array_name, array, limit)
           array_bytesize = array.inject(0){|r, e| r += e.bytesize}
-          raise ArgumentError, errmsg.titleize if array_bytesize > bytesize
+          ensure_not_over_bytesize(array_name, array_bytesize, limit)
+        end
+
+        def ensure_hash_not_over_bytesize(hash_name, hash, limit)
+          hash_bytesize = hash.to_json.bytesize
+          ensure_not_over_bytesize(hash_name, hash_bytesize, limit)
+        end
+
+        def ensure_not_over_bytesize(arg_name, bytesize, limit)
+          errmsg = "invalid #{arg_name} ( expect its bytesize less than #{limit} byte )"
+          raise ArgumentError, errmsg.titleize if bytesize > limit
+        end
+
+        def ensure_argument_type(obj_name, obj, type)
+          errmsg = "#{obj_name} is a #{obj.class} ( expect its type is #{type} )"
+          raise ArgumentError, errmsg.titleize unless obj.is_a? type
         end
 
       end
