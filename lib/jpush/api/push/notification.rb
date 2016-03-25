@@ -17,7 +17,7 @@ module Jpush
         end
 
         def set_android(alert: , title: nil, builder_id: nil, extras: nil)
-          check_argument(alert, {'title': title, 'builder_id': builder_id}, extras)
+          check_argument(alert, {title: title, builder_id: builder_id}, extras)
           @android = {
             alert: alert,
             title: title,
@@ -28,7 +28,9 @@ module Jpush
         end
 
         def set_ios(alert: , sound: nil, badge: nil, available: nil, category:nil, extras: nil)
-          check_argument(alert, {'sound': sound, 'badge': badge, 'category': category}, extras)
+          check_argument(alert, {sound: sound, badge: badge, category: category}, extras)
+          Notification.ensure_string_can_convert_to_fixnum('badge', badge) unless badge.nil?
+          Notification.ensure_argument_type('available', available, TrueClass) unless available.nil?
           @ios = {
             alert: alert,
             sound: sound,

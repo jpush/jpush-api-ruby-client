@@ -39,6 +39,36 @@ module Jpush
           assert_true result.has_key?(:ios)
         end
 
+        def test_sets
+          result = @notification.
+            set_alert('Hello Jpush').
+            set_android(
+              alert: 'Hello Android',
+              title: 'hello',
+              extras: {
+                key0: 'value0',
+                key1: 'value1'
+              }
+            ).set_ios(
+              alert: 'Hello IOS',
+              sound: 'sound',
+              badge: '+1',
+              available: true,
+              category: 'jpush',
+              extras: {
+                key2: 'value2',
+                key3: 'value3'
+              }
+            ).build
+          assert_equal 3, result.size
+          assert_true result.has_key?(:alert)
+          assert_true result.has_key?(:android)
+          assert_true result.has_key?(:ios)
+
+          assert_equal 3, result[:android].length
+          assert_equal 6, result[:ios].length
+        end
+
       end
     end
   end

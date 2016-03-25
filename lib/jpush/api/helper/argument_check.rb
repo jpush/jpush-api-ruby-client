@@ -73,6 +73,11 @@ module Jpush
           raise ArgumentError, errmsg.titleize unless obj.is_a? type
         end
 
+        def ensure_string_can_convert_to_fixnum(name, str)
+          errmsg = "invalid #{name}: #{str} ( expect it can be convert to Fixnum )"
+          raise ArgumentError, errmsg.titleize if '0' != str && 0 == str.to_i
+        end
+
       end
     end
   end
