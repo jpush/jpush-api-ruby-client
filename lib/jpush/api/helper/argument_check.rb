@@ -69,8 +69,8 @@ module Jpush
         end
 
         def ensure_argument_type(obj_name, obj, type)
-          errmsg = "#{obj_name} is a #{obj.class} ( expect its type is #{type} )"
-          raise ArgumentError, errmsg.titleize unless obj.is_a? type
+          errmsg = "#{obj_name} is a #{obj.class} ( expect its type is".titleize + " #{type} )"
+          raise ArgumentError, errmsg unless obj.is_a? type
         end
 
         def ensure_string_can_convert_to_fixnum(name, str)
