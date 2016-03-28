@@ -6,22 +6,22 @@ module Jpush
       class MessageTest < Jpush::Test
 
         def test_new
-          msg = Message.new(content: 'jpush').build
+          msg = Message.new(msg_content: 'jpush').build
           assert_equal 1, msg.size
-          assert_true msg.has_key?(:content)
-          assert_true msg[:content].include?('jpush')
+          assert_true msg.has_key?(:msg_content)
+          assert_true msg[:msg_content].include?('jpush')
         end
 
         def test_init
           msg = Message.new(
-            content: 'jpush',
+            msg_content: 'jpush',
             title: 'hello',
             content_type: 'text',
             extras: {key0: 'value0', key1: 'value1'}
           ).build
 
           assert_equal 4, msg.size
-          assert_true msg.has_key?(:content)
+          assert_true msg.has_key?(:msg_content)
           assert_true msg.has_key?(:title)
           assert_true msg.has_key?(:content_type)
           assert_true msg.has_key?(:extras)

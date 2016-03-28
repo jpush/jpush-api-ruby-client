@@ -8,11 +8,11 @@ module Jpush
 
         attr_reader :message
 
-        def initialize(content: , title: nil, content_type: nil, extras: nil)
+        def initialize(msg_content: , title: nil, content_type: nil, extras: nil)
           check_argument({title: title, content_type: content_type }, extras)
           Message.ensure_argument_type('extras', extras, Hash) unless extras.nil?
           @message = {
-            content: content,
+            msg_content: msg_content,
             title: title,
             content_type: content_type,
             extras: extras
