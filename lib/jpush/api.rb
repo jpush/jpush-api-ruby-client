@@ -17,7 +17,7 @@ module Jpush
       return Api::Alias
     end
 
-    def push
+    def pusher
       return Api::Push
     end
 

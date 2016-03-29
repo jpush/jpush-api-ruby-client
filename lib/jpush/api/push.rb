@@ -1,5 +1,5 @@
 require 'jpush/api/helper/argument_helper'
-require 'jpush/api/push/push_pay_load'
+require 'jpush/api/push/push_payload'
 require 'jpush/http/client'
 
 module Jpush

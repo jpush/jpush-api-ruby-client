@@ -29,8 +29,19 @@ module Jpush
         end
 
         def build
-          ensure_content
+          ensure_content_available
           self
+        end
+
+        def to_hash
+          {
+            platform: @platform,
+            audience: @audience,
+            notification: @notification,
+            message: @message,
+            sms_message: @sms,
+            options: @options
+          }.reject{|key, value| value.nil?}
         end
 
         private
@@ -72,7 +83,7 @@ module Jpush
           def build_options(opts)
           end
 
-          def ensure_content
+          def ensure_content_available
             raise ArgumentError, 'No Notification OR Message Found' unless @notification || @message
           end
 

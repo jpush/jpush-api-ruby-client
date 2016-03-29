@@ -3,7 +3,7 @@ require 'test_helper'
 module Jpush
   module Api
     module Push
-      class PushPayLoadTest < Jpush::Test
+      class PushPayloadTest < Jpush::Test
 
         def test_new
           push = PushPayload.new(platform: 'all', audience: 'all')
