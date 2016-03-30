@@ -6,8 +6,6 @@ module Jpush
       class Audience
         extend Helper::ArgumentHelper
 
-        attr_reader :audience
-
         def set_tag(tags)
           @tag = Audience.build_tags(tags, 20)
           self
@@ -36,6 +34,10 @@ module Jpush
             registration_id: @registration_id
           }.reject{|key, value| value.nil?}
           Audience.ensure_argument_not_blank('audience', @audience)
+          self
+        end
+
+        def to_hash
           @audience
         end
 

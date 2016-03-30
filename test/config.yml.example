@@ -6,3 +6,4 @@ registration_ids:
   ios: 'IOS_ID'
 tags:
   common: 'COMMON_TAG'
+repoer_delay_time: '5'

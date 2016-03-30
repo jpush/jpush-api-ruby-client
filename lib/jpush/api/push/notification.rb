@@ -8,8 +8,6 @@ module Jpush
 
         MAX_IOS_NOTIFICATION_SIZE = 2000
 
-        attr_reader :notification
-
         def set_alert(alert)
           Notification.ensure_argument_not_blank('alert', alert) unless '' == alert
           @alert = alert
@@ -50,6 +48,10 @@ module Jpush
             ios: @ios
           }.reject{|key, value| value.nil?}
           Notification.ensure_argument_not_blank('notification', @notification)
+          self
+        end
+
+        def to_hash
           @notification
         end
 

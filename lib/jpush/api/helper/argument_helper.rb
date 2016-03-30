@@ -12,6 +12,7 @@ module Jpush
         ALIAS_ARRAY_LIMIT = 1000
         REGISTRATION_ID_ARRAY_LIMIT = 1000
         TAG_ARRAY_BYTESIZE_LIMIT = 1024
+        MSG_IDS_LIMIT = 100
 
         def self.extended(base)
           base.extend ArgumentCheck
@@ -29,6 +30,10 @@ module Jpush
 
         def build_alias(alis)
           build_args_from_array_or_string('alias', alis, ALIAS_ARRAY_LIMIT)
+        end
+
+        def build_msg_ids(msg_ids)
+          build_args_from_array_or_string('msg ids', msg_ids, MSG_IDS_LIMIT)
         end
 
         private

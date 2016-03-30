@@ -21,27 +21,30 @@ module Jpush
         end
 
         def add_sms_message(msg)
-          @sms = build_sms_message(msg)
+          @sms_message = build_sms_message(msg)
+          self
         end
 
         def add_options(opts)
           @options = build_options(opts)
+          self
         end
 
         def build
           ensure_content_available
+          @push_payload =  {
+              platform: @platform,
+              audience: @audience,
+              notification: @notification,
+              message: @message,
+              sms_message: @sms_message,
+              options: @options
+            }.reject{|key, value| value.nil?}
           self
         end
 
         def to_hash
-          {
-            platform: @platform,
-            audience: @audience,
-            notification: @notification,
-            message: @message,
-            sms_message: @sms,
-            options: @options
-          }.reject{|key, value| value.nil?}
+          @push_payload
         end
 
         private
@@ -50,6 +53,7 @@ module Jpush
             PushPayload.ensure_argument_not_blank('platform', platform)
             return VALID_PLATFORM if 'all' == platform
 
+            platform = [platform].flatten
             platform.each do |pf|
               raise ArgumentError, "Invalid Platform #{pf.upcase}" unless VALID_PLATFORM.include?(pf)
             end
@@ -60,21 +64,22 @@ module Jpush
             PushPayload.ensure_argument_not_blank('audience', audience)
             return 'all' if 'all' == audience.downcase
             PushPayload.ensure_argument_type('audience', audience, Audience)
-            audience
+            audience.to_hash
           end
 
           def build_notification(notification)
             PushPayload.ensure_argument_not_blank('notification', notification)
             return {alert: notification} if notification.is_a?(String)
             PushPayload.ensure_argument_type('notification', notification, Notification)
-            notification
+            notification.to_hash
           end
 
           def build_message(message)
             PushPayload.ensure_argument_not_blank('message', message)
-            return Message.new(msg_content: message).build if message.is_a?(String)
+            msg = Message.new(msg_content: message).build
+            return msg.to_hash if message.is_a?(String)
             PushPayload.ensure_argument_type('message', message, Message)
-            message
+            message.to_hash
           end
 
           def build_sms_message(msg)

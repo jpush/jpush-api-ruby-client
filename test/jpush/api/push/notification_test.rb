@@ -16,12 +16,12 @@ module Jpush
         end
 
         def test_set_alert
-          result = @notification.set_alert('').build
+          result = @notification.set_alert('').build.to_hash
           assert_equal 1, result.size
           assert_true result.has_key?(:alert)
           assert_true result[:alert].include?('')
 
-          result = @notification.set_alert('jpush').build
+          result = @notification.set_alert('jpush').build.to_hash
           assert_equal 1, result.size
           assert_true result.has_key?(:alert)
           assert_true result[:alert].include?('jpush')
@@ -32,7 +32,7 @@ module Jpush
             set_alert('Hello Jpush').
             set_android(alert: 'Hello Android').
             set_ios(alert: 'Hello IOS').
-            build
+            build.to_hash
           assert_equal 3, result.size
           assert_true result.has_key?(:alert)
           assert_true result.has_key?(:android)
@@ -59,7 +59,7 @@ module Jpush
                 key2: 'value2',
                 key3: 'value3'
               }
-            ).build
+            ).build.to_hash
           assert_equal 3, result.size
           assert_true result.has_key?(:alert)
           assert_true result.has_key?(:android)

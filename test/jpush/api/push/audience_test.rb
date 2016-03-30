@@ -16,7 +16,7 @@ module Jpush
         end
 
         def test_set_tag
-          result = @audience.set_tag('jpush').build
+          result = @audience.set_tag('jpush').build.to_hash
 
           assert_equal 1, result.size
           assert_true result.has_key?(:tag)
@@ -29,7 +29,7 @@ module Jpush
             set_tag_and('jpush').
             set_alias('jpush').
             set_registration_id('jpush').
-            build
+            build.to_hash
 
           assert_equal 4, result.size
           assert_true result.has_key?(:tag)

@@ -1,5 +1,6 @@
 require 'jpush/api/device'
 require 'jpush/api/push'
+require 'jpush/api/report'
 
 module Jpush
   module Api
@@ -19,6 +20,10 @@ module Jpush
 
     def pusher
       return Api::Push
+    end
+
+    def reporter
+      return Api::Report
     end
 
   end

@@ -23,6 +23,7 @@ $test_android_registration_id = conf[:registration_ids][:android]
 $test_ios_registration_id = conf[:registration_ids][:ios]
 
 $test_common_tag = conf[:tags][:common]
+$test_repoer_delay_time = conf[:repoer_delay_time].to_i
 
 class Jpush::Test < MiniTest::Test
 

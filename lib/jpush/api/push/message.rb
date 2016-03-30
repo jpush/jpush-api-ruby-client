@@ -6,21 +6,23 @@ module Jpush
       class Message
         extend Helper::ArgumentHelper
 
-        attr_reader :message
-
         def initialize(msg_content: , title: nil, content_type: nil, extras: nil)
-          check_argument({title: title, content_type: content_type }, extras)
+          check_argument({title: title, content_type: content_type}, extras)
           Message.ensure_argument_type('extras', extras, Hash) unless extras.nil?
-          @message = {
-            msg_content: msg_content,
-            title: title,
-            content_type: content_type,
-            extras: extras
-          }.reject{|key, value| value.nil?}
-          Message.ensure_argument_not_blank('message', @message)
+          @msg_content, @title, @content_type, @extras = msg_content, title, content_type, extras
         end
 
         def build
+          @message = {
+            msg_content: @msg_content,
+            title: @title,
+            content_type: @content_type,
+            extras: @extras
+          }.reject{|key, value| value.nil?}
+          self
+        end
+
+        def to_hash
           @message
         end
 
