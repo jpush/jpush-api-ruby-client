@@ -7,6 +7,7 @@ module Jpush
     module Push
       class PushPayload
         extend Helper::ArgumentHelper
+        using Utils::Helper::ObjectExtensions
 
         attr_reader :platform, :audience, :notification, :message, :sms_message, :options
 
@@ -46,7 +47,7 @@ module Jpush
             message: @message,
             sms_message: @sms_message,
             options: @options
-          }.reject{|key, value| value.nil?}
+          }.compact
           self
         end
 
@@ -89,7 +90,7 @@ module Jpush
               title: title,
               content_type: content_type,
               extras: extras
-            }.reject{|key, value| value.nil?}
+            }.compact
           end
 
           def build_sms_message(content, delay_time)

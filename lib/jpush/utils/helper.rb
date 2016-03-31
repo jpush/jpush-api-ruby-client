@@ -36,6 +36,12 @@ module Jpush
           end
         end
 
+        refine Hash do
+          def compact
+            self.select { |_, value| !value.nil? }
+          end
+        end
+
       end
     end
   end

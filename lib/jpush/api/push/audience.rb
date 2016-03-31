@@ -5,6 +5,7 @@ module Jpush
     module Push
       class Audience
         extend Helper::ArgumentHelper
+        using Utils::Helper::ObjectExtensions
 
         def set_tag(tags)
           @tag = Audience.build_tags(tags, 20)
@@ -32,7 +33,7 @@ module Jpush
             tag_and: @tag_and,
             alias: @alias,
             registration_id: @registration_id
-          }.reject{|key, value| value.nil?}
+          }.compact
           Audience.ensure_argument_not_blank('audience', @audience)
           self
         end

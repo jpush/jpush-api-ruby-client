@@ -6,6 +6,7 @@ module Jpush
     module Device
       extend self
       extend Helper::ArgumentHelper
+      using Utils::Helper::ObjectExtensions
 
       # GET /v3/devices/{registration_id}
       # 获取当前设备的所有属性
@@ -27,15 +28,14 @@ module Jpush
           else
             tags_add = build_tags(tags_add) unless tags_add.nil?
             tags_remove = build_tags(tags_remove) unless tags_remove.nil?
-            tags = { add: tags_add, remove: tags_remove }.reject{ |key, value| value.nil? }
+            tags = { add: tags_add, remove: tags_remove }.compact
             tags.empty? ? nil : tags
           end
         body = {
           tags: tags,
           alias: alis,
           mobile: mobile
-        }
-        body = body.reject { |key, value| value.nil? }
+        }.compact
 
         raise ArgumentError, 'Invalid Arguments' if body.empty?
 
@@ -92,6 +92,7 @@ module Jpush
     module Tag
       extend self
       extend Helper::ArgumentHelper
+      using Utils::Helper::ObjectExtensions
 
       # GET /v3/tags/
       # 获取当前应用的所有标签列表。
@@ -116,7 +117,7 @@ module Jpush
 
         devices_add = build_registration_ids(devices_add) unless devices_add.nil?
         devices_remove = build_registration_ids(devices_remove) unless devices_remove.nil?
-        registration_ids = { add: devices_add, remove: devices_remove }.reject{ |key, value| value.nil? }
+        registration_ids = { add: devices_add, remove: devices_remove }.compact
         ensure_argument_not_blank('registration ids', registration_ids)
 
         body = { registration_ids: registration_ids }

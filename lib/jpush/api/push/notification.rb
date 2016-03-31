@@ -5,6 +5,7 @@ module Jpush
     module Push
       class Notification
         extend Helper::ArgumentHelper
+        using Utils::Helper::ObjectExtensions
 
         MAX_IOS_NOTIFICATION_SIZE = 2000
 
@@ -27,7 +28,7 @@ module Jpush
             title: title,
             builder_id: builder_id,
             extras: extras
-          }.reject{|key, value| value.nil?}
+          }.compact
           self
         end
 
@@ -43,7 +44,7 @@ module Jpush
             'content-available': available,
             category: category,
             extras: extras
-          }.reject{|key, value| value.nil?}
+          }.compact
           Notification.ensure_hash_not_over_bytesize('ios', {'ios': @ios}, MAX_IOS_NOTIFICATION_SIZE)
           self
         end
@@ -53,7 +54,7 @@ module Jpush
             alert: @alert,
             android: @android,
             ios: @ios
-          }.reject{|key, value| value.nil?}
+          }.compact
           Notification.ensure_argument_not_blank('notification', @notification)
           self
         end
