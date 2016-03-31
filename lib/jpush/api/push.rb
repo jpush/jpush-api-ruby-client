@@ -24,7 +24,7 @@ module Jpush
       private
 
         def send_push(url, push_payload)
-          ensure_argument_type('push_payload', push_payload, PushPayload)
+          push_payload = push_payload.is_a?(PushPayload) ? push_payload : nil
           body = push_payload.to_hash
           Http::Client.post(url, body: body)
         end

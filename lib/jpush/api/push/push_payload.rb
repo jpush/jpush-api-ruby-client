@@ -69,14 +69,14 @@ module Jpush
 
           def build_audience(audience)
             PushPayload.ensure_argument_not_blank('audience', audience)
-            PushPayload.ensure_argument_type('audience', audience, Audience)
+            audience = audience.is_a?(Audience) ? audience : nil
             audience.to_hash
           end
 
           def build_notification(notification)
             PushPayload.ensure_argument_not_blank('notification', notification)
             return {alert: notification} if notification.is_a?(String)
-            PushPayload.ensure_argument_type('notification', notification, Notification)
+            notification = notification.is_a?(Notification) ? notification : nil
             notification.to_hash
           end
 
@@ -101,7 +101,6 @@ module Jpush
           end
 
           def build_options(opts)
-            PushPayload.ensure_argument_type('options', opts, Hash)
             opts.each_key do |key|
               raise ArgumentError, "Invalid options item: #{key.upcase}" unless VALID_OPTION_KEY.include?(key.to_sym)
             end

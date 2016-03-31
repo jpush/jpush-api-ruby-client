@@ -116,17 +116,6 @@ module Jpush
           assert_nil @klass.ensure_hash_not_over_bytesize('arg', hash, 30)
         end
 
-        def test_ensure_argument_type
-          assert_nil @klass.ensure_argument_type('arg', 1, Integer)
-          assert_nil @klass.ensure_argument_type('arg', 'jpush', String)
-          assert_nil @klass.ensure_argument_type('arg', :jpush, Symbol)
-          assert_nil @klass.ensure_argument_type('arg', ['jpush'], Array)
-          assert_nil @klass.ensure_argument_type('arg', {jpush: 'jpush'}, Hash)
-          assert_raises ArgumentError do
-            @klass.ensure_argument_type('arg', ['jpush'], String)
-          end
-        end
-
         def test_ensure_string_not_over_size
           assert_raises ArgumentError do
             @klass.ensure_string_not_over_size('arg', 'jpush', 4)

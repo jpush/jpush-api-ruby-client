@@ -78,11 +78,6 @@ module Jpush
           raise ArgumentError, errmsg.titleize if value > max_size
         end
 
-        def ensure_argument_type(obj_name, obj, type)
-          errmsg = "#{obj_name} is a #{obj.class} ( expect its type is".titleize + " #{type} )"
-          raise ArgumentError, errmsg unless obj.is_a? type
-        end
-
       end
     end
   end
