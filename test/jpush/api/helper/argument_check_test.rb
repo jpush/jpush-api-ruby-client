@@ -127,16 +127,14 @@ module Jpush
           end
         end
 
-        def test_ensure_string_can_convert_to_fixnum
-          assert_nil @klass.ensure_string_can_convert_to_fixnum('arg', '0')
-          assert_nil @klass.ensure_string_can_convert_to_fixnum('arg', '+1')
-          assert_nil @klass.ensure_string_can_convert_to_fixnum('arg', '+2')
-          assert_nil @klass.ensure_string_can_convert_to_fixnum('arg', '-1')
-          assert_nil @klass.ensure_string_can_convert_to_fixnum('arg', '-2')
+        def test_ensure_string_not_over_size
           assert_raises ArgumentError do
-            @klass.ensure_string_can_convert_to_fixnum('arg', 'jpush')
+            @klass.ensure_string_not_over_size('arg', 'jpush', 4)
           end
+          @klass.ensure_string_not_over_size('arg', 'jpush', 5)
+          @klass.ensure_string_not_over_size('arg', 'jpush', 6)
         end
+
 
       end
     end

@@ -9,13 +9,19 @@ module Jpush
         MAX_IOS_NOTIFICATION_SIZE = 2000
 
         def set_alert(alert)
-          Notification.ensure_argument_not_blank('alert', alert) unless '' == alert
+          Notification.ensure_argument_not_blank('alert', alert)
           @alert = alert
           self
         end
 
+        def set_not_alert
+          @alert = ''
+          self
+        end
+
         def set_android(alert: , title: nil, builder_id: nil, extras: nil)
-          check_argument(alert, {title: title, builder_id: builder_id}, extras)
+          extras = nil if extras.nil? || !extras.is_a?(Hash) || extras.empty?
+          check_argument(alert, {title: title, builder_id: builder_id})
           @android = {
             alert: alert,
             title: title,
@@ -26,9 +32,10 @@ module Jpush
         end
 
         def set_ios(alert: , sound: nil, badge: nil, available: nil, category:nil, extras: nil)
-          check_argument(alert, {sound: sound, badge: badge, category: category}, extras)
-          Notification.ensure_string_can_convert_to_fixnum('badge', badge) unless badge.nil?
-          Notification.ensure_argument_type('available', available, TrueClass) unless available.nil?
+          extras = nil if extras.nil? || !extras.is_a?(Hash) || extras.empty?
+          check_argument(alert, {sound: sound, badge: badge, category: category})
+          badge = 0 == badge.to_i ? '0' : badge unless badge.nil?
+          available = nil unless available.is_a? TrueClass
           @ios = {
             alert: alert,
             sound: sound,
@@ -57,14 +64,10 @@ module Jpush
 
         private
 
-          def check_argument(alert, args, extras = nil)
+          def check_argument(alert, args)
             Notification.ensure_argument_not_blank('alert', alert) unless '' == alert
             args.each do |key, value|
               Notification.ensure_argument_not_blank(key, value) unless value.nil?
-            end
-            unless extras.nil?
-              Notification.ensure_argument_not_blank('extras', extras)
-              Notification.ensure_argument_type('extras', extras, Hash)
             end
           end
 

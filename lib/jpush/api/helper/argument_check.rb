@@ -8,8 +8,8 @@ module Jpush
 
         MOBILE_RE = /^(1[34578])(\d{9})$/
 
-        ALIAS_BYTESIZE = 40
-        TAG_BYTESIZE = 40
+        MAX_ALIAS_BYTESIZE = 40
+        MAX_TAG_BYTESIZE = 40
 
         def check_registration_id(registration_id)
           ensure_argument_not_blank('registration id', registration_id)
@@ -21,12 +21,12 @@ module Jpush
 
         def check_alias(alis)
           ensure_word_valid('alias', alis)
-          ensure_string_not_over_bytesize('alias', alis, ALIAS_BYTESIZE)
+          ensure_string_not_over_bytesize('alias', alis, MAX_ALIAS_BYTESIZE)
         end
 
         def check_tag(tag)
           ensure_word_valid('tag', tag)
-          ensure_string_not_over_bytesize('tag', tag, TAG_BYTESIZE)
+          ensure_string_not_over_bytesize('tag', tag, MAX_TAG_BYTESIZE)
         end
 
         def ensure_argument_not_blank(arg_name, arg_value)
@@ -37,9 +37,9 @@ module Jpush
           raise ArgumentError, "#{arg_name} can not be nil".titleize if arg_value.nil?
         end
 
-        def ensure_array_valid(array_name, array, limit)
-          errmsg= "invalid #{array_name} ( expect its size less than #{limit} )"
-          raise ArgumentError, errmsg.titleize if array.size > limit
+        def ensure_array_valid(array_name, array, max_size)
+          errmsg= "#{array_name} must have at most #{max_size} elements )"
+          raise ArgumentError, errmsg.titleize if array.size > max_size
           array.each{|word| ensure_word_valid(array_name, word)}
           nil
         end
@@ -49,33 +49,38 @@ module Jpush
           raise ArgumentError, errmsg.titleize unless word.valid_word?
         end
 
-        def ensure_string_not_over_bytesize(str_name, str, limit)
-          ensure_not_over_bytesize(str_name, str.bytesize, limit)
+        def ensure_string_not_over_bytesize(str_name, str, max_bytesize)
+          ensure_not_over_bytesize(str_name, str.bytesize, max_bytesize)
         end
 
-        def ensure_array_not_over_bytesize(array_name, array, limit)
+        def ensure_array_not_over_bytesize(array_name, array, max_bytesize)
           array_bytesize = array.inject(0){|r, e| r += e.bytesize}
-          ensure_not_over_bytesize(array_name, array_bytesize, limit)
+          ensure_not_over_bytesize(array_name, array_bytesize, max_bytesize)
         end
 
-        def ensure_hash_not_over_bytesize(hash_name, hash, limit)
+        def ensure_hash_not_over_bytesize(hash_name, hash, max_bytesize)
           hash_bytesize = hash.to_json.bytesize
-          ensure_not_over_bytesize(hash_name, hash_bytesize, limit)
+          ensure_not_over_bytesize(hash_name, hash_bytesize, max_bytesize)
         end
 
-        def ensure_not_over_bytesize(arg_name, bytesize, limit)
-          errmsg = "invalid #{arg_name} ( expect its bytesize less than #{limit} byte )"
-          raise ArgumentError, errmsg.titleize if bytesize > limit
+        def ensure_not_over_bytesize(arg_name, bytesize, max_bytesize)
+          errmsg = "#{arg_name} must have at most #{max_bytesize} byte"
+          raise ArgumentError, errmsg.titleize if bytesize > max_bytesize
+        end
+
+        def ensure_string_not_over_size(str_name, str, max_size)
+          errmsg = "#{str_name} must have at most #{max_size} characters"
+          raise ArgumentError, errmsg.titleize if str.size > max_size
+        end
+
+        def ensure_integer_not_over_size(name, value, max_size)
+          errmsg = "#{name} must be less than or equal #{max_size}"
+          raise ArgumentError, errmsg.titleize if value > max_size
         end
 
         def ensure_argument_type(obj_name, obj, type)
           errmsg = "#{obj_name} is a #{obj.class} ( expect its type is".titleize + " #{type} )"
           raise ArgumentError, errmsg unless obj.is_a? type
-        end
-
-        def ensure_string_can_convert_to_fixnum(name, str)
-          errmsg = "invalid #{name}: #{str} ( expect it can be convert to Fixnum )"
-          raise ArgumentError, errmsg.titleize if '0' != str && 0 == str.to_i
         end
 
       end

@@ -16,11 +16,6 @@ module Jpush
         end
 
         def test_set_alert
-          result = @notification.set_alert('').build.to_hash
-          assert_equal 1, result.size
-          assert_true result.has_key?(:alert)
-          assert_true result[:alert].include?('')
-
           result = @notification.set_alert('jpush').build.to_hash
           assert_equal 1, result.size
           assert_true result.has_key?(:alert)

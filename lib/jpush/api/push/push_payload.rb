@@ -1,7 +1,6 @@
 require 'jpush/api/helper/argument_helper'
 require 'jpush/api/push/audience'
 require 'jpush/api/push/notification'
-require 'jpush/api/push/message'
 
 module Jpush
   module Api
@@ -9,19 +8,27 @@ module Jpush
       class PushPayload
         extend Helper::ArgumentHelper
 
-        attr_reader :platform, :audience, :notification, :message
+        attr_reader :platform, :audience, :notification, :message, :sms_message, :options
 
         VALID_PLATFORM = ['android', 'ios']
+        VALID_OPTION_KEY = [:sendno, :time_to_live, :override_msg_id, :apns_production, :big_push_duration]
+        MAX_SMS_CONTENT_SIZE = 480
+        MAX_SMS_DELAY_TIME = 86400    # 24 * 60 * 60 (second)
 
         def initialize(platform: , audience: , notification: nil, message: nil)
-          @platform = build_platform(platform)
-          @audience = build_audience(audience)
+          @platform = 'all' == platform ? VALID_PLATFORM : build_platform(platform)
+          @audience = 'all' == audience ? 'all' : build_audience(audience)
           @notification = build_notification(notification) unless notification.nil?
           @message = build_message(message) unless message.nil?
         end
 
-        def add_sms_message(msg)
-          @sms_message = build_sms_message(msg)
+        def set_message(msg_content, title: nil, content_type: nil, extras: nil)
+          @message = build_message(msg_content, title, content_type, extras)
+          self
+        end
+
+        def add_sms_message(content, delay_time = 0)
+          @sms_message = build_sms_message(content, delay_time)
           self
         end
 
@@ -33,13 +40,13 @@ module Jpush
         def build
           ensure_content_available
           @push_payload =  {
-              platform: @platform,
-              audience: @audience,
-              notification: @notification,
-              message: @message,
-              sms_message: @sms_message,
-              options: @options
-            }.reject{|key, value| value.nil?}
+            platform: @platform,
+            audience: @audience,
+            notification: @notification,
+            message: @message,
+            sms_message: @sms_message,
+            options: @options
+          }.reject{|key, value| value.nil?}
           self
         end
 
@@ -51,7 +58,6 @@ module Jpush
 
           def build_platform(platform)
             PushPayload.ensure_argument_not_blank('platform', platform)
-            return VALID_PLATFORM if 'all' == platform
 
             platform = [platform].flatten
             platform.each do |pf|
@@ -62,7 +68,6 @@ module Jpush
 
           def build_audience(audience)
             PushPayload.ensure_argument_not_blank('audience', audience)
-            return 'all' if 'all' == audience.downcase
             PushPayload.ensure_argument_type('audience', audience, Audience)
             audience.to_hash
           end
@@ -74,18 +79,31 @@ module Jpush
             notification.to_hash
           end
 
-          def build_message(message)
-            PushPayload.ensure_argument_not_blank('message', message)
-            msg = Message.new(msg_content: message).build
-            return msg.to_hash if message.is_a?(String)
-            PushPayload.ensure_argument_type('message', message, Message)
-            message.to_hash
+          def build_message(msg_content, title = nil, content_type = nil, extras = nil)
+            PushPayload.ensure_argument_not_blank('msg_content', msg_content)
+            PushPayload.ensure_argument_not_blank('title', title) unless title.nil?
+            PushPayload.ensure_argument_not_blank('content_type', content_type) unless content_type.nil?
+            extras = nil if extras.nil? || !extras.is_a?(Hash) || extras.empty?
+            message = {
+              msg_content: msg_content,
+              title: title,
+              content_type: content_type,
+              extras: extras
+            }.reject{|key, value| value.nil?}
           end
 
-          def build_sms_message(msg)
+          def build_sms_message(content, delay_time)
+            PushPayload.ensure_argument_not_blank('content', content)
+            PushPayload.ensure_string_not_over_size('content', content, MAX_SMS_CONTENT_SIZE)
+            PushPayload.ensure_integer_not_over_size('delay_time', delay_time, MAX_SMS_DELAY_TIME)
+            {content: content, delay_time: delay_time}
           end
 
           def build_options(opts)
+            PushPayload.ensure_argument_type('options', opts, Hash)
+            opts.each_key do |key|
+              raise ArgumentError, "Invalid options item: #{key.upcase}" unless VALID_OPTION_KEY.include?(key.to_sym)
+            end
           end
 
           def ensure_content_available
