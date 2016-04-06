@@ -22,8 +22,12 @@ module Jpush
           Utils::Http.new(method.to_sym, url, params: params, body: body).
           basic_auth(jpush_basic_auth[:user], jpush_basic_auth[:pass]).
           send_request
-        bool_error = !(raw_response.kind_of? Net::HTTPSuccess)
-        Response.new(raw_response.code, raw_response.body, bool_error)
+
+        if raw_response.kind_of? Net::HTTPSuccess
+          Response.new(raw_response.code, raw_response.body)
+        else
+          raise Utils::Exceptions::JpushResponseError.new(raw_response)
+        end
       end
 
       private

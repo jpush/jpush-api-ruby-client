@@ -49,6 +49,28 @@ module Jpush
         end
       end
 
+      class JpushResponseError < JpushError
+        attr_reader :http_code, :error_code, :error_message
+
+        def initialize(response)
+          @http_code = response.code
+          body = JSON.parse(response.body)
+          @error_code, @error_message =
+            if body.has_key?('error')
+              [body['error']['code'], body['error']['message']]
+            else
+              [body['code'], body['message']]
+            end
+          @error_message = "UnknownError[#{@http_code}]." if @error_message.blank?
+          super("Request Failed: #{@error_message}")
+        end
+
+        def to_s
+          "#{@message}. error code: #{@error_code}, http status code: #{@http_code}"
+        end
+
+      end
+
     end
   end
 end

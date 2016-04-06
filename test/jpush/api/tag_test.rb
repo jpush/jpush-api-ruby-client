@@ -19,9 +19,9 @@ module Jpush
       end
 
       def test_tag_has_device_with_invalid_argument
-        response = @tags.has_device?($test_common_tag, 'INVALID_REGISTRATION_ID')
-        assert_equal 400, response.http_code
-        assert_equal 7002, response.error[:code]
+        assert_raises Utils::Exceptions::JpushResponseError do
+          @tags.has_device?($test_common_tag, 'INVALID_REGISTRATION_ID')
+        end
 
         response = @tags.has_device?('INVALID_TAG', $test_common_registration_id)
         assert_equal 200, response.http_code
@@ -99,13 +99,12 @@ module Jpush
       end
 
       def test_update_with_invalid_registration_id
-        response = @tags.add_devices($test_common_tag, 'INVALID_REGISTRATION_ID')
-        assert_equal 400, response.http_code
-        assert_equal 7002, response.error[:code]
-
-        response = @tags.remove_devices($test_common_tag, 'INVALID_REGISTRATION_ID')
-        assert_equal 400, response.http_code
-        assert_equal 7002, response.error[:code]
+        assert_raises Utils::Exceptions::JpushResponseError do
+          @tags.add_devices($test_common_tag, 'INVALID_REGISTRATION_ID')
+        end
+        assert_raises Utils::Exceptions::JpushResponseError do
+          @tags.remove_devices($test_common_tag, 'INVALID_REGISTRATION_ID')
+        end
       end
 
       def test_delete_tag_with_invalid_tag_value
