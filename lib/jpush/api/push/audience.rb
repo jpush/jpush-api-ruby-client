@@ -34,7 +34,7 @@ module Jpush
             alias: @alias,
             registration_id: @registration_id
           }.compact
-          Audience.ensure_argument_not_blank('audience', @audience)
+          raise Utils::Exceptions::JpushError, 'Audience can not be empty.' if @audience.empty?
           self
         end
 

@@ -10,7 +10,7 @@ module Jpush
         end
 
         def test_new_notification
-          assert_raises ArgumentError do
+          assert_raises Utils::Exceptions::JpushError do
             @notification.build
           end
         end

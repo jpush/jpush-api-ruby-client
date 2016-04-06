@@ -28,18 +28,20 @@ module Jpush
           self
         end
 
-        def add_sms_message(content, delay_time = 0)
+        def set_sms_message(content, delay_time = 0)
           @sms_message = build_sms_message(content, delay_time)
           self
         end
 
-        def add_options(opts)
+        def set_options(opts)
           @options = build_options(opts)
           self
         end
 
         def build
-          ensure_content_available
+          raise Utils::Exceptions::MissingArgumentError.new(['audience']) unless @audience
+          err_msg = 'missing notification or message'
+          raise Utils::Exceptions::JpushError, err_msg unless @notification || @message
           @push_payload =  {
             platform: @platform,
             audience: @audience,
@@ -58,33 +60,24 @@ module Jpush
         private
 
           def build_platform(platform)
-            PushPayload.ensure_argument_not_blank('platform', platform)
-
-            platform = [platform].flatten
-            platform.each do |pf|
-              raise ArgumentError, "Invalid Platform #{pf.upcase}" unless VALID_PLATFORM.include?(pf)
+            [platform].flatten.each do |pf|
+              raise Utils::Exceptions::InvalidElementError.new('platform', pf, VALID_OPTION_KEY) unless VALID_PLATFORM.include?(pf)
             end
-            platform
           end
 
           def build_audience(audience)
-            PushPayload.ensure_argument_not_blank('audience', audience)
-            audience = audience.is_a?(Audience) ? audience : nil
-            audience.to_hash
+            audience.is_a?(Audience) ? audience.to_hash : nil
           end
 
           def build_notification(notification)
-            PushPayload.ensure_argument_not_blank('notification', notification)
             return {alert: notification} if notification.is_a?(String)
-            notification = notification.is_a?(Notification) ? notification : nil
-            notification.to_hash
+            notification.is_a?(Notification) ? notification.to_hash : nil
           end
 
           def build_message(msg_content, title = nil, content_type = nil, extras = nil)
-            PushPayload.ensure_argument_not_blank('msg_content', msg_content)
-            PushPayload.ensure_argument_not_blank('title', title) unless title.nil?
-            PushPayload.ensure_argument_not_blank('content_type', content_type) unless content_type.nil?
-            extras = nil if extras.nil? || !extras.is_a?(Hash) || extras.empty?
+            hash = {'msg_content': msg_content, 'title': title, 'content_type': content_type}.select{|key, value| !value.nil?}
+            PushPayload.ensure_argument_not_blank(hash)
+            extras = PushPayload.build_extras(extras)
             message = {
               msg_content: msg_content,
               title: title,
@@ -94,20 +87,16 @@ module Jpush
           end
 
           def build_sms_message(content, delay_time)
-            PushPayload.ensure_argument_not_blank('content', content)
-            PushPayload.ensure_string_not_over_size('content', content, MAX_SMS_CONTENT_SIZE)
-            PushPayload.ensure_integer_not_over_size('delay_time', delay_time, MAX_SMS_DELAY_TIME)
+            PushPayload.ensure_argument_not_blank('content': content)
+            PushPayload.ensure_not_over_size('content', content, MAX_SMS_CONTENT_SIZE)
+            delay_time = 0 if delay_time > MAX_SMS_DELAY_TIME
             {content: content, delay_time: delay_time}
           end
 
           def build_options(opts)
             opts.each_key do |key|
-              raise ArgumentError, "Invalid options item: #{key.upcase}" unless VALID_OPTION_KEY.include?(key.to_sym)
+              raise Utils::Exceptions::InvalidElementError.new('options', key.to_sym, VALID_OPTION_KEY) unless VALID_OPTION_KEY.include?(key.to_sym)
             end
-          end
-
-          def ensure_content_available
-            raise ArgumentError, 'No Notification OR Message Found' unless @notification || @message
           end
 
       end

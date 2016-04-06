@@ -10,16 +10,16 @@ module Jpush
         end
 
         def test_build_tags
-          assert_raises ArgumentError do
+          assert_raises Utils::Exceptions::InvalidArgumentError do
             @klass.build_tags('')
           end
-          assert_raises ArgumentError do
+          assert_raises Utils::Exceptions::InvalidArgumentError do
             @klass.build_tags(' ')
           end
-          assert_raises ArgumentError do
+          assert_raises Utils::Exceptions::InvalidArgumentError do
             @klass.build_tags([])
           end
-          assert_raises ArgumentError do
+          assert_raises Utils::Exceptions::InvalidArgumentError do
             @klass.build_tags(['', ' ', '   ', [], [''], [' '], nil])
           end
 
@@ -35,7 +35,7 @@ module Jpush
           assert_instance_of(Array, tags)
           assert_equal 1, tags.length
 
-          assert_raises ArgumentError do
+          assert_raises Utils::Exceptions::OverLimitError do
             @klass.build_tags(['tag1', 'tag2', 'tag3'], 2)
           end
 

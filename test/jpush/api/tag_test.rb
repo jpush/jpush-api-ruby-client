@@ -40,7 +40,7 @@ module Jpush
       end
 
       def test_update
-        assert_raises ArgumentError do
+        assert_raises Utils::Exceptions::JpushError do
           @tags.update($test_common_tag)
         end
       end
@@ -68,13 +68,13 @@ module Jpush
         body = @tags.has_device?(invalid_tag, $test_common_registration_id).body
         assert_false body['result']
 
-        body = @tags.list.body
+        body = tags_list_body
         before_tag_len = body['tags'].length
 
         response = @tags.add_devices(invalid_tag, $test_common_registration_id)
         assert_equal 200, response.http_code
 
-        body = @tags.list.body
+        body = tags_list_body
         after_tag_len = body['tags'].length
 
         body = @tags.has_device?(invalid_tag, $test_common_registration_id).body
@@ -83,7 +83,7 @@ module Jpush
 
         @tags.delete(invalid_tag)
 
-        body = @tags.list.body
+        body = tags_list_body
         final_tag_len = body['tags'].length
         assert_equal before_tag_len, final_tag_len
 
@@ -93,7 +93,7 @@ module Jpush
         body = @tags.has_device?(invalid_tag, $test_common_registration_id).body
         assert_false body['result']
 
-        body = @tags.list.body
+        body = tags_list_body
         after_tag_len = body['tags'].length
         assert_equal after_tag_len, before_tag_len
       end
@@ -109,40 +109,46 @@ module Jpush
       end
 
       def test_delete_tag_with_invalid_tag_value
-        body = @tags.list.body
+        body = tags_list_body
         before_tag_len = body['tags'].length
 
         response = @tags.delete('INVALID_TAG')
         assert_equal 200, response.http_code
 
-        body = @tags.list.body
+        body = tags_list_body
         after_tag_len = body['tags'].length
 
         assert_equal before_tag_len, after_tag_len
       end
 
       def test_delete_tag
-        body = @tags.list.body
+        body = tags_list_body
         before_tag_len = body['tags'].length
         assert_true body['tags'].include?($test_common_tag)
 
         response = @tags.delete($test_common_tag)
         assert_equal 200, response.http_code
 
-        body = @tags.list.body
+        body = tags_list_body
         after_tag_len = body['tags'].length
         assert_false body['tags'].include?($test_common_tag)
         assert_equal 1, before_tag_len  - after_tag_len
 
         @tags.add_devices($test_common_tag, $test_common_registration_id)
 
-        body = @tags.list.body
+        body = tags_list_body
         final_tag_len = body['tags'].length
         assert_true body['tags'].include?($test_common_tag)
         assert_equal before_tag_len, final_tag_len
 
         body = @tags.has_device?($test_common_tag, $test_common_registration_id).body
         assert_true body['result']
+      end
+
+      private
+
+      def tags_list_body
+        @tags.list.body
       end
 
     end

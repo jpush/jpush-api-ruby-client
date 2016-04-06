@@ -13,9 +13,8 @@ module Jpush
 
       def initialize(method, url, params: nil, body: nil, headers: nil)
         method = method.downcase.to_sym
-        unless HTTP_VERB_MAP.keys.include?(method)
-          raise ArgumentError, "Http Method #{method.upcase} Is Not Supported"
-        end
+        err_msg = "http method #{method} is not supported"
+        raise Utils::Exceptions::JpushError, err_msg unless HTTP_VERB_MAP.keys.include?(method)
         @uri = URI(url)
         @uri.query = URI.encode_www_form(params) unless params.nil?
         @request = prepare_request(method, body)

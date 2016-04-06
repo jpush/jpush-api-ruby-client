@@ -21,7 +21,7 @@ module Jpush
       def update(registration_id, tags_add: nil, tags_remove: nil, clear_tags: false, alis: nil, mobile: nil)
         check_registration_id(registration_id)
         check_mobile(mobile) unless mobile.nil?
-        check_alias(alis) unless (alis.nil? || '' == alis)
+        check_alias(alis) unless alis.nil?
         tags =
           if clear_tags
             ''
@@ -37,7 +37,7 @@ module Jpush
           mobile: mobile
         }.compact
 
-        raise ArgumentError, 'Invalid Arguments' if body.empty?
+        raise Utils::Exceptions::JpushError, 'Devices update body can not be empty' if body.empty?
 
         url = base_url + registration_id
         Http::Client.post(url, body: body)
@@ -45,12 +45,10 @@ module Jpush
 
       # 下面两个方法接受一个参数,其类型为数组或字符串
       def add_tags(registration_id, tags)
-        ensure_argument_not_nil('tags', tags)
         update(registration_id, tags_add: tags)
       end
 
       def remove_tags(registration_id, tags)
-        ensure_argument_not_nil('tags', tags)
         update(registration_id, tags_remove: tags)
       end
 
@@ -59,7 +57,6 @@ module Jpush
       end
 
       def update_alias(registration_id, alis)
-        ensure_argument_not_nil('alias', alis)
         update(registration_id, alis: alis)
       end
 
@@ -118,7 +115,8 @@ module Jpush
         devices_add = build_registration_ids(devices_add) unless devices_add.nil?
         devices_remove = build_registration_ids(devices_remove) unless devices_remove.nil?
         registration_ids = { add: devices_add, remove: devices_remove }.compact
-        ensure_argument_not_blank('registration ids', registration_ids)
+
+        raise Utils::Exceptions::JpushError, 'Tags update body can not be empty.' if registration_ids.empty?
 
         body = { registration_ids: registration_ids }
         url = base_url + tag_value
@@ -127,12 +125,10 @@ module Jpush
 
       # 下面两个方法接受一个参数,其类型为数组或字符串
       def add_devices(tag_value, registration_ids)
-        ensure_argument_not_nil('registration ids', registration_ids)
         update(tag_value, devices_add: registration_ids)
       end
 
       def remove_devices(tag_value, registration_ids)
-        ensure_argument_not_nil('registration ids', registration_ids)
         update(tag_value, devices_remove: registration_ids)
       end
 
@@ -155,7 +151,7 @@ module Jpush
 
     module Alias
       extend self
-      extend Helper::ArgumentCheck
+      extend Helper::ArgumentHelper
 
       # GET /v3/aliases/{alias_value}
       # 获取指定alias下的设备，最多输出10个

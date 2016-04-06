@@ -1,11 +1,11 @@
-require 'jpush/api/helper/argument_check'
+require 'jpush/api/helper/argument'
 require 'jpush/utils/helper'
 
 module Jpush
   module Api
     module Helper
       module ArgumentHelper
-        extend ArgumentCheck
+        extend Argument
         using Utils::Helper::ObjectExtensions
 
         MAX_TAG_ARRAY_SZIE = 100
@@ -15,12 +15,12 @@ module Jpush
         MAX_MSG_IDS_ARRAY_SIZE = 100
 
         def self.extended(base)
-          base.extend ArgumentCheck
+          base.extend Argument
         end
 
         def build_tags(tags, max_size = MAX_TAG_ARRAY_SZIE)
           tags = build_args_from_array_or_string('tags', tags, max_size)
-          ensure_array_not_over_bytesize('tags', tags, MAX_TAG_ARRAY_MAX_BYTESIZE)
+          ensure_not_over_bytesize('tags', tags, MAX_TAG_ARRAY_MAX_BYTESIZE)
           tags
         end
 
@@ -36,14 +36,19 @@ module Jpush
           build_args_from_array_or_string('msg ids', msg_ids, MAX_MSG_IDS_ARRAY_SIZE)
         end
 
+        def build_extras(extras)
+          (extras.nil? || !extras.is_a?(Hash) || extras.empty?) ? nil : extras
+        end
+
+
         private
 
           def build_args_from_array_or_string(args_name, args_value, max_size)
             # remove blank elements in args array
             args = [args_value].flatten.compact.reject{ |arg| arg.blank? }.uniq
-            ensure_argument_not_blank(args_name, args)
-            ensure_array_valid(args_name, args, max_size)
-            args
+            ensure_argument_not_blank(args_name.to_sym => args)
+            ensure_not_over_size(args_name, args, max_size)
+            args.each{|word| ensure_word_valid(args_name, word)}
           end
 
       end

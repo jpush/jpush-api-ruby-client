@@ -10,7 +10,7 @@ module Jpush
         MAX_IOS_NOTIFICATION_SIZE = 2000
 
         def set_alert(alert)
-          Notification.ensure_argument_not_blank('alert', alert)
+          Notification.ensure_argument_not_blank('alert': alert)
           @alert = alert
           self
         end
@@ -21,8 +21,8 @@ module Jpush
         end
 
         def set_android(alert: , title: nil, builder_id: nil, extras: nil)
-          extras = nil if extras.nil? || !extras.is_a?(Hash) || extras.empty?
-          check_argument(alert, {title: title, builder_id: builder_id})
+          extras = Notification.build_extras(extras)
+          check_argument(alert: alert, title: title, builder_id: builder_id)
           @android = {
             alert: alert,
             title: title,
@@ -33,10 +33,10 @@ module Jpush
         end
 
         def set_ios(alert: , sound: nil, badge: nil, available: nil, category:nil, extras: nil)
-          extras = nil if extras.nil? || !extras.is_a?(Hash) || extras.empty?
-          check_argument(alert, {sound: sound, badge: badge, category: category})
+          extras = Notification.build_extras(extras)
           badge = 0 == badge.to_i ? '0' : badge unless badge.nil?
           available = nil unless available.is_a? TrueClass
+          check_argument(alert: alert, sound: sound, badge: badge, category: category)
           @ios = {
             alert: alert,
             sound: sound,
@@ -45,7 +45,7 @@ module Jpush
             category: category,
             extras: extras
           }.compact
-          Notification.ensure_hash_not_over_bytesize('ios', {'ios': @ios}, MAX_IOS_NOTIFICATION_SIZE)
+          Notification.ensure_not_over_bytesize('ios', {'ios': @ios}, MAX_IOS_NOTIFICATION_SIZE)
           self
         end
 
@@ -55,7 +55,7 @@ module Jpush
             android: @android,
             ios: @ios
           }.compact
-          Notification.ensure_argument_not_blank('notification', @notification)
+          raise Utils::Exceptions::JpushError, 'Notification can not be empty.' if @notification.empty?
           self
         end
 
@@ -65,11 +65,10 @@ module Jpush
 
         private
 
-          def check_argument(alert, args)
-            Notification.ensure_argument_not_blank('alert', alert) unless '' == alert
-            args.each do |key, value|
-              Notification.ensure_argument_not_blank(key, value) unless value.nil?
-            end
+          def check_argument(args)
+            hash = args.select{|key, value| !value.nil?}
+            hash.delete(:alert) if '' == hash[:alert]
+            Notification.ensure_argument_not_blank(hash)
           end
 
       end
