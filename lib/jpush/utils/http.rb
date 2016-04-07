@@ -17,7 +17,7 @@ module Jpush
         raise Utils::Exceptions::JpushError, err_msg unless HTTP_VERB_MAP.keys.include?(method)
         @uri = URI(url)
         @uri.query = URI.encode_www_form(params) unless params.nil?
-        @request = prepare_request(method, body)
+        @request = prepare_request(method, body, headers)
       end
 
       def send_request
@@ -33,8 +33,9 @@ module Jpush
 
       private
 
-        def prepare_request(method, body)
+        def prepare_request(method, body, headers)
           request = HTTP_VERB_MAP[method].new @uri
+          request.initialize_http_header(headers)
           request.body = body.to_json unless body.nil?
           request
         end

@@ -5,21 +5,22 @@ module Jpush
     module Client
       extend self
 
-      def get(url, params: nil)
-        send_request(:get, url, params: params)
+      def get(url, params: nil, headers: {})
+        send_request(:get, url, params: params, headers: headers)
       end
 
-      def post(url, body:)
-        send_request(:post, url, body: body)
+      def post(url, body: , headers: {})
+        send_request(:post, url, body: body, headers: headers)
       end
 
-      def delete(url, params: nil)
-        send_request(:delete, url, params: params)
+      def delete(url, params: nil, headers: {})
+        send_request(:delete, url, params: params, headers: headers)
       end
 
-      def send_request(method, url, params: nil, body: nil)
+      def send_request(method, url, params: nil, body: nil, headers: {})
+        headers = jpush_headers.merge(headers)
         raw_response =
-          Utils::Http.new(method.to_sym, url, params: params, body: body).
+          Utils::Http.new(method.to_sym, url, params: params, body: body, headers: headers).
           basic_auth(jpush_basic_auth[:user], jpush_basic_auth[:pass]).
           send_request
 
@@ -41,7 +42,10 @@ module Jpush
 
         def jpush_headers
           {
-            accept: 'application/json'
+            'user-agent' => 'jpush-ruby-sdk-client/' + Jpush::VERSION,
+            'accept' => 'application/json',
+            'content-type' => 'application/json',
+            'connection' => 'close'
           }
         end
 
