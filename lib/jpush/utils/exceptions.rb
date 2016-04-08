@@ -71,6 +71,12 @@ module Jpush
 
       end
 
+      class TimeOutError < JpushError
+        def initialize(error)
+          super("#{error.class} was raised, please rescue it")
+        end
+      end
+
     end
   end
 end
