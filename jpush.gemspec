@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["JPush Offical"]
   spec.email         = ["support@jpush.cn"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{JPush's officially supported Ruby client library for accessing JPush APIs.}
+  spec.description   = %q{JPush's officially supported Ruby client library for accessing JPush APIs. 极光推送官方支持的 Ruby 版本服务器端 SDK. http://docs.jpush.io/server/server_overview/}
+  spec.homepage      = "https://github.com/jpush/jpush-api-ruby-client"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
