@@ -8,7 +8,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git', branch: 'dev'
+gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
 ```
 
 ## Usage
