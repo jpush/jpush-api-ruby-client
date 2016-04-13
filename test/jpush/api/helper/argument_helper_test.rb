@@ -43,6 +43,14 @@ module Jpush
           assert_instance_of(Array, tags)
         end
 
+        def test_build_platform
+          @klass.build_platform('android')
+          @klass.build_platform(['android', 'ios'])
+          assert_raises  Utils::Exceptions::InvalidElementError do
+            @klass.build_platform('wp')
+          end
+        end
+
       end
     end
   end

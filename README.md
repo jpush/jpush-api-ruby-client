@@ -86,22 +86,22 @@ tags.remove_devices(tag_value, registration_ids)
 ###### 删除标签 (与设备的绑定关系)
 
 ```ruby
-# 删除一个标签，以及标签与设备之间的关联关系。
-tags.delete(tag_value)
+# 删除一个标签，以及标签与设备之间的关联关系, platform 可选参数，不填则默认为所有平台
+tags.delete(tag_value, platform)
 ```
 
 ###### 查询别名 (与设备的绑定关系)
 
 ```ruby
-# 获取指定别名下的设备，最多输出10个
-aliases.show(alias_value)
+# 获取指定别名下的设备，最多输出10个, platform 可选参数，不填则默认为所有平台
+aliases.show(alias_value, platform)
 ```
 
 ###### 删除别名 (与设备的绑定关系)
 
 ```ruby
-# 删除一个别名，以及该别名与设备的绑定关系
-aliases.delete(alias_value)
+# 删除一个别名，以及该别名与设备的绑定关系, platform 可选参数，不填则默认为所有平台
+aliases.delete(alias_value, platform)
 ```
 
 #### Push API

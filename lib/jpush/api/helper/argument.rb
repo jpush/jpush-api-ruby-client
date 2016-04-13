@@ -31,6 +31,11 @@ module Jpush
           ensure_not_over_bytesize('tag', tag, MAX_TAG_BYTESIZE)
         end
 
+        def check_platform(platform)
+          valid_platform = Jpush::Config.settings[:valid_platform]
+          raise Utils::Exceptions::InvalidElementError.new('platform', platform, valid_platform) unless valid_platform.include?(platform)
+        end
+
         def ensure_argument_not_blank(args)
           invalid_args = args.select{|key, value| value.blank?}
           raise Utils::Exceptions::InvalidArgumentError.new(invalid_args.keys) unless invalid_args.empty?

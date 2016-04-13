@@ -11,13 +11,12 @@ module Jpush
 
         attr_reader :platform, :audience, :notification, :message, :sms_message, :options
 
-        VALID_PLATFORM = ['android', 'ios']
         VALID_OPTION_KEY = [:sendno, :time_to_live, :override_msg_id, :apns_production, :big_push_duration]
         MAX_SMS_CONTENT_SIZE = 480
         MAX_SMS_DELAY_TIME = 86400    # 24 * 60 * 60 (second)
 
         def initialize(platform: , audience: , notification: nil, message: nil)
-          @platform = 'all' == platform ? VALID_PLATFORM : build_platform(platform)
+          @platform = 'all' == platform ? Jpush::Config.settings[:valid_platform] : build_platform(platform)
           @audience = 'all' == audience ? 'all' : build_audience(audience)
           @notification = build_notification(notification) unless notification.nil?
           @message = build_message(message) unless message.nil?
@@ -60,9 +59,7 @@ module Jpush
         private
 
           def build_platform(platform)
-            [platform].flatten.each do |pf|
-              raise Utils::Exceptions::InvalidElementError.new('platform', pf, VALID_OPTION_KEY) unless VALID_PLATFORM.include?(pf)
-            end
+            PushPayload.build_platform(platform)
           end
 
           def build_audience(audience)

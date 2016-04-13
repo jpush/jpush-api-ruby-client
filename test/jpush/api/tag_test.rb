@@ -144,6 +144,16 @@ module Jpush
         assert_true body['result']
       end
 
+      def test_delete_tag_with_platform
+        response = @tags.delete($test_common_tag, 'android')
+        assert_equal 200, response.http_code
+        @tags.add_devices($test_common_tag, $test_common_registration_id)
+
+        response = @tags.delete($test_common_tag, ['android', 'ios'])
+        assert_equal 200, response.http_code
+        @tags.add_devices($test_common_tag, $test_common_registration_id)
+      end
+
       private
 
       def tags_list_body
