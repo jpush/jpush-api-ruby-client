@@ -9,7 +9,8 @@ module Jpush
       api_version: 'v3',
       push_api_host: 'https://api.jpush.cn/',
       device_api_host: 'https://device.jpush.cn/',
-      report_api_host: 'https://report.jpush.cn/'
+      report_api_host: 'https://report.jpush.cn/',
+      valid_platform: ['android', 'ios']
     }
 
     attr_reader :settings

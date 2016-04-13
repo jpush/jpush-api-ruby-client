@@ -2,6 +2,7 @@ app_key: 'APP_KEY'
 master_secret: 'MASTER_SECRET'
 registration_ids:
   common: 'COMMON_ID'
+  common2: 'COMMON_ID2'
   android: 'ANDROID_ID'
   ios: 'IOS_ID'
 tags:

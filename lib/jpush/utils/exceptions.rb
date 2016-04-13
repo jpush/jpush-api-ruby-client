@@ -39,7 +39,7 @@ module Jpush
 
       class InvalidElementError < JpushError
         def initialize(name, invalid_element, list)
-          super("invalid #{name}: #{invalid_element} ( #{name} only support #{list * (', ')}")
+          super("invalid #{name}: #{invalid_element} ( #{name} only support #{list * (', ')} )")
         end
       end
 

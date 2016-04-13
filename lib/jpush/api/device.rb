@@ -134,10 +134,11 @@ module Jpush
 
       # DELETE /v3/tags/{tag_value}
       # 删除一个标签，以及标签与设备之间的关联关系
-      def delete(tag_value)
+      def delete(tag_value, platform = nil)
         check_tag(tag_value)
+        params = platform.nil? ? nil : { platform: build_platform(platform) }
         url = base_url + tag_value
-        Http::Client.delete(url)
+        Http::Client.delete(url, params: params)
       end
 
       private
@@ -155,18 +156,20 @@ module Jpush
 
       # GET /v3/aliases/{alias_value}
       # 获取指定alias下的设备，最多输出10个
-      def show(alias_value)
+      def show(alias_value, platform = nil)
         check_alias(alias_value)
+        params = platform.nil? ? nil : { platform: build_platform(platform) }
         url = base_url + alias_value
-        Http::Client.get(url)
+        Http::Client.get(url, params: params)
       end
 
       # DELETE /v3/aliases/{alias_value}
       # 删除一个别名，以及该别名与设备的绑定关系
-      def delete(alias_value)
+      def delete(alias_value, platform = nil)
         check_alias(alias_value)
+        params = platform.nil? ? nil : { platform: build_platform(platform) }
         url = base_url + alias_value
-        Http::Client.delete(url)
+        Http::Client.delete(url, params: params)
       end
 
       private
