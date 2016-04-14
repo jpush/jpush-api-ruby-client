@@ -1,10 +1,10 @@
-app_key: 'APP_KEY'
-master_secret: 'MASTER_SECRET'
+app_key: <%= ENV['app_key'] %>
+master_secret: <%= ENV['master_secret'] %>
 registration_ids:
-  common: 'COMMON_ID'
-  common2: 'COMMON_ID2'
-  android: 'ANDROID_ID'
-  ios: 'IOS_ID'
+  common: <%= ENV['rid_common'] %>
+  common2: <%= ENV['rid_common2'] %>
+  android: <%= ENV['rid_android'] %>
+  ios: <%= ENV['rid_ios'] %>
 tags:
-  common: 'COMMON_TAG'
-repoer_delay_time: '5'
+  common: <%= ENV['tags_common'] %>
+repoer_delay_time: <%= ENV['repoer_delay_time'] %>
