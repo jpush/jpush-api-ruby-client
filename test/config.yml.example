@@ -7,4 +7,4 @@ registration_ids:
   ios: <%= ENV['rid_ios'] %>
 tags:
   common: <%= ENV['tags_common'] %>
-repoer_delay_time: <%= ENV['repoer_delay_time'] %>
+report_delay_time: <%= ENV['report_delay_time'] %>
