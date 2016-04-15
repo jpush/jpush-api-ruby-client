@@ -239,7 +239,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 $ cp test/config.yml.example test/config.yml
 
 # 编辑 test/config.yml 文件，填入必须的变量值
-$ vi test/config.yml
+# OR 设置相应的环境变量
 
 # 运行全部测试用例
 $ bundle exec test
