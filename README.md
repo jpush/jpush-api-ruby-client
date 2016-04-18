@@ -2,6 +2,7 @@
 
 这是 JPush REST API 的 Ruby 版本封装开发包，是由极光推送官方提供的，一般支持最新的 API 功能。
 对应的 REST API 文档： http://docs.jpush.io/server/server_overview/
+支持 Ruby 版本 >= 2.2.0
 
 ## Installation
 
@@ -239,7 +240,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 $ cp test/config.yml.example test/config.yml
 
 # 编辑 test/config.yml 文件，填入必须的变量值
-$ vi test/config.yml
+# OR 设置相应的环境变量
 
 # 运行全部测试用例
 $ bundle exec test

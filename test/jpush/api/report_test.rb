@@ -14,6 +14,10 @@ module Jpush
       end
 
       def test_received
+        @reporter.received(@msg_id)
+        @reporter.received(@msg_id)
+        sleep $test_report_delay_time
+
         response = @reporter.received(@msg_id)
         assert_equal 200, response.http_code
 

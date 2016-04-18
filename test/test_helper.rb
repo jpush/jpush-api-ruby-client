@@ -3,13 +3,16 @@ require 'jpush'
 
 require 'minitest/autorun'
 require 'webmock/minitest'
-require 'yaml'
 
 using Jpush::Utils::Helper::ObjectExtensions
 
 conf =
   if File.exists? conf_file = File.expand_path('../config.yml', __FILE__)
-    YAML.load_file(conf_file).jpush_symbolize_keys!
+    require "yaml"
+    require "erb"
+    template = File.read(conf_file)
+    erb_result = ERB.new(template).result
+    YAML.load(erb_result).jpush_symbolize_keys!
   else
     raise 'No Conf File Found!!'
   end
@@ -23,7 +26,7 @@ $test_android_registration_id = conf[:registration_ids][:android]
 $test_ios_registration_id = conf[:registration_ids][:ios]
 
 $test_common_tag = conf[:tags][:common]
-$test_report_delay_time = conf[:repoer_delay_time].to_i
+$test_report_delay_time = conf[:report_delay_time].to_i
 
 class Jpush::Test < MiniTest::Test
 
