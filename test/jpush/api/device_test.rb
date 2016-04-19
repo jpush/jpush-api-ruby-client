@@ -168,8 +168,7 @@ module Jpush
       end
 
       def test_device_status
-        # TODO
-        # need vip appKey
+        @devices.status($test_common_registration_id)
       end
 
       private

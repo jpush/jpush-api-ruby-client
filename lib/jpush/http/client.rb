@@ -27,11 +27,7 @@ module Jpush
           opts: opts
         ).basic_auth.send_request
 
-        if raw_response.kind_of? Net::HTTPSuccess
-          Response.new(raw_response.code, raw_response.body)
-        else
-          raise Utils::Exceptions::JpushResponseError.new(raw_response)
-        end
+        Response.new(raw_response)
       end
 
     end
