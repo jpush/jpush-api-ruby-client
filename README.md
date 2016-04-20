@@ -60,6 +60,14 @@ devices.delete_alias(registration_id)
 devices.update_mobile(registration_id)
 ```
 
+###### 获取用户在线状态（VIP专属接口）
+
+```ruby
+# 参数 registration_ids 为一个表示有效的 registration_id 字符串
+# 或者一个最多包含1000个有效的 registration_id 字符串的数组
+device.status(registration_ids)
+```
+
 ###### 查询标签列表
 
 ```ruby
@@ -223,8 +231,43 @@ push_payload = Jpush::Api::Push::PushPayload.new(
 ```
 
 ###### 推送消息
+
 ```ruby
 pusher.push(push_payload)
+```
+
+#### Report API
+
+```ruby
+reporter = jpush.reporter
+```
+
+###### 送达统计
+
+```ruby
+# 参数 msg_ids 为一个表示有效的 msg_id 字符串或者一个最多包含100个有效的 msg_id 字符串的数组
+reporter.received(msg_ids)
+```
+
+###### 消息统计（VIP专属接口）
+
+```ruby
+# 与”送达统计” API 不同的是，该 API 提供更多的的统计数据
+# 参数 msg_ids 为一个表示有效的 msg_id 字符串或者一个最多包含100个有效的 msg_id 字符串的数组
+reporter.messages(msg_ids)
+```
+
+###### 用户统计（VIP专属接口）
+
+```ruby
+# 提供近2个月内某时间段的用户相关统计数据：新增用户、在线用户、活跃用户
+# 参数 time_unit 表示时间单位，支持：HOUR（小时）、DAY（天）、MONTH（月） （不区分大小写）
+# 参数 start 接受一个 Time 类的实例，表示统计的起始时间，会根据参数 time_unit 自动的转换成需要的格式
+# 参数 duration 表示统计持续的时长，根据参数 time_unit 的不同有不同的取值范围，
+# 若 time_unit 为 'MONTH' 其范围为1至2，若 time_unit 为 'DAY' 其范围为1至60，
+# 若 time_unit 为 'HOUR'，其范围为1至24，并且只支持输出当天的统计结果，
+# 若 duration 超过限定的最大取值，则取最大值。
+reporter.users(time_unit, start, duration)
 ```
 
 ## Development

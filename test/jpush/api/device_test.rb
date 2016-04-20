@@ -168,7 +168,10 @@ module Jpush
       end
 
       def test_device_status
-        @devices.status($test_common_registration_id)
+        response = @devices.status($test_common_registration_id)
+        assert_equal 200, response.http_code
+        assert_instance_of Hash, response.body
+        assert_instance_of Array, response.body.first
       end
 
       private
