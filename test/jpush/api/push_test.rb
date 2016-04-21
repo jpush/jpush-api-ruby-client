@@ -6,11 +6,11 @@ module Jpush
 
       def setup
         @pusher = @@jPush.pusher
-        @all_push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from push api').build
       end
 
       def test_validate
-        response = @pusher.validate(@all_push_payload)
+        push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from push api').build
+        response = @pusher.validate(push_payload)
         assert_equal 200, response.http_code
         body = response.body
 
@@ -19,7 +19,8 @@ module Jpush
       end
 
       def test_simple_push_all
-        response = @pusher.push(@all_push_payload)
+        push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from push api').build
+        response = @pusher.push(push_payload)
         assert_equal 200, response.http_code
         body = response.body
 

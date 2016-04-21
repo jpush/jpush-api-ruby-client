@@ -32,10 +32,6 @@ module Jpush
             build.to_hash
 
           assert_equal 4, result.size
-          assert_true result.has_key?(:tag)
-          assert_true result.has_key?(:tag_and)
-          assert_true result.has_key?(:alias)
-          assert_true result.has_key?(:registration_id)
           assert_true result[:tag].include?('jpush')
           assert_true result[:tag_and].include?('jpush')
           assert_true result[:alias].include?('jpush')

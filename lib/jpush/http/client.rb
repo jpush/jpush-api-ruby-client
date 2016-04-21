@@ -13,6 +13,10 @@ module Jpush
         send_request(:post, url, body: body, headers: headers)
       end
 
+      def put(url, body: , headers: {})
+        send_request(:put, url, body: body, headers: headers)
+      end
+
       def delete(url, params: nil, headers: {})
         send_request(:delete, url, params: params, headers: headers)
       end

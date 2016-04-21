@@ -1,6 +1,7 @@
 require 'jpush/api/device'
 require 'jpush/api/push'
 require 'jpush/api/report'
+require 'jpush/api/schedule'
 
 module Jpush
   module Api
@@ -24,6 +25,10 @@ module Jpush
 
     def reporter
       return Api::Report
+    end
+
+    def schedules
+      return Api::Schedule
     end
 
   end
