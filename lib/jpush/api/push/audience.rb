@@ -1,6 +1,6 @@
 require 'jpush/api/helper/argument_helper'
 
-module Jpush
+module JPush
   module Api
     module Push
       class Audience
@@ -34,7 +34,7 @@ module Jpush
             alias: @alias,
             registration_id: @registration_id
           }.compact
-          raise Utils::Exceptions::JpushError, 'Audience can not be empty.' if @audience.empty?
+          raise Utils::Exceptions::JPushError, 'Audience can not be empty.' if @audience.empty?
           self
         end
 

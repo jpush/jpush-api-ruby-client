@@ -1,14 +1,14 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
-    class PushTest < Jpush::Test
+    class PushTest < JPush::Test
 
       def setup
         @push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from schedule api').build
         @schedule_payload = Schedule::SchedulePayload.new('jpush', Time.new(2020), @push_payload).build
-        @pusher = @@jPush.pusher
-        @schedules = @@jPush.schedules
+        @pusher = @@jpush.pusher
+        @schedules = @@jpush.schedules
       end
 
       def test_create
@@ -27,7 +27,7 @@ module Jpush
       end
 
       def test_show
-        assert_raises Utils::Exceptions::JpushResponseError do
+        assert_raises Utils::Exceptions::JPushResponseError do
           @schedules.show('INVALID_SCHEDULE_ID')
         end
 
@@ -39,7 +39,7 @@ module Jpush
       end
 
       def test_update
-        assert_raises  Jpush::Utils::Exceptions::JpushResponseError do
+        assert_raises  JPush::Utils::Exceptions::JPushResponseError do
           @schedules.update('INVALID_SCHEDULE_ID', name: 'jpush_ruby')
         end
         schedule_id = @schedules.tasks.body['schedules'].first['schedule_id']

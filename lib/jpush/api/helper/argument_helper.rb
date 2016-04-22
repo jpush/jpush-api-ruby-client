@@ -1,7 +1,7 @@
 require 'jpush/api/helper/argument'
 require 'jpush/utils/helper'
 
-module Jpush
+module JPush
   module Api
     module Helper
       module ArgumentHelper

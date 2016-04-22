@@ -1,8 +1,8 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Utils
-    class HttpTest < Jpush::Test
+    class HttpTest < JPush::Test
 
       def setup
         @test_url = 'https://test.com/'
@@ -11,7 +11,7 @@ module Jpush
       def test_new_http_client_with_invalid_http_verb
         stub_request(:any, @test_url)
 
-        assert_raises Utils::Exceptions::JpushError do
+        assert_raises Utils::Exceptions::JPushError do
           Http.new(:http, @test_url)
         end
       end

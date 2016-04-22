@@ -2,7 +2,7 @@ require 'jpush/api/helper/argument_helper'
 require 'jpush/api/schedule/schedule_payload'
 require 'jpush/http/client'
 
-module Jpush
+module JPush
   module Api
     module Schedule
       extend self

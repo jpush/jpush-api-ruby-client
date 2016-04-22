@@ -1,6 +1,6 @@
 require 'jpush/api/helper/argument_helper'
 
-module Jpush
+module JPush
   module Api
     module Schedule
       class Trigger
@@ -38,7 +38,7 @@ module Jpush
             single: @single,
             periodical: @periodical
           }.compact
-          raise Utils::Exceptions::JpushError, 'Trigger can not be empty.' if @trigger.empty?
+          raise Utils::Exceptions::JPushError, 'Trigger can not be empty.' if @trigger.empty?
           self
         end
 

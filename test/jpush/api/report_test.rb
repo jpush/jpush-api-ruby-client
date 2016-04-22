@@ -1,16 +1,16 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
-    class ReportTest < Jpush::Test
+    class ReportTest < JPush::Test
 
       def setup
-        pusher = @@jPush.pusher
+        pusher = @@jpush.pusher
         push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from report api').build
         @msg_id = pusher.push(push_payload).body['msg_id']
         sleep $test_report_delay_time
 
-        @reporter = @@jPush.reporter
+        @reporter = @@jpush.reporter
       end
 
       def test_received

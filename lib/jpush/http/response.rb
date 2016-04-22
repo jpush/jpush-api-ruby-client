@@ -1,4 +1,4 @@
-module Jpush
+module JPush
   module Http
     class Response
 
@@ -38,7 +38,7 @@ module Jpush
           when 2003
             raise Utils::Exceptions::VIPAppKeyError.new(http_code, error_code, error_message)
           else
-            raise Utils::Exceptions::JpushResponseError.new(http_code, error_code, error_message)
+            raise Utils::Exceptions::JPushResponseError.new(http_code, error_code, error_message)
           end
         end
 

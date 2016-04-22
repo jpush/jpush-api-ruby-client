@@ -1,12 +1,12 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
-    class AliasTest < Jpush::Test
+    class AliasTest < JPush::Test
 
       def setup
-        @aliases = @@jPush.aliases
-        @devices = @@jPush.devices
+        @aliases = @@jpush.aliases
+        @devices = @@jpush.devices
       end
 
       def test_show

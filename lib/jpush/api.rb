@@ -3,7 +3,7 @@ require 'jpush/api/push'
 require 'jpush/api/report'
 require 'jpush/api/schedule'
 
-module Jpush
+module JPush
   module Api
     extend self
 

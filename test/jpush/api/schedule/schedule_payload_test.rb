@@ -1,9 +1,9 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
     module Schedule
-      class SchedulePayloadTest < Jpush::Test
+      class SchedulePayloadTest < JPush::Test
 
         def setup
           @push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello').build

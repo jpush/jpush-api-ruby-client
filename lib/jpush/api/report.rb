@@ -1,7 +1,7 @@
 require 'jpush/api/helper/argument_helper'
 require 'jpush/http/client'
 
-module Jpush
+module JPush
   module Api
     module Report
       extend self

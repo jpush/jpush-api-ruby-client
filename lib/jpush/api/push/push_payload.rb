@@ -2,7 +2,7 @@ require 'jpush/api/helper/argument_helper'
 require 'jpush/api/push/audience'
 require 'jpush/api/push/notification'
 
-module Jpush
+module JPush
   module Api
     module Push
       class PushPayload
@@ -16,7 +16,7 @@ module Jpush
         MAX_SMS_DELAY_TIME = 86400    # 24 * 60 * 60 (second)
 
         def initialize(platform: , audience: , notification: nil, message: nil)
-          @platform = 'all' == platform ? Jpush::Config.settings[:valid_platform] : build_platform(platform)
+          @platform = 'all' == platform ? JPush::Config.settings[:valid_platform] : build_platform(platform)
           @audience = 'all' == audience ? 'all' : build_audience(audience)
           @notification = build_notification(notification) unless notification.nil?
           @message = build_message(message) unless message.nil?
@@ -40,7 +40,7 @@ module Jpush
         def build
           raise Utils::Exceptions::MissingArgumentError.new(['audience']) unless @audience
           err_msg = 'missing notification or message'
-          raise Utils::Exceptions::JpushError, err_msg unless @notification || @message
+          raise Utils::Exceptions::JPushError, err_msg unless @notification || @message
           @push_payload =  {
             platform: @platform,
             audience: @audience,

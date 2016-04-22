@@ -1,16 +1,16 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
     module Push
-      class NotificationTest < Jpush::Test
+      class NotificationTest < JPush::Test
 
         def setup
           @notification = Notification.new
         end
 
         def test_new_notification
-          assert_raises Utils::Exceptions::JpushError do
+          assert_raises Utils::Exceptions::JPushError do
             @notification.build
           end
         end
@@ -24,7 +24,7 @@ module Jpush
 
         def test_alert_sets
           result = @notification.
-            set_alert('Hello Jpush').
+            set_alert('Hello JPush').
             set_android(alert: 'Hello Android').
             set_ios(alert: 'Hello IOS').
             build.to_hash
@@ -36,7 +36,7 @@ module Jpush
 
         def test_sets
           result = @notification.
-            set_alert('Hello Jpush').
+            set_alert('Hello JPush').
             set_android(
               alert: 'Hello Android',
               title: 'hello',

@@ -1,11 +1,11 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
-    class TagTest < Jpush::Test
+    class TagTest < JPush::Test
 
       def setup
-        @tags = @@jPush.tags
+        @tags = @@jpush.tags
       end
 
       def test_list
@@ -19,7 +19,7 @@ module Jpush
       end
 
       def test_tag_has_device_with_invalid_argument
-        assert_raises Utils::Exceptions::JpushResponseError do
+        assert_raises Utils::Exceptions::JPushResponseError do
           @tags.has_device?($test_common_tag, 'INVALID_REGISTRATION_ID')
         end
 
@@ -40,7 +40,7 @@ module Jpush
       end
 
       def test_update
-        assert_raises Utils::Exceptions::JpushError do
+        assert_raises Utils::Exceptions::JPushError do
           @tags.update($test_common_tag)
         end
       end
@@ -99,10 +99,10 @@ module Jpush
       end
 
       def test_update_with_invalid_registration_id
-        assert_raises Utils::Exceptions::JpushResponseError do
+        assert_raises Utils::Exceptions::JPushResponseError do
           @tags.add_devices($test_common_tag, 'INVALID_REGISTRATION_ID')
         end
-        assert_raises Utils::Exceptions::JpushResponseError do
+        assert_raises Utils::Exceptions::JPushResponseError do
           @tags.remove_devices($test_common_tag, 'INVALID_REGISTRATION_ID')
         end
       end

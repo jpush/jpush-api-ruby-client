@@ -1,9 +1,9 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
     module Push
-      class PushPayloadTest < Jpush::Test
+      class PushPayloadTest < JPush::Test
 
         def setup
           @hello_payload = PushPayload.new(platform: 'all', audience: 'all', notification: 'hello')
@@ -12,7 +12,7 @@ module Jpush
         def test_initialize
           push_payload = PushPayload.new(platform: 'all', audience: 'all')
 
-          assert_raises Utils::Exceptions::JpushError do
+          assert_raises Utils::Exceptions::JPushError do
             push_payload.build
           end
 

@@ -5,7 +5,7 @@ require 'jpush/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "jpush"
-  spec.version       = Jpush::VERSION
+  spec.version       = JPush::VERSION
   spec.authors       = ["JPush Offical"]
   spec.email         = ["support@jpush.cn"]
 

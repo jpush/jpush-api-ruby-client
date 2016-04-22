@@ -1,6 +1,6 @@
 require "jpush/version"
 
-module Jpush
+module JPush
   # Your code goes here...
   require 'jpush/hola'
   require 'jpush/config'

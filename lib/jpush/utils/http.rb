@@ -1,10 +1,10 @@
 require 'net/http'
 
-module Jpush
+module JPush
   module Utils
     class Http
 
-      DEFAULT_USER_AGENT = 'jpush-api-ruby-client/' + Jpush::VERSION
+      DEFAULT_USER_AGENT = 'jpush-api-ruby-client/' + JPush::VERSION
       DEFAULT_OPEN_TIMEOUT = 10
       DEFAULT_READ_TIMEOUT = 120
       DEFAULT_RETRY_TIMES = 3
@@ -27,7 +27,7 @@ module Jpush
       def initialize(method, url, params: nil, body: nil, headers: {}, opts: {})
         method = method.downcase.to_sym
         err_msg = "http method #{method} is not supported"
-        raise Utils::Exceptions::JpushError, err_msg unless HTTP_VERB_MAP.keys.include?(method)
+        raise Utils::Exceptions::JPushError, err_msg unless HTTP_VERB_MAP.keys.include?(method)
         @uri = URI(url)
         @uri.query = URI.encode_www_form(params) unless params.nil?
         @request = prepare_request(method, body, headers)

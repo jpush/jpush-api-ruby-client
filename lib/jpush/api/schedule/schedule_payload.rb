@@ -2,7 +2,7 @@ require 'jpush/api/helper/argument_helper'
 require 'jpush/api/push/push_payload'
 require 'jpush/api/schedule/trigger'
 
-module Jpush
+module JPush
   module Api
     module Schedule
       class SchedulePayload
@@ -23,7 +23,7 @@ module Jpush
             trigger: @trigger,
             push: @push_payload
           }.compact
-          raise Utils::Exceptions::JpushError, 'Schedule update body can not be empty' if @schedule_payload.empty?
+          raise Utils::Exceptions::JPushError, 'Schedule update body can not be empty' if @schedule_payload.empty?
           self
         end
 

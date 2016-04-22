@@ -1,9 +1,9 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
     module Schedule
-      class TriggerTest < Jpush::Test
+      class TriggerTest < JPush::Test
 
         def setup
           @trigger = Trigger.new

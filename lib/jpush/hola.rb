@@ -1,4 +1,4 @@
-module Jpush
+module JPush
   class Hola
     attr_reader :msg
     def initialize(msg)

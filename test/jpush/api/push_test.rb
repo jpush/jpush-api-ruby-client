@@ -1,11 +1,11 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
-    class PushTest < Jpush::Test
+    class PushTest < JPush::Test
 
       def setup
-        @pusher = @@jPush.pusher
+        @pusher = @@jpush.pusher
       end
 
       def test_validate

@@ -1,7 +1,7 @@
 require 'jpush/utils/helper'
 require 'jpush/utils/exceptions'
 
-module Jpush
+module JPush
   module Api
     module Helper
       module Argument
@@ -32,7 +32,7 @@ module Jpush
         end
 
         def check_platform(platform)
-          valid_platform = Jpush::Config.settings[:valid_platform]
+          valid_platform = JPush::Config.settings[:valid_platform]
           raise Utils::Exceptions::InvalidElementError.new('platform', platform, valid_platform) unless valid_platform.include?(platform)
         end
 

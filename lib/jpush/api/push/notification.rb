@@ -1,6 +1,6 @@
 require 'jpush/api/helper/argument_helper'
 
-module Jpush
+module JPush
   module Api
     module Push
       class Notification
@@ -55,7 +55,7 @@ module Jpush
             android: @android,
             ios: @ios
           }.compact
-          raise Utils::Exceptions::JpushError, 'Notification can not be empty.' if @notification.empty?
+          raise Utils::Exceptions::JPushError, 'Notification can not be empty.' if @notification.empty?
           self
         end
 

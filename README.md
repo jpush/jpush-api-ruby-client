@@ -23,7 +23,7 @@ gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
 ```ruby
 app_key = 'xxx'
 master_secret = 'xxx'
-jpush = Jpush::Config.init(app_key, master_secret)
+jpush = JPush::Config.init(app_key, master_secret)
 ```
 
 #### Device API
@@ -119,7 +119,7 @@ aliases.delete(alias_value, platform = nil)
 pusher = jpush.pusher
 
 # simplest push Hello to all
-push_payload = Jpush::Api::Push::PushPayload.new(
+push_payload = JPush::Api::Push::PushPayload.new(
   platform: 'all',
   audience: 'all',
   notification: 'hello jpush',
@@ -139,7 +139,7 @@ pusher.push(push_payload)
 # 参数 tag 和 tag_and 为一个有效的 tag 字符串或者一个最多包含20个有效的 tag 字符串的数组
 # 参数 alias 为一个表示有效的 alias 字符串或者一个最多包含1000个有效的 alias 字符串的数组
 # 参数registration_ids 为一个表示有效的 registration_id 字符串或者一个最多包含1000个有效的 registration_id 字符串的数组
-audience = Jpush::Api::Push::Audience.new
+audience = JPush::Api::Push::Audience.new
 audience.set_tag(tag)
 audience.set_tag_and(tag_and)
 audience.set_alias(alis)
@@ -147,7 +147,7 @@ audience.set_registration_id(registration_ids)
 audience.build
 
 # OR
-audience = Jpush::Api::Push::Audience.new.
+audience = JPush::Api::Push::Audience.new.
   set_tag(tag).
   set_tag_and(tag_and).
   set_alias(alis).
@@ -161,7 +161,7 @@ audience = Jpush::Api::Push::Audience.new.
 则不需要构建 Notifacation 对象，在新建 PushPayload 对象的时候，给 'notication' 直接传递 alert 字符串即可。
 
 ```ruby
-notification = Jpush::Api::Push::Notification.new
+notification = JPush::Api::Push::Notification.new
 
 notification.set_alert(alert)
 notification.set_not_alert    # 不展示到通知栏
@@ -174,7 +174,7 @@ notification.set_ios(alert: , sound: nil, badge: nil, available: nil, category: 
 notification.build
 
 # OR
-notification = Jpush::Api::Push::Notification.new.
+notification = JPush::Api::Push::Notification.new.
   set_alert(alert).
   set_android(alert: , title: nil, builder_id: nil, extras: nil).
   set_ios(alert: , sound: nil, badge: nil, available: nil, category: nil, extras: nil).
@@ -188,15 +188,15 @@ notification 和 message 二者必须有其一，可以二者并存。
 
 ```ruby
 # audience 和 notification 对象可按照上面的例子实例化
-audience = Jpush::Api::Push::Andience.new
-notification = Jpush::Api::Push::Notification.new
+audience = JPush::Api::Push::Andience.new
+notification = JPush::Api::Push::Notification.new
 
 # 初始化 PushPayload 对象
 # 参数 platform 表示推送的平台，其可接受的参数为 'all'（表示推送到所有平台）, 'android' 或 'ios'
 # 参数 audience 表示推送的设备，其可接受的参数为 'all' （表示发广播（推送到全部设备）） 或者一个 Audience 对象
 # 参数 notification 接受一个字符串（表示为仅设置最基本的属性 'alert'） 或者一个 Notifcation 对象
 # 参数 message 仅接受一个字符串来快速设置消息内容本身
-push_payload = Jpush::Api::Push::PushPayload.new(
+push_payload = JPush::Api::Push::PushPayload.new(
   platform: , audience: , notification: , message:
 )
 
@@ -213,7 +213,7 @@ push_payload.set_sms_message(content, delay_time = 0)
 push_payload.build
 
 # OR
-push_payload = Jpush::Api::Push::PushPayload.new(
+push_payload = JPush::Api::Push::PushPayload.new(
   platform: , audience: , notification: ).
   set_message(msg_content, title: nil，content_type: nil, extras: nil).
   set_sms_message(content, delay_time).
@@ -274,7 +274,7 @@ schedules = jpush.schedules
 ```ruby
 # 定时任务（single）
 # 参数 time 接受一个 Time 对象
-single = Jpush::Api::Schedule::Trigger.new.set_single(time)
+single = JPush::Api::Schedule::Trigger.new.set_single(time)
 
 # 定期任务（periodical)
 # 参数 start_time 和 end_time 表示定期任务有效起始时间与过期时间，都接受一个 Time 对象
@@ -285,7 +285,7 @@ single = Jpush::Api::Schedule::Trigger.new.set_single(time)
 #   当time_unit为day时point此项无效
 #   当time_unit为week时，point为数组 ['MON','TUE','WED','THU','FRI','SAT','SUN'] 的子数组，表示星期几进行触发
 #   当time_unit为month时，point为当前进行月对应的日期， 为数组['01', '02' , ..,  '31'] 的子数组
-periodical = Jpush::Api::Schedule::Trigger.new.set_periodical(start_time, end_time, time, time_unit, frequency, point)
+periodical = JPush::Api::Schedule::Trigger.new.set_periodical(start_time, end_time, time, time_unit, frequency, point)
 ```
 
 ###### 构建 SchedulePayload 对象
@@ -293,7 +293,7 @@ periodical = Jpush::Api::Schedule::Trigger.new.set_periodical(start_time, end_ti
 ```ruby
 # 参数 triggle 接受一个 Trigger 对象，或者一个 Time 对象快速设置 single 定时任务
 # 参数 push 仅接受一个有效的 PushPayload 对象
-Jpush::Api::Schedule::SchedulePayload.new(name, trigger, push)
+JPush::Api::Schedule::SchedulePayload.new(name, trigger, push)
 ```
 
 ###### 创建定时任务

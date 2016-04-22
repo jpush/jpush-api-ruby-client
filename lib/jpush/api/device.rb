@@ -1,7 +1,7 @@
 require 'jpush/api/helper/argument_helper'
 require 'jpush/http/client'
 
-module Jpush
+module JPush
   module Api
     module Device
       extend self
@@ -37,7 +37,7 @@ module Jpush
           mobile: mobile
         }.compact
 
-        raise Utils::Exceptions::JpushError, 'Devices update body can not be empty' if body.empty?
+        raise Utils::Exceptions::JPushError, 'Devices update body can not be empty' if body.empty?
 
         url = base_url + registration_id
         Http::Client.post(url, body: body)
@@ -116,7 +116,7 @@ module Jpush
         devices_remove = build_registration_ids(devices_remove) unless devices_remove.nil?
         registration_ids = { add: devices_add, remove: devices_remove }.compact
 
-        raise Utils::Exceptions::JpushError, 'Tags update body can not be empty.' if registration_ids.empty?
+        raise Utils::Exceptions::JPushError, 'Tags update body can not be empty.' if registration_ids.empty?
 
         body = { registration_ids: registration_ids }
         url = base_url + tag_value

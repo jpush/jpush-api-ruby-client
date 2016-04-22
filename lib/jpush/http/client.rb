@@ -1,6 +1,6 @@
 require_relative 'response'
 
-module Jpush
+module JPush
   module Http
     module Client
       extend self

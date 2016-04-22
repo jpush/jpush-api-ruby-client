@@ -1,16 +1,16 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
     module Push
-      class AudienceTest < Jpush::Test
+      class AudienceTest < JPush::Test
 
         def setup
           @audience = Audience.new
         end
 
         def test_new_audience
-          assert_raises Utils::Exceptions::JpushError do
+          assert_raises Utils::Exceptions::JPushError do
             @audience.build
           end
         end

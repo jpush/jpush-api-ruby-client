@@ -1,9 +1,9 @@
 require_relative 'api'
 
-module Jpush
+module JPush
   module Config
     extend self
-    include Jpush::Api
+    include JPush::Api
 
     DEFAULT_OPTIONS = {
       api_version: 'v3',
@@ -17,7 +17,7 @@ module Jpush
 
     def init(app_key, master_secret)
       @settings = DEFAULT_OPTIONS.merge!(app_key: app_key, master_secret: master_secret)
-      return Jpush::Api
+      return JPush::Api
     end
 
   end

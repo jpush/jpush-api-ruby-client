@@ -1,9 +1,9 @@
 require 'test_helper'
 
-module Jpush
+module JPush
   module Api
     module Helper
-      class ArgumentTest < Jpush::Test
+      class ArgumentTest < JPush::Test
 
         def setup
           @klass = Class.new{ extend Argument }
