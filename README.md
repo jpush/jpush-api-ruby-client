@@ -23,7 +23,7 @@ gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
 ```ruby
 app_key = 'xxx'
 master_secret = 'xxx'
-jpush = JPush::Config.init(app_key, master_secret)
+jpush = JPush::Client.new(app_key, master_secret)
 ```
 
 #### Device API
