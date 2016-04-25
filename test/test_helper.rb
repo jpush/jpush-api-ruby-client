@@ -35,7 +35,7 @@ class JPush::Test < MiniTest::Test
   allowed_sites = [ 'api.jpush.cn', 'device.jpush.cn', 'report.jpush.cn' ]
   WebMock.disable_net_connect!(allow: allowed_sites)
 
-  @@jpush = JPush::Config.init($test_app_key, $test_master_secret)
+  @@jpush = JPush::Client.new($test_app_key, $test_master_secret)
 
   def assert_true(statement)
     assert_equal true, statement

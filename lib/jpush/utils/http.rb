@@ -5,7 +5,7 @@ module JPush
     class Http
 
       DEFAULT_USER_AGENT = 'jpush-api-ruby-client/' + JPush::VERSION
-      DEFAULT_OPEN_TIMEOUT = 10
+      DEFAULT_OPEN_TIMEOUT = 20
       DEFAULT_READ_TIMEOUT = 120
       DEFAULT_RETRY_TIMES = 3
       RETRY_SLEEP_TIME = 3

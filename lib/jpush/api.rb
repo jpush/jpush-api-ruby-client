@@ -1,35 +1,42 @@
-require 'jpush/api/device'
-require 'jpush/api/push'
-require 'jpush/api/report'
-require 'jpush/api/schedule'
+require 'jpush/device'
+require 'jpush/push'
+require 'jpush/report'
+require 'jpush/schedule'
 
 module JPush
-  module Api
-    extend self
-
+  module API
     def devices
-      return Api::Device
+      Device
     end
 
     def tags
-      return Api::Tag
+      Tag
     end
 
     def aliases
-      return Api::Alias
+      Alias
     end
 
     def pusher
-      return Api::Push
+      Push
     end
 
     def reporter
-      return Api::Report
+      Report
     end
 
     def schedules
-      return Api::Schedule
+      Schedule
+    end
+  end
+
+  class Client
+    include JPush::API
+
+    def initialize(app_key, master_secret)
+      JPush::Config.init(app_key, master_secret)
     end
 
   end
+
 end
