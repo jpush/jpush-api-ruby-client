@@ -2,7 +2,6 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'jpush'
 
 require 'minitest/autorun'
-require 'webmock/minitest'
 
 using JPush::Utils::Helper::ObjectExtensions
 
@@ -29,11 +28,6 @@ $test_common_tag = conf[:tags][:common]
 $test_report_delay_time = conf[:report_delay_time].to_i
 
 class JPush::Test < MiniTest::Test
-
-  # Allow external requests in the whitelist.
-  # It will raise an exception for unregistered request by WebMock.
-  allowed_sites = [ 'api.jpush.cn', 'device.jpush.cn', 'report.jpush.cn' ]
-  WebMock.disable_net_connect!(allow: allowed_sites)
 
   @@jpush = JPush::Client.new($test_app_key, $test_master_secret)
 

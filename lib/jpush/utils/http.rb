@@ -1,4 +1,5 @@
 require 'net/http'
+require 'json'
 
 module JPush
   module Utils
