@@ -2,9 +2,8 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'jpush'
 
 require 'minitest/autorun'
-require 'webmock/minitest'
 
-using Jpush::Utils::Helper::ObjectExtensions
+using JPush::Utils::Helper::ObjectExtensions
 
 conf =
   if File.exists? conf_file = File.expand_path('../config.yml', __FILE__)
@@ -28,14 +27,9 @@ $test_ios_registration_id = conf[:registration_ids][:ios]
 $test_common_tag = conf[:tags][:common]
 $test_report_delay_time = conf[:report_delay_time].to_i
 
-class Jpush::Test < MiniTest::Test
+class JPush::Test < MiniTest::Test
 
-  # Allow external requests in the whitelist.
-  # It will raise an exception for unregistered request by WebMock.
-  allowed_sites = [ 'api.jpush.cn', 'device.jpush.cn', 'report.jpush.cn' ]
-  WebMock.disable_net_connect!(allow: allowed_sites)
-
-  @@jPush = Jpush::Config.init($test_app_key, $test_master_secret)
+  @@jpush = JPush::Client.new($test_app_key, $test_master_secret)
 
   def assert_true(statement)
     assert_equal true, statement

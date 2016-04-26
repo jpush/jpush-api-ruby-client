@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class JpushTest < Minitest::Test
+class JPushTest < Minitest::Test
   def test_that_it_has_a_version_number
-    refute_nil ::Jpush::VERSION
+    refute_nil ::JPush::VERSION
   end
 
   def test_it_does_something_useful

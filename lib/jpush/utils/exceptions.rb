@@ -1,21 +1,21 @@
 require 'jpush/utils/helper'
 
-module Jpush
+module JPush
   module Utils
     module Exceptions
       using Utils::Helper::ObjectExtensions
 
-      class JpushError < StandardError
+      class JPushError < StandardError
         attr_reader :message
         def initialize(message)
           @message = message
         end
       end
 
-      class JpushArgumentError < JpushError
+      class JPushArgumentError < JPushError
       end
 
-      class MissingArgumentError < JpushArgumentError
+      class MissingArgumentError < JPushArgumentError
         def initialize(missed_args)
           list = missed_args.map {|arg| arg.to_s} * (', ')
           msg = "#{list} are required."
@@ -23,7 +23,7 @@ module Jpush
         end
       end
 
-      class InvalidArgumentError < JpushArgumentError
+      class InvalidArgumentError < JPushArgumentError
         def initialize(invalid_args, msg = nil)
           list = invalid_args.map {|arg| arg.to_s} * (', ')
           msg ||= "#{list} can not be blank."
@@ -31,47 +31,45 @@ module Jpush
         end
       end
 
-      class InvalidWordError < JpushError
+      class InvalidWordError < JPushError
         def initialize(name, word)
           super("invalid #{name}: #{word} ( #{name} can only contain letters, numbers, '_' and Chinese character)")
         end
       end
 
-      class InvalidElementError < JpushError
+      class InvalidElementError < JPushError
         def initialize(name, invalid_element, list)
           super("invalid #{name}: #{invalid_element} ( #{name} only support #{list * (', ')} )")
         end
       end
 
-      class OverLimitError < JpushError
+      class OverLimitError < JPushError
         def initialize(name, limit, unit)
           super("#{name} must have at most #{limit} #{unit}")
         end
       end
 
-      class JpushResponseError < JpushError
+      class JPushResponseError < JPushError
         attr_reader :http_code, :error_code, :error_message
 
-        def initialize(response)
-          @http_code = response.code
-          body = JSON.parse(response.body)
-          @error_code, @error_message =
-            if body.has_key?('error')
-              [body['error']['code'], body['error']['message']]
-            else
-              [body['code'], body['message']]
-            end
+        def initialize(http_code, error_code, error_message)
+          @http_code, @error_code, @error_message = http_code, error_code, error_message
           @error_message = "UnknownError[#{@http_code}]." if @error_message.blank?
-          super("Request Failed: #{@error_message}")
+          super("#{@error_message} (error code: #{@error_code}) ")
         end
 
         def to_s
-          "#{@message}. error code: #{@error_code}, http status code: #{@http_code}"
+          "#{@message}. http status code: #{@http_code}"
         end
-
       end
 
-      class TimeOutError < JpushError
+      class VIPAppKeyError < JPushResponseError
+        def initialize(http_code, error_code, error_message)
+          super(http_code, error_code, error_message)
+        end
+      end
+
+      class TimeOutError < JPushError
         def initialize(error)
           super("#{error.class} was raised, please rescue it")
         end

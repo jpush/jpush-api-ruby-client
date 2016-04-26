@@ -1,8 +1,8 @@
 require "jpush/version"
 
-module Jpush
+module JPush
   # Your code goes here...
-  require 'jpush/hola'
+  require 'jpush/api'
   require 'jpush/config'
   require 'jpush/utils/helper'
   require 'jpush/utils/http'

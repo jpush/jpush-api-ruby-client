@@ -1,4 +1,4 @@
-module Jpush
+module JPush
   module Utils
     module Helper
       module ObjectExtensions

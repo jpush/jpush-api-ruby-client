@@ -1,6 +1,6 @@
 require_relative 'response'
 
-module Jpush
+module JPush
   module Http
     module Client
       extend self
@@ -11,6 +11,10 @@ module Jpush
 
       def post(url, body: , headers: {})
         send_request(:post, url, body: body, headers: headers)
+      end
+
+      def put(url, body: , headers: {})
+        send_request(:put, url, body: body, headers: headers)
       end
 
       def delete(url, params: nil, headers: {})
@@ -27,11 +31,7 @@ module Jpush
           opts: opts
         ).basic_auth.send_request
 
-        if raw_response.kind_of? Net::HTTPSuccess
-          Response.new(raw_response.code, raw_response.body)
-        else
-          raise Utils::Exceptions::JpushResponseError.new(raw_response)
-        end
+        Response.new(raw_response)
       end
 
     end
