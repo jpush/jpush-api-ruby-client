@@ -1,16 +1,6 @@
 # 目录
 
 - [Getting Started](#getting-started)
-- [Device API](#device-api)
- - [查询设备](#查询设备-设备的别名与标签)
- - [更新设备](#更新设备-设备的别名与标签)
- - [获取用户在线状态（VIP专属接口）](#获取用户在线状态vip专属接口)
- - [查询标签列表](#查询标签列表)
- - [判断设备与标签的绑定](#判断设备与标签的绑定)
- - [更新标签](#更新标签-与设备的绑定的关系)
- - [删除标签](#删除标签-与设备的绑定关系)
- - [查询别名](#查询别名-与设备的绑定关系)
- - [删除别名](#删除别名-与设备的绑定关系)
 - [Push API](#push-api)
  - [构建 Audience 对象](#构建-audience-对象)
  - [构建 Notification 对象](#构建-notification-对象)
@@ -28,6 +18,16 @@
  - [获取定时任务详情](#获取定时任务详情)
  - [更新定时任务](#更新定时任务)
  - [删除定时任务](#删除定时任务)
+- [Device API](#device-api)
+ - [查询设备](#查询设备-设备的别名与标签)
+ - [更新设备](#更新设备-设备的别名与标签)
+ - [获取用户在线状态（VIP专属接口）](#获取用户在线状态vip专属接口)
+ - [查询标签列表](#查询标签列表)
+ - [判断设备与标签的绑定](#判断设备与标签的绑定)
+ - [更新标签](#更新标签-与设备的绑定的关系)
+ - [删除标签](#删除标签-与设备的绑定关系)
+ - [查询别名](#查询别名-与设备的绑定关系)
+ - [删除别名](#删除别名-与设备的绑定关系)
 
 ## Getting Started
 
@@ -37,95 +37,6 @@
 app_key = 'xxx'
 master_secret = 'xxx'
 jpush = JPush::Client.new(app_key, master_secret)
-```
-
-## Device API
-
-Device API 用于在服务器端查询、设置、更新、删除设备的 tag,alias 信息，使用时需要注意不要让服务端设置的标签又被客户端给覆盖了
-
-```ruby
-devices = jpush.devices
-tags = jpush.tags
-aliases = jpush.aliases
-```
-
-#### 查询设备 (设备的别名与标签)
-
-```ruby
-# 获取当前设备的所有属性，包含标签 tags, 别名 alias， 手机号码 mobile
-devices.show(registration_id)
-```
-
-#### 更新设备 (设备的别名与标签)
-
-```ruby
-# 为设备添加/移除标签
-# 参数 tags 为一个表示有效的 tag 字符串或者一个最多包含100个有效的 tag 字符串的数组
-devices.add_tags(registration_id, tags)
-devices.remove_tags(registration_id, tags)
-
-# 清除设备所有标签
-devices.clear_tags(registration_id)
-
-# 更新设备的别名
-devices.update_alias(registration_id, alis)
-
-# 删除设备的别名
-devices.delete_alias(registration_id)
-
-# 更新设备的手机号码
-devices.update_mobile(registration_id)
-```
-
-#### 获取用户在线状态（VIP专属接口）
-
-```ruby
-# 参数 registration_ids 为一个表示有效的 registration_id 字符串或者一个最多包含1000个有效的 registration_id 字符串的数组
-device.status(registration_ids)
-```
-
-#### 查询标签列表
-
-```ruby
-# 获取应用的所有标签列表
-tags.list
-```
-
-#### 判断设备与标签的绑定
-
-```ruby
-# 查询某个设备是否在标签下
-tags.has_device?(tag_value, registration_id)
-```
-
-#### 更新标签 (与设备的绑定的关系)
-
-```ruby
-# 为一个标签添加/移除设备
-# 参数 registration_ids 为一个表示有效的 registration_id 字符串或者一个最多包含1000个有效的 registration_id 字符串的数组
-tags.add_devices(tag_value, registration_ids)
-tags.remove_devices(tag_value, registration_ids)
-```
-
-#### 删除标签 (与设备的绑定关系)
-
-```ruby
-# 删除一个标签，以及标签与设备之间的关联关系, platform 不填默认为所有平台
-tags.delete(tag_value, platform)
-```
-
-#### 查询别名 (与设备的绑定关系)
-
-```ruby
-# 获取指定别名下的设备，最多输出10个, platform 不填默认为所有平台
-aliases.show(alias_value, platform)
-```
-
-#### 删除别名 (与设备的绑定关系)
-
-```ruby
-# 删除一个别名，以及该别名与设备的绑定关系, platform 不填默认为所有平台
-aliases.delete(alias_value, platform)
 ```
 
 ## Push API
@@ -507,4 +418,93 @@ schedules.update(schedule_id, name: 'jpush')
 
 ```ruby
 schedules.delete(schedule_id)
+```
+
+## Device API
+
+Device API 用于在服务器端查询、设置、更新、删除设备的 tag,alias 信息，使用时需要注意不要让服务端设置的标签又被客户端给覆盖了
+
+```ruby
+devices = jpush.devices
+tags = jpush.tags
+aliases = jpush.aliases
+```
+
+#### 查询设备 (设备的别名与标签)
+
+```ruby
+# 获取当前设备的所有属性，包含标签 tags, 别名 alias， 手机号码 mobile
+devices.show(registration_id)
+```
+
+#### 更新设备 (设备的别名与标签)
+
+```ruby
+# 为设备添加/移除标签
+# 参数 tags 为一个表示有效的 tag 字符串或者一个最多包含100个有效的 tag 字符串的数组
+devices.add_tags(registration_id, tags)
+devices.remove_tags(registration_id, tags)
+
+# 清除设备所有标签
+devices.clear_tags(registration_id)
+
+# 更新设备的别名
+devices.update_alias(registration_id, alis)
+
+# 删除设备的别名
+devices.delete_alias(registration_id)
+
+# 更新设备的手机号码
+devices.update_mobile(registration_id)
+```
+
+#### 获取用户在线状态（VIP专属接口）
+
+```ruby
+# 参数 registration_ids 为一个表示有效的 registration_id 字符串或者一个最多包含1000个有效的 registration_id 字符串的数组
+device.status(registration_ids)
+```
+
+#### 查询标签列表
+
+```ruby
+# 获取应用的所有标签列表
+tags.list
+```
+
+#### 判断设备与标签的绑定
+
+```ruby
+# 查询某个设备是否在标签下
+tags.has_device?(tag_value, registration_id)
+```
+
+#### 更新标签 (与设备的绑定的关系)
+
+```ruby
+# 为一个标签添加/移除设备
+# 参数 registration_ids 为一个表示有效的 registration_id 字符串或者一个最多包含1000个有效的 registration_id 字符串的数组
+tags.add_devices(tag_value, registration_ids)
+tags.remove_devices(tag_value, registration_ids)
+```
+
+#### 删除标签 (与设备的绑定关系)
+
+```ruby
+# 删除一个标签，以及标签与设备之间的关联关系, platform 不填默认为所有平台
+tags.delete(tag_value, platform)
+```
+
+#### 查询别名 (与设备的绑定关系)
+
+```ruby
+# 获取指定别名下的设备，最多输出10个, platform 不填默认为所有平台
+aliases.show(alias_value, platform)
+```
+
+#### 删除别名 (与设备的绑定关系)
+
+```ruby
+# 删除一个别名，以及该别名与设备的绑定关系, platform 不填默认为所有平台
+aliases.delete(alias_value, platform)
 ```
