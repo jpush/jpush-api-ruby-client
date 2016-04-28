@@ -21,11 +21,11 @@ gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
 
 ## Usage
 
-- [Getting Started](docs/README.md#getting-started)
-- [Push API](docs/README.md#push-api)
-- [Report API](docs/README.md#report-api)
-- [Schedule API](docs/README.md#schedule-api)
-- [Device API](docs/README.md#device-api)
+- [Getting Started](docs/Guides.md#getting-started)
+- [Push API](docs/Guides.md#push-api)
+- [Report API](docs/Guides.md#report-api)
+- [Schedule API](docs/Guides.md#schedule-api)
+- [Device API](docs/Guides.md#device-api)
 
 ## Development
 
