@@ -10,12 +10,12 @@ module JPush
 
       def test_new_notification
         assert_raises Utils::Exceptions::JPushError do
-          @notification.build
+          @notification.to_hash
         end
       end
 
       def test_set_alert
-        result = @notification.set_alert('jpush').build.to_hash
+        result = @notification.set_alert('jpush').to_hash
         assert_equal 1, result.size
         assert_true result.has_key?(:alert)
         assert_true result[:alert].include?('jpush')
@@ -25,8 +25,7 @@ module JPush
         result = @notification.
           set_alert('Hello JPush').
           set_android(alert: 'Hello Android').
-          set_ios(alert: 'Hello IOS').
-          build.to_hash
+          set_ios(alert: 'Hello IOS').to_hash
         assert_equal 3, result.size
         assert_true result.has_key?(:alert)
         assert_true result.has_key?(:android)
@@ -53,7 +52,7 @@ module JPush
               key2: 'value2',
               key3: 'value3'
             }
-          ).build.to_hash
+          ).to_hash
         assert_equal 3, result.size
         assert_true result.has_key?(:alert)
         assert_true result.has_key?(:android)

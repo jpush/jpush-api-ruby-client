@@ -26,7 +26,7 @@ module JPush
         self
       end
 
-      def build
+      def to_hash
         @audience = {
           tag: @tag,
           tag_and: @tag_and,
@@ -34,10 +34,6 @@ module JPush
           registration_id: @registration_id
         }.compact
         raise Utils::Exceptions::JPushError, 'Audience can not be empty.' if @audience.empty?
-        self
-      end
-
-      def to_hash
         @audience
       end
 

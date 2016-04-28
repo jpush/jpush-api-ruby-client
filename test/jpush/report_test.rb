@@ -5,7 +5,7 @@ module JPush
 
     def setup
       pusher = @@jpush.pusher
-      push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from report api').build
+      push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from report api')
       @msg_id = pusher.push(push_payload).body['msg_id']
       sleep $test_report_delay_time
 

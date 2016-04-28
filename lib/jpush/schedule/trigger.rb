@@ -32,16 +32,12 @@ module JPush
         self
       end
 
-      def build
+      def to_hash
         @trigger = {
           single: @single,
           periodical: @periodical
         }.compact
         raise Utils::Exceptions::JPushError, 'Trigger can not be empty.' if @trigger.empty?
-        self
-      end
-
-      def to_hash
         @trigger
       end
 

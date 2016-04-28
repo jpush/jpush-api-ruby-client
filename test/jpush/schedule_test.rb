@@ -4,8 +4,8 @@ module JPush
   class PushTest < JPush::Test
 
     def setup
-      @push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from schedule api').build
-      @schedule_payload = Schedule::SchedulePayload.new('jpush', Time.new(2020), @push_payload).build
+      @push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from schedule api')
+      @schedule_payload = Schedule::SchedulePayload.new('jpush', Time.new(2020), @push_payload)
       @pusher = @@jpush.pusher
       @schedules = @@jpush.schedules
     end

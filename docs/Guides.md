@@ -50,7 +50,7 @@ push_payload = JPush::Push::PushPayload.new(
   audience: 'all',
   notification: 'hello jpush',
   message: 'hello world'
-).build
+)
 pusher.push(push_payload)
 ```
 
@@ -66,15 +66,13 @@ audience.set_tag(tag)
 audience.set_tag_and(tag_and)
 audience.set_alias(alis)
 audience.set_registration_id(registration_ids)
-audience.build
 
 # 链式调用
 audience = JPush::Push::Audience.new.
   set_tag(tag).
   set_tag_and(tag_and).
   set_alias(alis).
-  set_registration_id(registration_ids).
-  build
+  set_registration_id(registration_ids)
 ```
 
 参数说明
@@ -100,7 +98,7 @@ notification = JPush::Push::Notification.new
 ###### alert
 
 ```ruby
-notification.set_alert(alert).build
+notification.set_alert(alert)
 ```
 
 ###### android
@@ -111,7 +109,7 @@ notification.set_android(
   title: title,
   builder_id: builder_id,
   extras: extras
-).build
+)
 ```
 
 参数说明
@@ -133,7 +131,7 @@ notification.set_ios(
   available: available,
   category: category,
   extras: extras
-).build
+)
 ```
 
 参数说明
@@ -164,7 +162,7 @@ notification = JPush::Push::Notification.new.
     available: available,
     category: category,
     extras: extras
-  ).build
+  )
 ```
 
 #### 构建 PushPayload 对象
@@ -175,8 +173,8 @@ notification = JPush::Push::Notification.new.
 
 ```ruby
 # audience 和 notification 对象可按照上面的例子实例化
-audience = JPush::Push::Andience.new.set_registration_id(registration_ids).build
-notification = JPush::Push::Notification.new.set_alert(alert).build
+audience = JPush::Push::Andience.new.set_registration_id(registration_ids)
+notification = JPush::Push::Notification.new.set_alert(alert)
 ```
 
 ```ruby
@@ -186,7 +184,7 @@ push_payload = JPush::Push::PushPayload.new(
   audience: audience,
   notification: notification,
   message: message
-).build
+)
 ```
 
 参数说明
@@ -210,7 +208,7 @@ push_payload = JPush::Push::PushPayload.new(
   title: title,
   content_type: content_type,
   extras: extras
-).build
+)
 ```
 
 参数说明
@@ -282,7 +280,7 @@ push_payload = JPush::Push::PushPayload.new(
   content_type: content_type,
   extras: extras
 ).set_sms_message(content, delay_time).
-set_options(options).build
+set_options(options)
 ```
 
 #### 推送消息

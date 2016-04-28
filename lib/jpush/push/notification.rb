@@ -48,17 +48,13 @@ module JPush
         self
       end
 
-      def build
+      def to_hash
         @notification = {
           alert: @alert,
           android: @android,
           ios: @ios
         }.compact
         raise Utils::Exceptions::JPushError, 'Notification can not be empty.' if @notification.empty?
-        self
-      end
-
-      def to_hash
         @notification
       end
 

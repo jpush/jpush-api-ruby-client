@@ -15,7 +15,7 @@ module JPush
         @enabled = enabled
       end
 
-      def build_update
+      def to_update_hash
         @schedule_payload = {
           name: @name,
           enabled: @enabled,
@@ -23,10 +23,10 @@ module JPush
           push: @push_payload
         }.compact
         raise Utils::Exceptions::JPushError, 'Schedule update body can not be empty' if @schedule_payload.empty?
-        self
+        @schedule_payload
       end
 
-      def build
+      def to_hash
         @schedule_payload = {
           name: @name,
           enabled: true,
@@ -35,10 +35,6 @@ module JPush
         }
         hash = @schedule_payload.select { |_, value| value.nil? }
         raise Utils::Exceptions::MissingArgumentError.new(hash.keys) unless hash.empty?
-        self
-      end
-
-      def to_hash
         @schedule_payload
       end
 
