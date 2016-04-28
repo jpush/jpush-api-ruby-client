@@ -3,6 +3,7 @@
 # JPush API Ruby Client
 
 [![Build Status](https://travis-ci.org/jpush/jpush-api-ruby-client.svg?branch=master)](https://travis-ci.org/jpush/jpush-api-ruby-client)
+[![Gem Version](https://badge.fury.io/rb/jpush.svg)](https://badge.fury.io/rb/jpush)
 
 这是 JPush REST API 的 Ruby 版本封装开发包，是由极光推送官方提供的，一般支持最新的 API 功能。
 对应的 REST API 文档: http://docs.jpush.io/server/server_overview/,
@@ -13,16 +14,18 @@
 Add this line to your application's Gemfile:
 
 ```ruby
+gem 'jpush'
+# OR
 gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
 ```
 
 ## Usage
 
 - [Getting Started](docs/README.md#getting-started)
-- [Device API](docs/README.md#device-api)
 - [Push API](docs/README.md#push-api)
 - [Report API](docs/README.md#report-api)
 - [Schedule API](docs/README.md#schedule-api)
+- [Device API](docs/README.md#device-api)
 
 ## Development
 
