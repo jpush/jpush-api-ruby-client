@@ -7,7 +7,8 @@
 
 这是 JPush REST API 的 Ruby 版本封装开发包，是由极光推送官方提供的，一般支持最新的 API 功能。
 对应的 REST API 文档: http://docs.jpush.io/server/server_overview/,
-支持 Ruby 版本 >= 2.2.0
+
+> 支持的 Ruby 版本：>= 2.2
 
 ## Installation
 
