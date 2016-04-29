@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["support@jpush.cn"]
 
   spec.summary       = %q{JPush's officially supported Ruby client library for accessing JPush APIs.}
-  spec.description   = %q{JPush's officially supported Ruby client library for accessing JPush APIs. 极光推送官方支持的 Ruby 版本服务器端 SDK. http://docs.jpush.io/server/server_overview/}
+  spec.description   = %q{JPush's officially supported Ruby client library for accessing JPush APIs. 极光推送官方支持的 Ruby 版本服务器端 SDK. 相应的 API 文档：http://docs.jpush.io/server/server_overview/ }
   spec.homepage      = "https://github.com/jpush/jpush-api-ruby-client"
   spec.license       = "MIT"
 
