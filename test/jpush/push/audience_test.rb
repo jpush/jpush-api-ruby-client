@@ -10,12 +10,12 @@ module JPush
 
       def test_new_audience
         assert_raises Utils::Exceptions::JPushError do
-          @audience.build
+          @audience.to_hash
         end
       end
 
       def test_set_tag
-        result = @audience.set_tag('jpush').build.to_hash
+        result = @audience.set_tag('jpush').to_hash
 
         assert_equal 1, result.size
         assert_true result.has_key?(:tag)
@@ -28,7 +28,7 @@ module JPush
           set_tag_and('jpush').
           set_alias('jpush').
           set_registration_id('jpush').
-          build.to_hash
+          to_hash
 
         assert_equal 4, result.size
         assert_true result[:tag].include?('jpush')

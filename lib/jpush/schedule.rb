@@ -31,8 +31,8 @@ module JPush
     # 修改指定的Schedule
     # PUT https://api.jpush.cn/v3/schedules/{schedule_id}
     def update(schedule_id, name: nil, enabled: nil, trigger: nil, push: nil)
-      hash = SchedulePayload.new(name, trigger, push, enabled).build_update.to_hash
-      Http::Client.put(base_url + schedule_id, body: hash)
+      body = SchedulePayload.new(name, trigger, push, enabled).to_update_hash
+      Http::Client.put(base_url + schedule_id, body: body)
     end
 
     # 删除指定的Schedule任务

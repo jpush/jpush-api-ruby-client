@@ -8,8 +8,6 @@ module JPush
       extend Helper::ArgumentHelper
       using Utils::Helper::ObjectExtensions
 
-      attr_reader :platform, :audience, :notification, :message, :sms_message, :options
-
       VALID_OPTION_KEY = [:sendno, :time_to_live, :override_msg_id, :apns_production, :big_push_duration]
       MAX_SMS_CONTENT_SIZE = 480
       MAX_SMS_DELAY_TIME = 86400    # 24 * 60 * 60 (second)
@@ -36,7 +34,7 @@ module JPush
         self
       end
 
-      def build
+      def to_hash
         raise Utils::Exceptions::MissingArgumentError.new(['audience']) unless @audience
         err_msg = 'missing notification or message'
         raise Utils::Exceptions::JPushError, err_msg unless @notification || @message
@@ -48,11 +46,6 @@ module JPush
           sms_message: @sms_message,
           options: @options
         }.compact
-        self
-      end
-
-      def to_hash
-        @push_payload
       end
 
       private
