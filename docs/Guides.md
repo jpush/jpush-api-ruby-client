@@ -140,7 +140,7 @@ notification.set_ios(
 | --- | :---: | --- |
 | alert | 是 | 表示通知内容，会覆盖上级统一指定的 alert 信息；内容可以为空字符串，表示不展示到通知栏 |
 | sound | 否 | 表示通知提示声音 |
-| bandge | 否 | 表示应用角标，把角标数字改为指定的数字；为 0 表示清除 |
+| badge | 否 | 表示应用角标，把角标数字改为指定的数字；为 0 表示清除 |
 | available | 否 | 表示推送唤醒，仅接受 true 表示为 Background Remote Notification，若不填默认是 nil 表示普通的 Remote Notification |
 | category | 否 | IOS8才支持。设置 APNs payload 中的 'category' 字段值 |
 | extras | 否 | 表示扩展字段，接受一个 Hash 对象，以供业务使用 |
