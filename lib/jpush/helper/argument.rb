@@ -36,7 +36,7 @@ module JPush
       end
 
       def ensure_argument_not_blank(args)
-        invalid_args = args.select{|key, value| value.blank?}
+        invalid_args = args.select{|key, value| value.j_blank?}
         raise Utils::Exceptions::InvalidArgumentError.new(invalid_args.keys) unless invalid_args.empty?
       end
 
