@@ -70,6 +70,59 @@ module JPush
         assert_equal 6, result[:ios].length
       end
 
+      def test_content_available
+        result = @notification.
+          set_alert('Hello JPush').
+          set_ios(
+            alert: { k1: 'v1', k2: 'v2' },
+            available: true
+          ).to_hash
+        assert_equal 2, result[:ios].size
+        assert_true result[:ios][:'content-available'].is_a? TrueClass
+
+        result = @notification.
+          set_alert('Hello JPush').
+          set_ios(
+            alert: { k1: 'v1', k2: 'v2' },
+            contentavailable: true
+          ).to_hash
+        assert_equal 2, result[:ios].size
+        assert_true result[:ios][:'content-available'].is_a? TrueClass
+
+        result = @notification.
+          set_alert('Hello JPush').
+          set_ios(
+            alert: { k1: 'v1', k2: 'v2' },
+            available: true,
+            contentavailable: false
+          ).to_hash
+        assert_equal 1, result[:ios].size
+        assert_true result[:ios][:'content-available'].nil?
+
+        result = @notification.
+          set_alert('Hello JPush').
+          set_ios(
+            alert: { k1: 'v1', k2: 'v2' },
+            available: false,
+            contentavailable: true
+          ).to_hash
+        assert_equal 2, result[:ios].size
+        assert_true result[:ios][:'content-available'].is_a? TrueClass
+      end
+
+      def test_available
+        result = @notification.
+          set_alert('Hello JPush').
+          set_ios(
+            alert: { k1: 'v1', k2: 'v2' },
+            contentavailable: true,
+            mutableavailable: true
+          ).to_hash
+        assert_equal 3, result[:ios].size
+        assert_true result[:ios][:'content-available'].is_a? TrueClass
+        assert_true result[:ios][:'mutable-available'].is_a? TrueClass
+      end
+
     end
   end
 end
