@@ -35,12 +35,13 @@ module JPush
       assert_equal 200, response.http_code
       assert_true response.body.has_key?('msg_id')
 
-      # notification = Push::Notification.new.set_ios(alert: 'hello', extras: extras)
-      # push_payload = Push::PushPayload.new(platform: 'ios', audience: 'all', notification: notification)
-      # response = @pusher.push(push_payload)
-      # puts response.body
-      # assert_equal 200, response.http_code
-      # assert_true response.body.has_key?('msg_id')
+      notification = Push::Notification.new
+        .set_alert('hello')
+        .set_ios(alert: extras, extras: extras)
+      push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: notification)
+      response = @pusher.push(push_payload)
+      assert_equal 200, response.http_code
+      assert_true response.body.has_key?('msg_id')
     end
 
   end

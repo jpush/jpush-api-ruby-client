@@ -30,6 +30,14 @@ module JPush
         assert_true result.has_key?(:alert)
         assert_true result.has_key?(:android)
         assert_true result.has_key?(:ios)
+
+        result = @notification.
+          set_alert('Hello JPush').
+          set_android(alert: 'Hello Android').
+          set_ios(alert: { k1: 'v1', k2: 'v2' }).to_hash
+        assert_equal 3, result.size
+        assert_true result[:ios][:alert].is_a? Hash
+        assert_equal 2, result[:ios][:alert].size
       end
 
       def test_sets
