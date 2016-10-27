@@ -31,16 +31,19 @@ module JPush
         self
       end
 
-      def set_ios(alert: , sound: nil, badge: nil, available: nil, category:nil, extras: nil)
+      def set_ios(alert: , sound: nil, badge: nil, available: nil, category:nil, extras: nil, contentavailable: nil, mutableavailable: nil)
+        contentavailable = available if contentavailable.nil?
         extras = Notification.build_extras(extras)
         badge = 0 == badge.to_i ? '0' : badge unless badge.nil?
-        available = nil unless available.is_a? TrueClass
+        contentavailable = nil unless contentavailable.is_a? TrueClass
+        mutableavailable = nil unless mutableavailable.is_a? TrueClass
         check_argument(alert: alert, sound: sound, badge: badge, category: category)
         @ios = {
           alert: alert,
           sound: sound,
           badge: badge,
-          'content-available': available,
+          'content-available': contentavailable,
+          'mutable-available': mutableavailable,
           category: category,
           extras: extras
         }.compact
