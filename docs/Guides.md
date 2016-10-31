@@ -128,7 +128,8 @@ notification.set_ios(
   alert: alert,
   sound: sound,
   badge: badge,
-  available: available,
+  contentavailable: contentavailable,
+  mutableavailable: mutableavailable,
   category: category,
   extras: extras
 )
@@ -160,7 +161,8 @@ notification = JPush::Push::Notification.new.
     alert: alert,
     sound: sound,
     badge: badge,
-    available: available,
+    contentavailable: contentavailable,
+    mutableavailable: mutableavailable,
     category: category,
     extras: extras
   )

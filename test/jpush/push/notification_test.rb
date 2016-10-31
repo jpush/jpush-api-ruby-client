@@ -54,7 +54,7 @@ module JPush
             alert: 'Hello IOS',
             sound: 'sound',
             badge: '+1',
-            available: true,
+            contentavailable: true,
             category: 'jpush',
             extras: {
               key2: 'value2',
