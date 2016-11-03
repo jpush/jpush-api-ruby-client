@@ -21,7 +21,7 @@ module JPush
 
         refine String do
           BLANK_RE = /\A[[:space:]]*\z/
-          WORD_RE = /\A[\p{han}a-zA-Z0-9_]+\z/u
+          WORD_RE = /\A[\p{han}a-zA-Z0-9_@!#&=|\$\*\+\.]+\z/u
 
           def titleize
             self.split(' ').map(&:capitalize).join(' ')

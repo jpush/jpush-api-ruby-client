@@ -68,6 +68,7 @@ module JPush
         raise Utils::Exceptions::OverLimitError.new(name, max_size, unit) if size > max_size
       end
 
+      # 有效的 tag alias 组成: 字母(区分大小写), 数字, 下划线, 汉字, 特殊字符(@!#$&*+=.|)
       def ensure_word_valid(name, word)
         raise Utils::Exceptions::InvalidWordError.new(name, word) unless word.valid_word?
       end

@@ -33,7 +33,8 @@ module JPush
 
       class InvalidWordError < JPushError
         def initialize(name, word)
-          super("invalid #{name}: #{word} ( #{name} can only contain letters, numbers, '_' and Chinese character)")
+          super("invalid #{name}: #{word} ( #{name} can only contain letters, numbers,
+            '_', Chinese character and special characters(@!#$&*+=.|))")
         end
       end
 
