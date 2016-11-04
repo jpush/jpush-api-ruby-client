@@ -116,11 +116,11 @@ module JPush
           set_ios(
             alert: { k1: 'v1', k2: 'v2' },
             contentavailable: true,
-            mutableavailable: true
+            mutablecontent: true
           ).to_hash
         assert_equal 3, result[:ios].size
         assert_true result[:ios][:'content-available'].is_a? TrueClass
-        assert_true result[:ios][:'mutable-available'].is_a? TrueClass
+        assert_true result[:ios][:'mutable-content'].is_a? TrueClass
       end
 
     end

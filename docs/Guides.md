@@ -129,7 +129,7 @@ notification.set_ios(
   sound: sound,
   badge: badge,
   contentavailable: contentavailable,
-  mutableavailable: mutableavailable,
+  mutablecontent: mutablecontent,
   category: category,
   extras: extras
 )
@@ -143,7 +143,7 @@ notification.set_ios(
 | sound | 否 | 表示通知提示声音 |
 | badge | 否 | 表示应用角标，把角标数字改为指定的数字；为 0 表示清除 |
 | contentavailable | 否 | 表示推送唤醒，仅接受 true 表示为 Background Remote Notification，若不填默认是 nil 表示普通的 Remote Notification |
-| mutableavailable | 否 | 表示通知扩展，仅接受 true 表示支持 iOS10 的 UNNotificationServiceExtension，若不填默认是 nil 表示普通的 Remote Notification |
+| mutablecontent | 否 | 表示通知扩展，仅接受 true 表示支持 iOS10 的 UNNotificationServiceExtension，若不填默认是 nil 表示普通的 Remote Notification |
 | category | 否 | IOS8才支持。设置 APNs payload 中的 'category' 字段值 |
 | extras | 否 | 表示扩展字段，接受一个 Hash 对象，以供业务使用 |
 
@@ -162,7 +162,7 @@ notification = JPush::Push::Notification.new.
     sound: sound,
     badge: badge,
     contentavailable: contentavailable,
-    mutableavailable: mutableavailable,
+    mutablecontent: mutablecontent,
     category: category,
     extras: extras
   )
