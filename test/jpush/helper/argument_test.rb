@@ -47,14 +47,12 @@ module JPush
           @klass.ensure_word_valid('arg', '')
         end
         assert_raises Utils::Exceptions::InvalidWordError do
-          @klass.ensure_word_valid('arg', 'jpush#000')
-        end
-        assert_raises Utils::Exceptions::InvalidWordError do
           @klass.ensure_word_valid('arg', 'あいうえお')
         end
-        assert_raises Utils::Exceptions::InvalidWordError do
-          @klass.ensure_word_valid('arg', 'jpush@')
-        end
+
+        # @klass.ensure_word_valid('arg', '@!#$&*+=.|')
+        @klass.ensure_word_valid('arg', 'jpush#000')
+        @klass.ensure_word_valid('arg', 'jpush@')
         @klass.ensure_word_valid('arg', '极光推送')
         @klass.ensure_word_valid('arg', 'jpush')
         @klass.ensure_word_valid('arg', '000')

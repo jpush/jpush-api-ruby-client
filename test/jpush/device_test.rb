@@ -138,7 +138,7 @@ module JPush
       assert_equal 200, response.http_code
 
       body = device_body($test_common_registration_id)
-      assert_nil body['alias']
+      assert_true body['alias'].empty?
 
       unless origin_alias.nil?
         response = @devices.update_alias($test_common_registration_id, origin_alias)
