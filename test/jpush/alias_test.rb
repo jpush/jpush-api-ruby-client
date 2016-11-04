@@ -48,7 +48,7 @@ module JPush
       assert_true body['registration_ids'].empty?
 
       body = @devices.show($test_common_registration_id).body
-      assert_nil body['alias']
+      assert_true body['alias'].empty?
     end
 
     def test_delete_invalid_alias

@@ -33,8 +33,6 @@ module JPush
       schedule_id = @schedules.tasks.body['schedules'].first['schedule_id']
       response = @schedules.show(schedule_id)
       assert_equal 200, response.http_code
-      body = response.body
-      assert_equal 5, body.size
     end
 
     def test_update
