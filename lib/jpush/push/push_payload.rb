@@ -44,7 +44,7 @@ module JPush
           notification: @notification,
           message: @message,
           sms_message: @sms_message,
-          options: @options
+          options: { apns_production: false }.merge(@options.nil? ? {} : @options)
         }.compact
       end
 

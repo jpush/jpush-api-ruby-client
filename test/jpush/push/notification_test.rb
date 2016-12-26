@@ -77,7 +77,7 @@ module JPush
             alert: { k1: 'v1', k2: 'v2' },
             available: true
           ).to_hash
-        assert_equal 2, result[:ios].size
+        assert_equal 3, result[:ios].size
         assert_true result[:ios][:'content-available'].is_a? TrueClass
 
         result = @notification.
@@ -86,7 +86,7 @@ module JPush
             alert: { k1: 'v1', k2: 'v2' },
             contentavailable: true
           ).to_hash
-        assert_equal 2, result[:ios].size
+        assert_equal 3, result[:ios].size
         assert_true result[:ios][:'content-available'].is_a? TrueClass
 
         result = @notification.
@@ -96,7 +96,7 @@ module JPush
             available: true,
             contentavailable: false
           ).to_hash
-        assert_equal 1, result[:ios].size
+        assert_equal 2, result[:ios].size
         assert_true result[:ios][:'content-available'].nil?
 
         result = @notification.
@@ -106,7 +106,7 @@ module JPush
             available: false,
             contentavailable: true
           ).to_hash
-        assert_equal 2, result[:ios].size
+        assert_equal 3, result[:ios].size
         assert_true result[:ios][:'content-available'].is_a? TrueClass
       end
 
@@ -118,7 +118,7 @@ module JPush
             contentavailable: true,
             mutablecontent: true
           ).to_hash
-        assert_equal 3, result[:ios].size
+        assert_equal 4, result[:ios].size
         assert_true result[:ios][:'content-available'].is_a? TrueClass
         assert_true result[:ios][:'mutable-content'].is_a? TrueClass
       end

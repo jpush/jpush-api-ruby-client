@@ -19,25 +19,29 @@ module JPush
         self
       end
 
-      def set_android(alert: , title: nil, builder_id: nil, extras: nil)
+      def set_android(alert: , title: nil, builder_id: nil,
+        priority: nil, category: nil, style: nil, big_text: nil, inbox: nil, big_pic_path: nil, extras: nil)
         extras = Notification.build_extras(extras)
-        check_argument(alert: alert, title: title, builder_id: builder_id)
         @android = {
           alert: alert,
           title: title,
           builder_id: builder_id,
+          priority: priority,
+          category: category,
+          style: style,
+          big_text: big_text,
+          inbox: inbox,
+          big_pic_path: big_pic_path,
           extras: extras
         }.compact
         self
       end
 
-      def set_ios(alert: , sound: nil, badge: nil, available: nil, category:nil, extras: nil, contentavailable: nil, mutablecontent: nil)
+      def set_ios(alert: , sound: nil, badge: '+1', available: nil, category:nil, extras: nil, contentavailable: nil, mutablecontent: nil)
         contentavailable = available if contentavailable.nil?
         extras = Notification.build_extras(extras)
-        badge = 0 == badge.to_i ? '0' : badge unless badge.nil?
         contentavailable = nil unless contentavailable.is_a? TrueClass
         mutablecontent = nil unless mutablecontent.is_a? TrueClass
-        check_argument(alert: alert, sound: sound, badge: badge, category: category)
         @ios = {
           alert: alert,
           sound: sound,
@@ -60,14 +64,6 @@ module JPush
         raise Utils::Exceptions::JPushError, 'Notification can not be empty.' if @notification.empty?
         @notification
       end
-
-      private
-
-        def check_argument(args)
-          hash = args.select{|key, value| !value.nil?}
-          hash.delete(:alert) if '' == hash[:alert]
-          Notification.ensure_argument_not_blank(hash)
-        end
 
     end
   end

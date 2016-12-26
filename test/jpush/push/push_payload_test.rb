@@ -86,9 +86,11 @@ module JPush
         assert_raises Utils::Exceptions::InvalidElementError do
           @hello_payload.set_options(key1: 'value1', key2: 'value2')
         end
+
         opts = @hello_payload.set_options(sendno: '000').to_hash[:options]
         assert_true opts.has_key?(:sendno)
-        assert_equal 1, opts.size
+        assert_true opts.has_key?(:apns_production)
+        assert_equal 2, opts.size
         assert_equal '000', opts[:sendno]
       end
 
