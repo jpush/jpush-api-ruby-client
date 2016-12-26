@@ -26,7 +26,6 @@ module JPush
 
       result = body.first
       assert_instance_of(Hash, result)
-      assert_equal 5, result.size
       assert_equal @msg_id.to_i, result['msg_id']
     end
 

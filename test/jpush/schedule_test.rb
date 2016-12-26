@@ -6,7 +6,7 @@ module JPush
     def setup
       @push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from schedule api')
       @schedule_name = "jpush#{rand(0..100)}"
-      @schedule_payload = Schedule::SchedulePayload.new(@schedule_name, Time.new(2020), @push_payload)
+      @schedule_payload = Schedule::SchedulePayload.new(@schedule_name, Time.now + 3600 * 24 * 360, @push_payload)
       @pusher = @@jpush.pusher
       @schedules = @@jpush.schedules
     end
