@@ -118,7 +118,13 @@ notification.set_android(
 | --- | :---: | --- |
 | alert | 是 | 表示通知内容，会覆盖上级统一指定的 alert 信息；内容可以为空字符串，表示不展示到通知栏 |
 | title | 否 | 表示通知标题，会替换通知里原来展示 App 名称的地方 |
-| builder_id | 否 | 表示通知栏样式ID，Android SDK 可设置通知栏样式，这里根据样式 ID 来指定该使用哪套样式 |
+| builder_id | 否 | 表示通知栏样式 ID，Android SDK 可设置通知栏样式，这里根据样式 ID 来指定该使用哪套样式 |
+| priority | 否 | 表示通知栏展示优先级，默认为 0，范围为 -2～2 ，其他值将会被忽略而采用默认值 |
+| category | 否 | 表示通知栏条目过滤或排序，完全依赖 rom 厂商对 category 的处理策略 |
+| style | 否 | 表示通知栏样式类型，默认为 0，还有1，2，3 可选，用来指定选择哪种通知栏样式，其他值无效。有三种可选分别为 bigText = 1，Inbox = 2，bigPicture = 3 |
+| big_text | 否 | 表示大文本通知栏样式，当 style = 1 时可用，内容会被通知栏以大文本的形式展示出来，支持 api 16 以上的 rom |
+| inbox | 否 | 表示文本条目通知栏样式，接受一个数组，当 style = 2 时可用，数组的每个 key 对应的 value 会被当作文本条目逐条展示，支持 api 16 以上的 rom |
+| big_pic_path | 否 | 表示大图片通知栏样式，当 style = 3 时可用，可以是网络图片 url，或本地图片的 path，目前支持 .jpg 和 .png 后缀的图片。图片内容会被通知栏以大图片的形式展示出来。如果是 http／https 的 url，会自动下载；如果要指定开发者准备的本地图片就填 sdcard 的相对路径，支持 api 16 以上的 rom |
 | extras | 否 | 表示扩展字段，接受一个 Hash 对象，以供业务使用 |
 
 ###### ios
@@ -141,7 +147,7 @@ notification.set_ios(
 | --- | :---: | --- |
 | alert | 是 | 表示通知内容，会覆盖上级统一指定的 alert 信息；内容可以为空字符串，表示不展示到通知栏 |
 | sound | 否 | 表示通知提示声音 |
-| badge | 否 | 表示应用角标，把角标数字改为指定的数字；为 0 表示清除 |
+| badge | 否 | 表示应用角标，把角标数字改为指定的数字；为 0 表示清除，若不填默认是默认是 +1 |
 | contentavailable | 否 | 表示推送唤醒，仅接受 true 表示为 Background Remote Notification，若不填默认是 nil 表示普通的 Remote Notification |
 | mutablecontent | 否 | 表示通知扩展，仅接受 true 表示支持 iOS10 的 UNNotificationServiceExtension，若不填默认是 nil 表示普通的 Remote Notification |
 | category | 否 | IOS8才支持。设置 APNs payload 中的 'category' 字段值 |
