@@ -48,7 +48,7 @@ module JPush
 
         def build_args_from_array_or_string(args_name, args_value, max_size)
           # remove blank elements in args array
-          args = [args_value].flatten.compact.reject{ |arg| arg.blank? }.uniq
+          args = [args_value].flatten.compact.reject{ |arg| arg.j_blank? }.uniq
           ensure_argument_not_blank(args_name.to_sym => args)
           ensure_not_over_size(args_name, args, max_size)
           args.each{|word| ensure_word_valid(args_name, word)}
