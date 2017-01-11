@@ -4,7 +4,6 @@ module JPush
   module Push
     class Audience
       extend Helper::ArgumentHelper
-      using Utils::Helper::ObjectExtensions
 
       def set_tag(tags)
         @tag = [tags].flatten
@@ -32,8 +31,7 @@ module JPush
           tag_and: @tag_and,
           alias: @alias,
           registration_id: @registration_id
-        }.compact
-        raise Utils::Exceptions::JPushError, 'Audience can not be empty.' if @audience.empty?
+        }.select { |_, value| !value.nil? }
         @audience
       end
 

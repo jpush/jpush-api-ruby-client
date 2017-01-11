@@ -4,7 +4,6 @@ module JPush
   module Push
     class Notification
       extend Helper::ArgumentHelper
-      using Utils::Helper::ObjectExtensions
 
       def set_alert(alert)
         @alert = alert
@@ -30,7 +29,7 @@ module JPush
           inbox: inbox,
           big_pic_path: big_pic_path,
           extras: extras
-        }.compact
+        }.select { |_, value| !value.nil? }
         self
       end
 
@@ -47,7 +46,7 @@ module JPush
           'mutable-content': mutablecontent,
           category: category,
           extras: extras
-        }.compact
+        }.select { |_, value| !value.nil? }
         self
       end
 
@@ -56,7 +55,7 @@ module JPush
           alert: @alert,
           android: @android,
           ios: @ios
-        }.compact
+        }.select { |_, value| !value.nil? }
         raise Utils::Exceptions::JPushError, 'Notification can not be empty.' if @notification.empty?
         @notification
       end

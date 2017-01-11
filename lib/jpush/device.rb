@@ -5,7 +5,6 @@ module JPush
   module Device
     extend self
     extend Helper::ArgumentHelper
-    using Utils::Helper::ObjectExtensions
 
     # GET /v3/devices/{registration_id}
     # 获取当前设备的所有属性
@@ -19,18 +18,18 @@ module JPush
     def update(registration_id, tags_add: nil, tags_remove: nil, clear_tags: false, alis: nil, mobile: nil)
       tags =
         if clear_tags
-          ''
+            ''
         else
-          tags_add = [tags_add].flatten unless tags_add.nil?
-          tags_remove = [tags_remove].flatten unless tags_remove.nil?
-          tags = { add: tags_add, remove: tags_remove }.compact
-          tags.empty? ? nil : tags
+          hash = {}
+          hash[:add] = [tags_add].flatten unless tags_add.nil?
+          hash[:remove] = [tags_remove].flatten unless tags_remove.nil?
+          hash.empty? ? nil : hash
         end
       body = {
         tags: tags,
         alias: alis,
         mobile: mobile
-      }.compact
+      }.select { |_, value| !value.nil? }
 
       url = base_url + registration_id
       Http::Client.post(url, body: body)
@@ -82,7 +81,6 @@ module JPush
   module Tag
     extend self
     extend Helper::ArgumentHelper
-    using Utils::Helper::ObjectExtensions
 
     # GET /v3/tags/
     # 获取当前应用的所有标签列表。
@@ -101,11 +99,11 @@ module JPush
     # POST /v3/tags/{tag_value}
     # 为一个标签添加或者删除设备。
     def update(tag_value, devices_add: nil, devices_remove: nil)
-      devices_add = [devices_add].flatten unless devices_add.nil?
-      devices_remove = [devices_remove].flatten unless devices_remove.nil?
-      registration_ids = { add: devices_add, remove: devices_remove }.compact
+      rids = {}
+      rids[:add] = [devices_add].flatten unless devices_add.nil?
+      rids[:remove] = [devices_remove].flatten unless devices_remove.nil?
 
-      body = { registration_ids: registration_ids }
+      body = { registration_ids: rids }
       url = base_url + tag_value
       Http::Client.post(url, body: body)
     end

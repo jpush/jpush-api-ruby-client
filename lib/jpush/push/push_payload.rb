@@ -6,7 +6,6 @@ module JPush
   module Push
     class PushPayload
       extend Helper::ArgumentHelper
-      using Utils::Helper::ObjectExtensions
 
       VALID_OPTION_KEY = [:sendno, :time_to_live, :override_msg_id, :apns_production, :big_push_duration]
       MAX_SMS_CONTENT_SIZE = 480
@@ -45,7 +44,7 @@ module JPush
           message: @message,
           sms_message: @sms_message,
           options: { apns_production: false }.merge(@options.nil? ? {} : @options)
-        }.compact
+        }.select { |_, value| !value.nil? }
       end
 
       private
@@ -72,7 +71,7 @@ module JPush
             title: title,
             content_type: content_type,
             extras: extras
-          }.compact
+          }.select { |_, value| !value.nil? }
         end
 
         def build_sms_message(content, delay_time)

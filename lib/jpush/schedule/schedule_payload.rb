@@ -6,7 +6,6 @@ module JPush
   module Schedule
     class SchedulePayload
       extend Helper::ArgumentHelper
-      using Utils::Helper::ObjectExtensions
 
       def initialize(name, trigger, push_payload, enabled = nil)
         @name = name
@@ -21,7 +20,7 @@ module JPush
           enabled: @enabled,
           trigger: @trigger,
           push: @push_payload
-        }.compact
+        }.select { |_, value| !value.nil? }
         raise Utils::Exceptions::JPushError, 'Schedule update body can not be empty' if @schedule_payload.empty?
         @schedule_payload
       end

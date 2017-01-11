@@ -1,9 +1,6 @@
-require 'jpush/utils/helper'
-
 module JPush
   module Utils
     module Exceptions
-      using Utils::Helper::ObjectExtensions
 
       class JPushError < StandardError
         attr_reader :message

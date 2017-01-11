@@ -39,7 +39,7 @@ module JPush
     end
 
     def test_update
-      assert_raises Utils::Exceptions::JPushError do
+      assert_raises Utils::Exceptions::JPushResponseError do
         @tags.update($test_common_tag)
       end
     end
