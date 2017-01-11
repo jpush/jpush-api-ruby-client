@@ -1,9 +1,6 @@
-require 'jpush/helper/argument_helper'
-
 module JPush
   module Push
     class Notification
-      extend Helper::ArgumentHelper
 
       def set_alert(alert)
         @alert = alert
@@ -17,7 +14,6 @@ module JPush
 
       def set_android(alert: , title: nil, builder_id: nil,
         priority: nil, category: nil, style: nil, big_text: nil, inbox: nil, big_pic_path: nil, extras: nil)
-        extras = Notification.build_extras(extras)
         @android = {
           alert: alert,
           title: title,
@@ -35,7 +31,6 @@ module JPush
 
       def set_ios(alert: , sound: nil, badge: '+1', available: nil, category:nil, extras: nil, contentavailable: nil, mutablecontent: nil)
         contentavailable = available if contentavailable.nil?
-        extras = Notification.build_extras(extras)
         contentavailable = nil unless contentavailable.is_a? TrueClass
         mutablecontent = nil unless mutablecontent.is_a? TrueClass
         @ios = {

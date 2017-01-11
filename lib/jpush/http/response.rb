@@ -7,15 +7,7 @@ module JPush
       def initialize(raw_response)
         @http_code = raw_response.code.to_i
         @body = parse_body(raw_response.body)
-
-        unless raw_response.kind_of? Net::HTTPSuccess
-          begin
-            build_error
-          rescue Utils::Exceptions::VIPAppKeyError => e
-            puts "\nVIPAppKeyError: #{e}"
-            puts "\t#{e.backtrace.join("\n\t")}"
-          end
-        end
+        build_error unless raw_response.kind_of? Net::HTTPSuccess
       end
 
       private
@@ -33,13 +25,7 @@ module JPush
             else
               [@body['code'], @body['message']]
             end
-
-          case error_code
-          when 2003
-            raise Utils::Exceptions::VIPAppKeyError.new(http_code, error_code, error_message)
-          else
-            raise Utils::Exceptions::JPushResponseError.new(http_code, error_code, error_message)
-          end
+          raise Utils::Exceptions::JPushResponseError.new(http_code, error_code, error_message)
         end
 
     end

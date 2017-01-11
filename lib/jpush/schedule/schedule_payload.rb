@@ -1,11 +1,9 @@
-require 'jpush/helper/argument_helper'
 require 'jpush/push/push_payload'
 require 'jpush/schedule/trigger'
 
 module JPush
   module Schedule
     class SchedulePayload
-      extend Helper::ArgumentHelper
 
       def initialize(name, trigger, push_payload, enabled = nil)
         @name = name
@@ -33,7 +31,6 @@ module JPush
           push: @push_payload
         }
         hash = @schedule_payload.select { |_, value| value.nil? }
-        raise Utils::Exceptions::MissingArgumentError.new(hash.keys) unless hash.empty?
         @schedule_payload
       end
 

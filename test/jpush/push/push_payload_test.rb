@@ -8,13 +8,6 @@ module JPush
         @hello_payload = PushPayload.new(platform: 'all', audience: 'all', notification: 'hello')
       end
 
-      def test_initialize
-        push_payload = PushPayload.new(platform: 'all', audience: 'all')
-        assert_raises Utils::Exceptions::JPushError do
-          push_payload.to_hash
-        end
-      end
-
       def test_platform
         push_payload = PushPayload.new(
           platform: 'android',
@@ -25,9 +18,6 @@ module JPush
       end
 
       def test_audience
-        assert_raises Utils::Exceptions::MissingArgumentError do
-          PushPayload.new(platform: 'all', audience: 'jpush', notification: 'hello').to_hash
-        end
         push_payload = PushPayload.new(
           platform: 'all',
           audience: Audience.new.set_tag('jpush'),
@@ -80,10 +70,6 @@ module JPush
       end
 
       def test_options
-        assert_raises Utils::Exceptions::InvalidElementError do
-          @hello_payload.set_options(key1: 'value1', key2: 'value2')
-        end
-
         opts = @hello_payload.set_options(sendno: '000').to_hash[:options]
         assert_true opts.has_key?(:sendno)
         assert_true opts.has_key?(:apns_production)

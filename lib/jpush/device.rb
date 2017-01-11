@@ -1,10 +1,8 @@
-require 'jpush/helper/argument_helper'
 require 'jpush/http/client'
 
 module JPush
   module Device
     extend self
-    extend Helper::ArgumentHelper
 
     # GET /v3/devices/{registration_id}
     # 获取当前设备的所有属性
@@ -80,7 +78,6 @@ module JPush
 
   module Tag
     extend self
-    extend Helper::ArgumentHelper
 
     # GET /v3/tags/
     # 获取当前应用的所有标签列表。
@@ -120,7 +117,7 @@ module JPush
     # DELETE /v3/tags/{tag_value}
     # 删除一个标签，以及标签与设备之间的关联关系
     def delete(tag_value, platform = nil)
-      params = platform.nil? ? nil : { platform: build_platform(platform) }
+      params = platform.nil? ? nil : { platform: [platform].flatten.join(',') }
       url = base_url + tag_value
       Http::Client.delete(url, params: params)
     end
@@ -136,7 +133,6 @@ module JPush
 
   module Alias
     extend self
-    extend Helper::ArgumentHelper
 
     # GET /v3/aliases/{alias_value}
     # 获取指定alias下的设备，最多输出10个
@@ -158,6 +154,10 @@ module JPush
 
       def base_url
         Config.settings[:device_api_host] + Config.settings[:api_version] + '/aliases/'
+      end
+
+      def build_platform(p)
+        [p].flatten.join(',')
       end
 
   end

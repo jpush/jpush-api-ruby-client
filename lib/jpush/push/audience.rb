@@ -1,9 +1,6 @@
-require 'jpush/helper/argument_helper'
-
 module JPush
   module Push
     class Audience
-      extend Helper::ArgumentHelper
 
       def set_tag(tags)
         @tag = [tags].flatten

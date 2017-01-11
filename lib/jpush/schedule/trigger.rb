@@ -1,11 +1,7 @@
-require 'jpush/helper/argument_helper'
-
 module JPush
   module Schedule
     class Trigger
-      extend Helper::ArgumentHelper
 
-      TIME_UNIT = ['MONTH', 'WEEK', 'DAY']
       WEEK = ['MON','TUE','WED','THU','FRI','SAT','SUN']
       MDAY = ('01'..'31').to_a
 
@@ -17,7 +13,6 @@ module JPush
 
       def set_periodical(start_time, end_time, time, time_unit, frequency, point)
         @single = nil
-        raise Utils::Exceptions::InvalidElementError.new('time unit', time_unit, TIME_UNIT) unless TIME_UNIT.include?(time_unit.upcase)
         require 'time'
         frequency = 100 if frequency > 100
         @periodical = {
@@ -51,7 +46,6 @@ module JPush
             when 'MONTH'
               MDAY & array
             end
-          raise Utils::Exceptions::InvalidArgumentError.new([], "invalid point") if point.empty?
         end
 
     end
