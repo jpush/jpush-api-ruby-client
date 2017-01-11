@@ -51,7 +51,8 @@ module JPush
       private
 
         def build_platform(platform)
-          PushPayload.build_platform(platform)
+          return platform if platform.is_a? Array
+          return [platform]
         end
 
         def build_audience(audience)
@@ -65,7 +66,6 @@ module JPush
 
         def build_message(msg_content, title = nil, content_type = nil, extras = nil)
           hash = {'msg_content': msg_content, 'title': title, 'content_type': content_type}.select{|key, value| !value.nil?}
-          PushPayload.ensure_argument_not_blank(hash)
           extras = PushPayload.build_extras(extras)
           message = {
             msg_content: msg_content,
@@ -76,8 +76,6 @@ module JPush
         end
 
         def build_sms_message(content, delay_time)
-          PushPayload.ensure_argument_not_blank('content': content)
-          PushPayload.ensure_not_over_size('content', content, MAX_SMS_CONTENT_SIZE)
           delay_time = 0 if delay_time > MAX_SMS_DELAY_TIME
           {content: content, delay_time: delay_time}
         end

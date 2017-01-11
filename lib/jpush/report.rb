@@ -13,7 +13,7 @@ module JPush
     # GET /v3/received
     # 送达统计
     def received(msg_ids)
-      msg_ids = build_msg_ids(msg_ids)
+      msg_ids = [msg_ids].flatten
       url = base_url + '/received'
       params = {
         msg_ids: msg_ids.join(',')
@@ -24,7 +24,7 @@ module JPush
     # GET /v3/messages
     # 消息统计
     def messages(msg_ids)
-      msg_ids = build_msg_ids(msg_ids)
+      msg_ids = [msg_ids].flatten
       url = base_url + '/messages'
       params = {
         msg_ids: msg_ids.join(',')

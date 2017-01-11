@@ -9,7 +9,6 @@ module JPush
       MAX_IOS_NOTIFICATION_SIZE = 2000
 
       def set_alert(alert)
-        Notification.ensure_argument_not_blank('alert': alert)
         @alert = alert
         self
       end

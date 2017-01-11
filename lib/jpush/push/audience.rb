@@ -7,22 +7,22 @@ module JPush
       using Utils::Helper::ObjectExtensions
 
       def set_tag(tags)
-        @tag = Audience.build_tags(tags, 20)
+        @tag = [tags].flatten
         self
       end
 
       def set_tag_and(tags)
-        @tag_and = Audience.build_tags(tags, 20)
+        @tag_and = [tags].flatten
         self
       end
 
       def set_alias(alis)
-        @alias = Audience.build_alias(alis)
+        @alias = [alis].flatten
         self
       end
 
       def set_registration_id(registration_ids)
-        @registration_id = Audience.build_registration_ids(registration_ids)
+        @registration_id = [registration_ids].flatten
         self
       end
 
