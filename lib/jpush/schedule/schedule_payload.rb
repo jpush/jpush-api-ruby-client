@@ -9,7 +9,7 @@ module JPush
       using Utils::Helper::ObjectExtensions
 
       def initialize(name, trigger, push_payload, enabled = nil)
-        @name = build_name(name)
+        @name = name
         @trigger = build_trigger(trigger)
         @push_payload = build_push_payload(push_payload)
         @enabled = enabled
@@ -36,11 +36,6 @@ module JPush
         hash = @schedule_payload.select { |_, value| value.nil? }
         raise Utils::Exceptions::MissingArgumentError.new(hash.keys) unless hash.empty?
         @schedule_payload
-      end
-
-      def build_name(name)
-        SchedulePayload.ensure_word_valid('name', name) unless name.nil?
-        name
       end
 
       def build_trigger(trigger)

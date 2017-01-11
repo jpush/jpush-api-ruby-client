@@ -6,8 +6,6 @@ module JPush
       extend Helper::ArgumentHelper
       using Utils::Helper::ObjectExtensions
 
-      MAX_IOS_NOTIFICATION_SIZE = 2000
-
       def set_alert(alert)
         @alert = alert
         self
@@ -50,7 +48,6 @@ module JPush
           category: category,
           extras: extras
         }.compact
-        Notification.ensure_not_over_bytesize('ios', {'ios': @ios}, MAX_IOS_NOTIFICATION_SIZE)
         self
       end
 

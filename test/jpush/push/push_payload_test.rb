@@ -16,9 +16,6 @@ module JPush
       end
 
       def test_platform
-        assert_raises Utils::Exceptions::InvalidElementError do
-          PushPayload.new(platform: 'iPhone', audience: 'all', notification: 'hello').to_hash
-        end
         push_payload = PushPayload.new(
           platform: 'android',
           audience: 'all',

@@ -25,9 +25,8 @@ module JPush
     end
 
     def test_update
-      assert_raises Utils::Exceptions::JPushError do
-        @devices.update($test_common_registration_id)
-      end
+        response =  @devices.update($test_common_registration_id)
+        assert_equal 200, response.http_code
     end
 
     def test_add_and_remove_tags
