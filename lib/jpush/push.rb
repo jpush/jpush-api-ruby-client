@@ -8,7 +8,7 @@ module JPush
     # POST https://api.jpush.cn/v3/push/validate
     # 验证推送调用是否能够成功，与推送 API 的区别在于：不向用户发送任何消息
     def validate(push_payload)
-      url =  base_url + 'validate'
+      url = base_url + 'validate'
       send_push(url, push_payload)
     end
 
