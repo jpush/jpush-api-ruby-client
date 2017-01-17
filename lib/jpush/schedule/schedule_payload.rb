@@ -1,15 +1,12 @@
-require 'jpush/helper/argument_helper'
 require 'jpush/push/push_payload'
 require 'jpush/schedule/trigger'
 
 module JPush
   module Schedule
     class SchedulePayload
-      extend Helper::ArgumentHelper
-      using Utils::Helper::ObjectExtensions
 
       def initialize(name, trigger, push_payload, enabled = nil)
-        @name = build_name(name)
+        @name = name
         @trigger = build_trigger(trigger)
         @push_payload = build_push_payload(push_payload)
         @enabled = enabled
@@ -21,7 +18,7 @@ module JPush
           enabled: @enabled,
           trigger: @trigger,
           push: @push_payload
-        }.compact
+        }.select { |_, value| !value.nil? }
         raise Utils::Exceptions::JPushError, 'Schedule update body can not be empty' if @schedule_payload.empty?
         @schedule_payload
       end
@@ -34,13 +31,7 @@ module JPush
           push: @push_payload
         }
         hash = @schedule_payload.select { |_, value| value.nil? }
-        raise Utils::Exceptions::MissingArgumentError.new(hash.keys) unless hash.empty?
         @schedule_payload
-      end
-
-      def build_name(name)
-        SchedulePayload.ensure_word_valid('name', name) unless name.nil?
-        name
       end
 
       def build_trigger(trigger)

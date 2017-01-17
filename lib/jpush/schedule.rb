@@ -1,4 +1,3 @@
-require 'jpush/helper/argument_helper'
 require 'jpush/schedule/schedule_payload'
 require 'jpush/http/client'
 
@@ -6,7 +5,6 @@ module JPush
 
   module Schedule
     extend self
-    extend Helper::ArgumentHelper
 
     # POST https://api.jpush.cn/v3/schedules
     # 创建一个新的定时任务

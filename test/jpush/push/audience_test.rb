@@ -8,12 +8,6 @@ module JPush
         @audience = Audience.new
       end
 
-      def test_new_audience
-        assert_raises Utils::Exceptions::JPushError do
-          @audience.to_hash
-        end
-      end
-
       def test_set_tag
         result = @audience.set_tag('jpush').to_hash
 

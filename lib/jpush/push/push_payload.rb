@@ -1,14 +1,10 @@
-require 'jpush/helper/argument_helper'
 require 'jpush/push/audience'
 require 'jpush/push/notification'
 
 module JPush
   module Push
     class PushPayload
-      extend Helper::ArgumentHelper
-      using Utils::Helper::ObjectExtensions
 
-      VALID_OPTION_KEY = [:sendno, :time_to_live, :override_msg_id, :apns_production, :big_push_duration]
       MAX_SMS_CONTENT_SIZE = 480
       MAX_SMS_DELAY_TIME = 86400    # 24 * 60 * 60 (second)
 
@@ -30,14 +26,11 @@ module JPush
       end
 
       def set_options(opts)
-        @options = build_options(opts)
+        @options = opts
         self
       end
 
       def to_hash
-        raise Utils::Exceptions::MissingArgumentError.new(['audience']) unless @audience
-        err_msg = 'missing notification or message'
-        raise Utils::Exceptions::JPushError, err_msg unless @notification || @message
         @push_payload =  {
           platform: @platform,
           audience: @audience,
@@ -45,13 +38,14 @@ module JPush
           message: @message,
           sms_message: @sms_message,
           options: { apns_production: false }.merge(@options.nil? ? {} : @options)
-        }.compact
+        }.select { |_, value| !value.nil? }
       end
 
       private
 
         def build_platform(platform)
-          PushPayload.build_platform(platform)
+          return platform if platform.is_a? Array
+          return [platform]
         end
 
         def build_audience(audience)
@@ -64,28 +58,18 @@ module JPush
         end
 
         def build_message(msg_content, title = nil, content_type = nil, extras = nil)
-          hash = {'msg_content': msg_content, 'title': title, 'content_type': content_type}.select{|key, value| !value.nil?}
-          PushPayload.ensure_argument_not_blank(hash)
-          extras = PushPayload.build_extras(extras)
+          extras = (extras.nil? || !extras.is_a?(Hash) || extras.empty?) ? nil : extras
           message = {
             msg_content: msg_content,
             title: title,
             content_type: content_type,
             extras: extras
-          }.compact
+          }.select { |_, value| !value.nil? }
         end
 
         def build_sms_message(content, delay_time)
-          PushPayload.ensure_argument_not_blank('content': content)
-          PushPayload.ensure_not_over_size('content', content, MAX_SMS_CONTENT_SIZE)
           delay_time = 0 if delay_time > MAX_SMS_DELAY_TIME
           {content: content, delay_time: delay_time}
-        end
-
-        def build_options(opts)
-          opts.each_key do |key|
-            raise Utils::Exceptions::InvalidElementError.new('options', key.to_sym, VALID_OPTION_KEY) unless VALID_OPTION_KEY.include?(key.to_sym)
-          end
         end
 
     end

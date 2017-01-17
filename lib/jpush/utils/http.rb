@@ -1,5 +1,6 @@
 require 'net/http'
 require 'json'
+require 'jpush/utils/exceptions'
 
 module JPush
   module Utils

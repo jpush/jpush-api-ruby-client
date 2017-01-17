@@ -1,15 +1,8 @@
-require 'jpush/helper/argument_helper'
-
 module JPush
   module Push
     class Notification
-      extend Helper::ArgumentHelper
-      using Utils::Helper::ObjectExtensions
-
-      MAX_IOS_NOTIFICATION_SIZE = 2000
 
       def set_alert(alert)
-        Notification.ensure_argument_not_blank('alert': alert)
         @alert = alert
         self
       end
@@ -21,7 +14,6 @@ module JPush
 
       def set_android(alert: , title: nil, builder_id: nil,
         priority: nil, category: nil, style: nil, big_text: nil, inbox: nil, big_pic_path: nil, extras: nil)
-        extras = Notification.build_extras(extras)
         @android = {
           alert: alert,
           title: title,
@@ -33,13 +25,12 @@ module JPush
           inbox: inbox,
           big_pic_path: big_pic_path,
           extras: extras
-        }.compact
+        }.select { |_, value| !value.nil? }
         self
       end
 
       def set_ios(alert: , sound: nil, badge: '+1', available: nil, category:nil, extras: nil, contentavailable: nil, mutablecontent: nil)
         contentavailable = available if contentavailable.nil?
-        extras = Notification.build_extras(extras)
         contentavailable = nil unless contentavailable.is_a? TrueClass
         mutablecontent = nil unless mutablecontent.is_a? TrueClass
         @ios = {
@@ -50,8 +41,7 @@ module JPush
           'mutable-content': mutablecontent,
           category: category,
           extras: extras
-        }.compact
-        Notification.ensure_not_over_bytesize('ios', {'ios': @ios}, MAX_IOS_NOTIFICATION_SIZE)
+        }.select { |_, value| !value.nil? }
         self
       end
 
@@ -60,7 +50,7 @@ module JPush
           alert: @alert,
           android: @android,
           ios: @ios
-        }.compact
+        }.select { |_, value| !value.nil? }
         raise Utils::Exceptions::JPushError, 'Notification can not be empty.' if @notification.empty?
         @notification
       end
