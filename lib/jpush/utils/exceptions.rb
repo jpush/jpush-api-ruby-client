@@ -9,9 +9,6 @@ module JPush
         end
       end
 
-      class JPushArgumentError < JPushError
-      end
-
       class JPushResponseError < JPushError
         attr_reader :http_code, :error_code, :error_message
 
