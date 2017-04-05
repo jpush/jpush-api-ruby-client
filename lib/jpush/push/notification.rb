@@ -13,7 +13,7 @@ module JPush
       end
 
       def set_android(alert: , title: nil, builder_id: nil,
-        priority: nil, category: nil, style: nil, big_text: nil, inbox: nil, big_pic_path: nil, extras: nil)
+        priority: nil, category: nil, style: nil, alert_type: nil, big_text: nil, inbox: nil, big_pic_path: nil, extras: nil)
         @android = {
           alert: alert,
           title: title,
@@ -21,6 +21,7 @@ module JPush
           priority: priority,
           category: category,
           style: style,
+          alert_type: alert_type,
           big_text: big_text,
           inbox: inbox,
           big_pic_path: big_pic_path,
