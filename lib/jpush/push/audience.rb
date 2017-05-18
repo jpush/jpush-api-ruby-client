@@ -12,6 +12,11 @@ module JPush
         self
       end
 
+      def set_tag_not(tags)
+        @tag_not = [tags].flatten
+        self
+      end
+
       def set_alias(alis)
         @alias = [alis].flatten
         self
@@ -26,6 +31,7 @@ module JPush
         @audience = {
           tag: @tag,
           tag_and: @tag_and,
+          tag_not: @tag_not,
           alias: @alias,
           registration_id: @registration_id
         }.select { |_, value| !value.nil? }

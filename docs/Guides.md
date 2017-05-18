@@ -58,12 +58,13 @@ pusher.push(push_payload)
 
 推送设备对象，表示一条推送可以被推送到哪些设备列表。
 如果要发广播（全部设备），不需要构建 Audience 对象，在新建 PushPayload 对象的时候，给 'audience' 参数直接传递字符串 'all' 即可。
-广播外的设备选择方式，有4种类型： tag, tag_and, alias, registration_id, **4种类型至少需要有其一, 这几种类型并存时多项的隐含关系是 AND，即取交集**
+广播外的设备选择方式，有4种类型： tag, tag_and, tag_not, alias, registration_id, **5 种类型至少需要有其一, 这几种类型并存时多项的隐含关系是 AND，即取交集**
 
 ```ruby
 audience = JPush::Push::Audience.new
 audience.set_tag(tag)
 audience.set_tag_and(tag_and)
+audience.set_tag_not(tag_not)
 audience.set_alias(alis)
 audience.set_registration_id(registration_ids)
 
@@ -71,6 +72,7 @@ audience.set_registration_id(registration_ids)
 audience = JPush::Push::Audience.new.
   set_tag(tag).
   set_tag_and(tag_and).
+  set_tag_not(tag_not).
   set_alias(alis).
   set_registration_id(registration_ids)
 ```
@@ -81,6 +83,7 @@ audience = JPush::Push::Audience.new.
 | --- | :---: | --- |
 | tag | 否 | 有效的标签字符串或者一个最多包含20个有效的标签字符串的数组 |
 | tag_and | 否 | 有效的标签字符串或者一个最多包含20个有效的标签字符串的数组 |
+| tag_not | 否 | 有效的标签字符串或者一个最多包含20个有效的标签字符串的数组 |
 | alis | 否 | 有效的别名字符串或者一个最多包含1000个有效的别名字符串的数组 |
 | registration_ids | 否 | 有效的 registration id 字符串或者一个最多包含1000个有效的 registration id 字符串的数组 |
 
