@@ -29,23 +29,6 @@ module JPush
         assert_equal 200, response.http_code
     end
 
-    def test_add_and_remove_tags
-      body = device_body($test_common2_registration_id)
-      assert_false body['tags'].include?($test_common_tag)
-
-      response = @devices.add_tags($test_common2_registration_id, $test_common_tag)
-      assert_equal 200, response.http_code
-
-      body = device_body($test_common2_registration_id)
-      assert_true body['tags'].include?($test_common_tag)
-
-      response = @devices.remove_tags($test_common2_registration_id, $test_common_tag)
-      assert_equal 200, response.http_code
-
-      body = device_body($test_common2_registration_id)
-      assert_false body['tags'].include?($test_common_tag)
-    end
-
     def test_add_invalid_tag_value
       invalid_tag = 'INVALID_TAG'
 
@@ -104,23 +87,6 @@ module JPush
       assert_raises Utils::Exceptions::JPushResponseError do
         @devices.remove_tags('INVALID_REGISTRATION_ID', $test_common_tag)
       end
-    end
-
-    def test_clear_tags
-      body = device_body($test_common2_registration_id)
-      assert_false body['tags'].include?($test_common_tag)
-
-      @devices.add_tags($test_common2_registration_id, $test_common_tag)
-
-      body = device_body($test_common2_registration_id)
-      assert_true body['tags'].include?($test_common_tag)
-
-      response = @devices.clear_tags($test_common2_registration_id)
-      assert_equal 200, response.http_code
-
-      body = device_body($test_common2_registration_id)
-      assert_false body['tags'].include?($test_common_tag)
-      assert_true body['tags'].empty?
     end
 
     def test_update_alias

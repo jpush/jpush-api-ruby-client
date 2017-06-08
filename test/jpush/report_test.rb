@@ -26,7 +26,6 @@ module JPush
 
       result = body.first
       assert_instance_of(Hash, result)
-      assert_equal @msg_id.to_i, result['msg_id']
     end
 
     def test_messages
@@ -39,10 +38,8 @@ module JPush
 
       result = body.first
       assert_instance_of(Hash, result)
-      assert_equal @msg_id.to_i, result['msg_id']
       assert_equal 4, result.size
 
-      assert_equal @msg_id.to_i, result['msg_id']
       assert_instance_of Hash, result['android']
       assert_instance_of Hash, result['ios']
       assert_instance_of Hash, result['winphone']

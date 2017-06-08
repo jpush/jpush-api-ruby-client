@@ -1,14 +1,14 @@
 require 'jpush/http/client'
+require 'jpush/handler'
 
 module JPush
-  module Device
-    extend self
+  class Device < Handler
 
     # GET /v3/devices/{registration_id}
     # 获取当前设备的所有属性
     def show(registration_id)
       url = base_url + registration_id
-      Http::Client.get(url)
+      Http::Client.get(@jpush, url)
     end
 
     # POST /v3/devices/{registration_id}
@@ -30,7 +30,7 @@ module JPush
       }.select { |_, value| !value.nil? }
 
       url = base_url + registration_id
-      Http::Client.post(url, body: body)
+      Http::Client.post(@jpush, url, body: body)
     end
 
     # 下面两个方法接受一个参数,其类型为数组或字符串
@@ -64,33 +64,32 @@ module JPush
       registration_ids = [registration_ids].flatten
       url = base_url + 'status'
       body = { registration_ids: registration_ids }
-      Http::Client.post(url, body: body)
+      Http::Client.post(@jpush, url, body: body)
     end
 
     private
 
       def base_url
-        Config.settings[:device_api_host] + Config.settings[:api_version] + '/devices/'
+        'https://device.jpush.cn/v3/devices/'
       end
 
   end
 
 
-  module Tag
-    extend self
+  class Tag < Handler
 
     # GET /v3/tags/
     # 获取当前应用的所有标签列表。
     def list
       url = base_url
-      Http::Client.get(url)
+      Http::Client.get(@jpush, url)
     end
 
     # GET /v3/tags/{tag_value}/registration_ids/{registration_id}
     # 查询某个设备是否在 tag 下
     def has_device?(tag_value, registration_id)
       url = base_url + "#{tag_value}/registration_ids/#{registration_id}"
-      Http::Client.get(url)
+      Http::Client.get(@jpush, url)
     end
 
     # POST /v3/tags/{tag_value}
@@ -102,7 +101,7 @@ module JPush
 
       body = { registration_ids: rids }
       url = base_url + tag_value
-      Http::Client.post(url, body: body)
+      Http::Client.post(@jpush, url, body: body)
     end
 
     # 下面两个方法接受一个参数,其类型为数组或字符串
@@ -119,27 +118,26 @@ module JPush
     def delete(tag_value, platform = nil)
       params = platform.nil? ? nil : { platform: [platform].flatten.join(',') }
       url = base_url + tag_value
-      Http::Client.delete(url, params: params)
+      Http::Client.delete(@jpush, url, params: params)
     end
 
     private
 
       def base_url
-        Config.settings[:device_api_host] + Config.settings[:api_version] + '/tags/'
+        'https://device.jpush.cn/v3/tags/'
       end
 
   end
 
 
-  module Alias
-    extend self
+  class Alias < Handler
 
     # GET /v3/aliases/{alias_value}
     # 获取指定alias下的设备，最多输出10个
     def show(alias_value, platform = nil)
       params = platform.nil? ? nil : { platform: build_platform(platform) }
       url = base_url + alias_value
-      Http::Client.get(url, params: params)
+      Http::Client.get(@jpush, url, params: params)
     end
 
     # DELETE /v3/aliases/{alias_value}
@@ -147,13 +145,13 @@ module JPush
     def delete(alias_value, platform = nil)
       params = platform.nil? ? nil : { platform: build_platform(platform) }
       url = base_url + alias_value
-      Http::Client.delete(url, params: params)
+      Http::Client.delete(@jpush, url, params: params)
     end
 
     private
 
       def base_url
-        Config.settings[:device_api_host] + Config.settings[:api_version] + '/aliases/'
+        'https://device.jpush.cn/v3/aliases/'
       end
 
       def build_platform(p)

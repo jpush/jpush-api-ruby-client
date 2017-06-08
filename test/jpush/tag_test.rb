@@ -44,23 +44,6 @@ module JPush
       end
     end
 
-    def test_add_and_remove_devices
-      body = @tags.has_device?($test_common_tag, $test_common2_registration_id).body
-      assert_false body['result']
-
-      response = @tags.add_devices($test_common_tag, $test_common2_registration_id)
-      assert_equal 200, response.http_code
-
-      body = @tags.has_device?($test_common_tag, $test_common2_registration_id).body
-      assert_true body['result']
-
-      response = @tags.remove_devices($test_common_tag, $test_common2_registration_id)
-      assert_equal 200, response.http_code
-
-      body = @tags.has_device?($test_common_tag, $test_common2_registration_id).body
-      assert_false body['result']
-    end
-
     def test_update_with_invalid_tag_value
       invalid_tag = 'INVALID_TAG'
 

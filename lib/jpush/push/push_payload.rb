@@ -9,7 +9,7 @@ module JPush
       MAX_SMS_DELAY_TIME = 86400    # 24 * 60 * 60 (second)
 
       def initialize(platform: , audience: , notification: nil, message: nil)
-        @platform = 'all' == platform ? JPush::Config.settings[:valid_platform] : build_platform(platform)
+        @platform = 'all' == platform ? 'all' : build_platform(platform)
         @audience = 'all' == audience ? 'all' : build_audience(audience)
         @notification = build_notification(notification) unless notification.nil?
         @message = build_message(message) unless message.nil?

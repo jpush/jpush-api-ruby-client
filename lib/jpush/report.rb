@@ -1,8 +1,8 @@
 require 'jpush/http/client'
+require 'jpush/handler'
 
 module JPush
-  module Report
-    extend self
+  class Report < Handler
 
     TIME_UNIT = ['HOUR', 'DAY', 'MONTH']
     TIME_FORMAT = { hour: '%F %H', day: '%F', month: '%Y-%m' }
@@ -16,7 +16,7 @@ module JPush
       params = {
         msg_ids: msg_ids.join(',')
       }
-      Http::Client.get(url, params: params)
+      Http::Client.get(@jpush, url, params: params)
     end
 
     # GET /v3/messages
@@ -27,7 +27,7 @@ module JPush
       params = {
         msg_ids: msg_ids.join(',')
       }
-      Http::Client.get(url, params: params)
+      Http::Client.get(@jpush, url, params: params)
     end
 
     # GET /v3/users
@@ -41,13 +41,13 @@ module JPush
         duration: duration
       }
       url = base_url + '/users'
-      Http::Client.get(url, params: params)
+      Http::Client.get(@jpush, url, params: params)
     end
 
     private
 
       def base_url
-        Config.settings[:report_api_host] + Config.settings[:api_version]
+        'https://report.jpush.cn/v3/'
       end
 
       def build_duration(time_unit, duration)
