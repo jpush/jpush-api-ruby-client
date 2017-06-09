@@ -14,9 +14,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'jpush'
-# OR
-gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
+gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git', branch: "http2"
 ```
 
 ## Usage
