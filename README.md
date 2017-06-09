@@ -26,6 +26,7 @@ gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
 - [Report API](https://github.com/jpush/jpush-api-ruby-client/blob/master/docs/Guides.md#report-api)
 - [Schedule API](https://github.com/jpush/jpush-api-ruby-client/blob/master/docs/Guides.md#schedule-api)
 - [Device API](https://github.com/jpush/jpush-api-ruby-client/blob/master/docs/Guides.md#device-api)
+- [Http2 Support](https://github.com/jpush/jpush-api-ruby-client/tree/http2)
 
 ## Development
 
