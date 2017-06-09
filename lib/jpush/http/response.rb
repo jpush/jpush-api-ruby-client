@@ -5,9 +5,9 @@ module JPush
       attr_accessor :http_code, :body, :heades
 
       def initialize(raw_response)
-        @http_code = raw_response.code.to_i
+        @http_code = raw_response.status.to_i
         @body = parse_body(raw_response.body)
-        build_error unless raw_response.kind_of? Net::HTTPSuccess
+        build_error unless raw_response.ok?
       end
 
       private

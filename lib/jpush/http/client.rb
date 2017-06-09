@@ -1,5 +1,7 @@
 require_relative 'response'
 require 'net/http'
+require 'net-http2'
+require "base64"
 require 'json'
 require 'jpush/utils/exceptions'
 
@@ -47,13 +49,6 @@ module JPush
       DEFAULT_RETRY_TIMES = 3
       RETRY_SLEEP_TIME = 3
 
-      HTTP_VERB_MAP = {
-        get:    Net::HTTP::Get,
-        post:   Net::HTTP::Post,
-        put:    Net::HTTP::Put,
-        delete: Net::HTTP::Delete
-      }
-
       DEFAULT_HEADERS = {
         'user-agent' => DEFAULT_USER_AGENT,
         'accept' => 'application/json',
@@ -62,39 +57,29 @@ module JPush
       }
 
       def initialize(jpush, method, url, params: nil, body: nil, headers: {}, opts: {})
-        method = method.downcase.to_sym
         @uri = URI(url)
-        @uri.query = URI.encode_www_form(params) unless params.nil?
-        @request = prepare_request(method, body, headers)
-        @request.basic_auth(jpush.app_key, jpush.master_secret)
+        @method = method.downcase.to_sym
+        @params = params
+        @body = body.to_json unless body.nil?
+        @headers = DEFAULT_HEADERS.merge(headers)
+        @headers['Authorization'] = 'Basic ' + Base64.encode64(jpush.app_key + ':' + jpush.master_secret).gsub("\n", '')
         @opts = opts
       end
 
       def send_request
-        tries ||= DEFAULT_RETRY_TIMES
         opts ||=  {
           use_ssl: 'https' == @uri.scheme,
           open_timeout: DEFAULT_OPEN_TIMEOUT,
           read_timeout: DEFAULT_READ_TIMEOUT
         }.merge @opts
-        Net::HTTP.start(@uri.host, @uri.port, opts) do |http|
-          http.request(@request)
-        end
-      # if raise Timeout::Error retry it for 3 times
-      rescue Net::OpenTimeout, Net::ReadTimeout => e
-        (tries -= 1).zero? ? (raise Utils::Exceptions::TimeOutError.new(e)) : retry
+
+        uri = @uri.scheme + '://' + @uri.host
+        @client = NetHttp2::Client.new(uri)
+
+        response = @client.call(@method, @uri.path, params: @params, body: @body, headers: @headers)
+        @client.close
+        response
       end
-
-      private
-
-        def prepare_request(method, body, headers)
-          headers = DEFAULT_HEADERS.merge(headers)
-          request = HTTP_VERB_MAP[method].new @uri
-          request.initialize_http_header(headers)
-          request.body = body.to_json unless body.nil?
-          request
-        end
-
     end
   end
 end
