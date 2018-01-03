@@ -38,8 +38,8 @@ module JPush
           alert: alert,
           sound: sound,
           badge: badge,
-          'content-available': contentavailable,
-          'mutable-content': mutablecontent,
+          :'content-available' => contentavailable,
+          :'mutable-content' => mutablecontent,
           category: category,
           extras: extras
         }.select { |_, value| !value.nil? }
