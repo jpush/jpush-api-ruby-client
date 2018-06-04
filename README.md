@@ -7,7 +7,7 @@
 
 对应的 REST API 文档: https://docs.jiguang.cn/jpush/server/push/server_overview/
 
-> 支持的 Ruby 版本：>= 2.2
+> 支持的 Ruby 版本：>= 2.0.0
 
 ## Installation
 
