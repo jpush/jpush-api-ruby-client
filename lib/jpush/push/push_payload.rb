@@ -5,8 +5,7 @@ module JPush
   module Push
     class PushPayload
 
-      MAX_SMS_CONTENT_SIZE = 480
-      MAX_SMS_DELAY_TIME = 86400    # 24 * 60 * 60 (second)
+      attr_reader :cid
 
       def initialize(platform: , audience: , notification: nil, message: nil)
         @platform = 'all' == platform ? 'all' : build_platform(platform)
@@ -20,13 +19,18 @@ module JPush
         self
       end
 
-      def set_sms_message(content, delay_time = 0)
-        @sms_message = build_sms_message(content, delay_time)
+      def set_sms_message(sms_message)
+        @sms_message = sms_message
         self
       end
 
-      def set_options(opts)
-        @options = opts
+      def set_options(options)
+        @options = options
+        self
+      end
+
+      def set_cid(cid)
+        @cid= cid
         self
       end
 
@@ -37,7 +41,8 @@ module JPush
           notification: @notification,
           message: @message,
           sms_message: @sms_message,
-          options: { apns_production: false }.merge(@options.nil? ? {} : @options)
+          options: { apns_production: false }.merge(@options.nil? ? {} : @options),
+          cid: @cid
         }.select { |_, value| !value.nil? }
       end
 
@@ -65,11 +70,6 @@ module JPush
             content_type: content_type,
             extras: extras
           }.select { |_, value| !value.nil? }
-        end
-
-        def build_sms_message(content, delay_time)
-          delay_time = 0 if delay_time > MAX_SMS_DELAY_TIME
-          {content: content, delay_time: delay_time}
         end
 
     end

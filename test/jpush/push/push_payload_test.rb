@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../../test_helper'
 
 module JPush
   module Push
@@ -60,13 +60,18 @@ module JPush
 
       def test_sms
         assert_false @hello_payload.to_hash.has_key?(:sms_message)
-        push_payload = @hello_payload.set_sms_message('hello jpush', 100).to_hash
+        sms_message = {
+            delay_time: 10,
+            signid: 12,
+            temp_id: 14353
+        }
+        push_payload = @hello_payload.set_sms_message(sms_message).to_hash
         assert_true push_payload.has_key?(:sms_message)
 
         sms = push_payload[:sms_message]
-        assert_true sms.has_key?(:content)
         assert_true sms.has_key?(:delay_time)
-        assert_equal 'hello jpush', sms[:content]
+        assert_true sms.has_key?(:signid)
+        assert_true sms.has_key?(:temp_id)
       end
 
       def test_options

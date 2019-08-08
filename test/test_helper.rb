@@ -17,8 +17,11 @@ conf =
 $test_app_key = conf['app_key']
 $test_master_secret = conf['master_secret']
 
-$test_common_registration_id = conf['common_rid']
-$test_common_tag = conf['tag']
+$test_common_rid = conf['common_rid']
+$test_android_rid = conf['android_rid']
+$test_ios_rid = conf['ios_rid']
+$test_common_tag = conf['common_tag']
+$test_common_alias = conf['common_alias']
 $test_report_delay_time = conf['report_delay_time'].to_i
 
 class JPush::Test < MiniTest::Test
