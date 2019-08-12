@@ -28,6 +28,22 @@ module JPush
       assert_instance_of(Hash, result)
     end
 
+    def test_received_detail
+      @reporter.received_detail(@msg_id)
+      @reporter.received_detail(@msg_id)
+      sleep $test_report_delay_time
+
+      response = @reporter.received_detail(@msg_id)
+      assert_equal 200, response.http_code
+
+      body = response.body
+      assert_instance_of(Array, body)
+      assert_equal 1, body.size
+
+      result = body.first
+      assert_instance_of(Hash, result)
+    end
+
     def test_messages
       response = @reporter.messages(@msg_id)
       assert_equal 200, response.http_code
@@ -43,6 +59,35 @@ module JPush
       assert_instance_of Hash, result['android']
       assert_instance_of Hash, result['ios']
       assert_instance_of Hash, result['winphone']
+    end
+
+    def test_messages_detail
+      response = @reporter.messages_detail(@msg_id)
+      assert_equal 200, response.http_code
+
+      body = response.body
+      assert_instance_of(Array, body)
+      assert_equal 1, body.size
+
+      result = body.first
+      assert_instance_of(Hash, result)
+      assert_equal 5, result.size
+
+      assert_instance_of Hash, result['jpush']
+      assert_instance_of Hash, result['android_pns']
+      assert_instance_of Hash, result['ios']
+      assert_instance_of Hash, result['winphone']
+    end
+
+    def test_status_message
+      regid = 'ee323rsdf'
+      response = @reporter.status_message(msg_id: @msg_id, registration_ids: [regid])
+      assert_equal 200, response.http_code
+
+      body = response.body
+      assert_instance_of(Hash, body)
+      assert_equal 1, body.size
+      assert_instance_of Hash, body[regid]
     end
 
     def test_users

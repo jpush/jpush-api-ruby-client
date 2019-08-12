@@ -39,11 +39,11 @@ module JPush
       registration_ids = [registration_ids].flatten
       url = base_url + 'status/message'
       body = {
-        msg_id: msg_id,
+        msg_id: msg_id.to_i,
         registration_ids: registration_ids,
         date: date
-      }
-      Http::Client.get(@jpush, url, body: body)
+      }.select { |_, value| !value.nil? }
+      Http::Client.post(@jpush, url, body: body)
     end
 
     # GET /v3/messages

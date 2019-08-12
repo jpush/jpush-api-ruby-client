@@ -41,11 +41,12 @@ module JPush
     # https://docs.jiguang.cn/jpush/server/push/rest_api_v3_push/#vip
     def push_batch_regid(single_push_payloads)
       cid_response = get_cid(count=single_push_payloads.size, type='push')
-      cidlist = response.body['cidlist']
+      cidlist = cid_response.body['cidlist']
       body = {}
+      body['pushlist'] = {}
       single_push_payloads.each { |payload|
         cid = cidlist.pop
-        body['cid'] = payload
+        body['pushlist'][cid] = payload.to_hash
       }
       url = base_url + 'batch/regid/single'
       Http::Client.post(@jpush, url, body: body)
@@ -55,12 +56,13 @@ module JPush
     # 针对Alias方式批量单推（VIP专属接口）
     # https://docs.jiguang.cn/jpush/server/push/rest_api_v3_push/#vip
     def push_batch_alias(single_push_payloads)
-      response = get_cid(count=single_push_payloads.size, type='push')
-      cidlist = response.body['cidlist']
+      cid_response = get_cid(count=single_push_payloads.size, type='push')
+      cidlist = cid_response.body['cidlist']
       body = {}
+      body['pushlist'] = {}
       single_push_payloads.each { |payload|
         cid = cidlist.pop
-        body['cid'] = payload
+        body['pushlist'][cid] = payload
       }
       url = base_url + 'batch/alias/single'
       Http::Client.post(@jpush, url, body: body)

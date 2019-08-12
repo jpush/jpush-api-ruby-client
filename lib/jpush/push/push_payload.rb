@@ -35,7 +35,7 @@ module JPush
       end
 
       def to_hash
-        @push_payload =  {
+        @push_payload = {
           platform: @platform,
           audience: @audience,
           notification: @notification,
