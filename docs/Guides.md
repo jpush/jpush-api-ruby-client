@@ -111,6 +111,7 @@ notification.set_android(
   alert: alert,
   title: title,
   builder_id: builder_id,
+  channel_id: channel_id,
   extras: extras
 )
 ```
@@ -122,6 +123,7 @@ notification.set_android(
 | alert | 是 | 表示通知内容，会覆盖上级统一指定的 alert 信息；内容可以为空字符串，表示不展示到通知栏 |
 | title | 否 | 表示通知标题，会替换通知里原来展示 App 名称的地方 |
 | builder_id | 否 | 表示通知栏样式 ID，Android SDK 可设置通知栏样式，这里根据样式 ID 来指定该使用哪套样式 |
+| channel_id | 否 | 不超过1000字节，Android 8.0开始可以进行NotificationChannel配置，这里根据channel ID 来指定通知栏展示效果。 |
 | priority | 否 | 表示通知栏展示优先级，默认为 0，范围为 -2～2 ，其他值将会被忽略而采用默认值 |
 | category | 否 | 表示通知栏条目过滤或排序，完全依赖 rom 厂商对 category 的处理策略 |
 | style | 否 | 表示通知栏样式类型，默认为 0，还有1，2，3 可选，用来指定选择哪种通知栏样式，其他值无效。有三种可选分别为 bigText = 1，Inbox = 2，bigPicture = 3 |
@@ -240,15 +242,26 @@ push_payload = JPush::Push::PushPayload.new(
   platform: platform,
   audience: audience,
   notification: notification
-).set_sms_message(content, delay_time)
+)
+sms_message = {
+  delay_time: delay_time,
+  signid: signid,
+  temp_id: temp_id,
+  temp_para: temp_para,
+  active_filter: active_filter
+}
+push_payload.set_sms_message(sms_message)
 ```
 
 参数说明
 
 | 参数 | 是否必须 | 说明 |
 | --- | :---: | --- |
-| content | 是 | 表示短信内容，不能超过480个字符 |
-| delay_time | 否 | 表示短信发送的延迟时间，单位为秒，不能超过24小时。仅对android平台有效。默认为 0，表示立即发送短信 |
+| delay_time | 是 | 单位为秒，不能超过 24 小时。设置为 0，表示立即发送短信。该参数仅对 android 和 iOS 平台有效，Winphone 平台则会立即发送短信。 |
+| signid | 否 | 签名ID，该字段为空则使用应用默认签名。 |
+| temp_id | 是 | 短信补充的内容模板 ID。没有填写该字段即表示不使用短信补充功能。 |
+| temp_para | 否 | 短信模板中的参数。 |
+| active_filter | 否 | active_filter 字段用来控制是否对补发短信的用户进行活跃过滤，默认为 true ，做活跃过滤；为 false，则不做活跃过滤； |
 
 ###### 推送可选项
 
@@ -303,25 +316,105 @@ set_options(options)
 pusher.push(push_payload)
 ```
 
+#### 构建 SinglePushPayload 对象
+
+一个单一目标的推送对象，目标为regId或者alias。用于批量单推接口，不同的目标指定不同的推送内容
+
+```ruby
+# 初始化 SinglePushPayload 对象
+single_push_payload = Push::SinglePushPayload.new(
+  platform: platform,
+  target: target
+)
+```
+
+参数说明
+
+| 参数 | 是否必须 | 说明 |
+| --- | :---: | --- |
+| platform | 是 | 表示推送的平台，其可接受的参数为 'all'（表示推送到所有平台）, 'android' 或 'ios' 或 ['android', 'ios'] |
+| target | 是 | 推送设备指定。如果是调用RegID方式批量单推接口（/v3/push/batch/regid/single），那此处就是指定regid值；如果是调用Alias方式批量单推接口（/v3/push/batch/alias/single），那此处就是指定alias值。 |
+| notification | 否 | 通知内容体。是被推送到客户端的内容。与 message 一起二者必须有其一，可以二者并存 |
+| message | 否 | 消息内容体。是被推送到客户端的内容。与 notification 一起二者必须有其一，可以二者并存 |
+| sms_message | 否 | 短信渠道补充送达内容体 |
+| options | 否 | 推送参数 |
+
+#### 批量单推（VIP专属接口）
+
+如果您在给每个用户的推送内容都不同的情况下，可以使用此接口。
+
+```ruby
+# 针对RegID方式批量单推
+single_push_payload = Push::SinglePushPayload.new(
+  platform: platform,
+  target: target
+)
+@pusher.push_batch_regid([single_push_payload])
+```
+
+```ruby
+# 针对Alias方式批量单推
+single_push_payload = Push::SinglePushPayload.new(
+  platform: platform,
+  target: target
+)
+@pusher.push_batch_alias([single_push_payload])
+```
+
 ## Report API
 
 ```ruby
 reporter = jpush.reporter
 ```
 
-#### 送达统计
+#### 送达统计（旧）
 
 ```ruby
 # 参数 msg_ids 为一个表示有效的 msg_id 字符串或者一个最多包含100个有效的 msg_id 字符串的数组
 reporter.received(msg_ids)
 ```
 
-#### 消息统计（VIP专属接口）
+#### 送达统计详情（新）
+
+```ruby
+# 参数 msg_ids 为一个表示有效的 msg_id 字符串或者一个最多包含100个有效的 msg_id 字符串的数组
+reporter.received_detail(msg_ids)
+```
+
+#### 送达状态查询
+
+```ruby
+# 参数 msg_id 为消息ID，registration_ids为一个注册ID数组
+reporter.status_message(
+  msg_id: msg_id,
+  registration_ids:
+  date: date
+)
+```
+
+参数说明
+
+| 参数 | 是否必须 | 说明 |
+| --- | :---: | --- |
+| msg_id | 是 | 消息 id，一次调用仅支持一个消息 id 查询。 |
+| registration_ids | 是 | JSON Array 类型，多个registration id 用逗号隔开，一次调用最多支持 1000个。 |
+| date | 否 | 查询的指定日期，格式为 yyyy-mm-dd，默认为当天。 |
+
+#### 消息统计（VIP专属接口，旧）
 
 ```ruby
 # 与送达统计 API 不同的是，该 API 提供更多的的统计数据
 # 参数 msg_ids 为一个表示有效的 msg_id 字符串或者一个最多包含100个有效的 msg_id 字符串的数组
 reporter.messages(msg_ids)
+```
+
+#### 消息统计详情（VIP 专属接口，新）
+
+```ruby
+# 与“送达统计” API 不同的是，该 API 提供更多的针对一个 msgid 的统计数据。
+# 与“消息统计” 旧接口相比，此接口获取到的数据更详细，而且如果您的应用开通了Android厂商通道，建议使用此接口。
+# 参数 msg_ids 为一个表示有效的 msg_id 字符串或者一个最多包含100个有效的 msg_id 字符串的数组
+reporter.messages_detail(msg_ids)
 ```
 
 #### 用户统计（VIP专属接口）
