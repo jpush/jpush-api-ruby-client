@@ -62,7 +62,7 @@ module JPush
       body['pushlist'] = {}
       single_push_payloads.each { |payload|
         cid = cidlist.pop
-        body['pushlist'][cid] = payload
+        body['pushlist'][cid] = payload.to_hash
       }
       url = base_url + 'batch/alias/single'
       Http::Client.post(@jpush, url, body: body)
