@@ -15,7 +15,7 @@ module JPush
         def parse_body(body)
           body = JSON.parse(body)
         rescue JSON::ParserError
-          body
+          raise Utils::Exceptions::JPushResponseError.new(http_code, http_code, body)
         end
 
         def build_error
