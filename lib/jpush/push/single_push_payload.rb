@@ -19,6 +19,16 @@ module JPush
         self
       end
 
+      def set_callback(callback)
+        @callback = callback
+        self
+      end
+
+      def set_notification_3rd(notification_3rd)
+        @notification_3rd = notification_3rd
+        self
+      end
+
       def set_sms_message(sms_message)
         @sms_message = sms_message
         self
@@ -37,6 +47,8 @@ module JPush
           message: @message,
           sms_message: @sms_message,
           options: @options
+          callback: @callback
+          notification_3rd: @notification_3rd
         }.select { |_, value| !value.nil? }
       end
 
