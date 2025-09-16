@@ -51,11 +51,37 @@ module JPush
         self
       end
 
+      def set_hmos(alert: , title: nil, category: , large_icon: nil,
+        intent: , badge_add_num: nil, badge_set_num: nil, test_message: nil, receipt_id: nil, extras: nil, style: nil, inbox: nil,
+        push_type: nil, extra_data: nil, display_foreground: nil, sound: nil, sound_duration: nil)
+        @hmos = {
+          alert: alert,
+          title: title,
+          category: category,
+          large_icon: large_icon,
+          intent: intent,
+          badge_add_num: badge_add_num,
+          badge_set_num: badge_set_num,
+          test_message: test_message,
+          receipt_id: receipt_id,
+          extras: extras,
+          style: style,
+          inbox: inbox,
+          push_type: push_type,
+          extra_data: extra_data,
+          display_foreground: display_foreground,
+          sound: sound,
+          sound_duration: sound_duration
+        }.select { |_, value| !value.nil? }
+        self
+      end
+
       def to_hash
         @notification = {
           alert: @alert,
           android: @android,
-          ios: @ios
+          ios: @ios,
+          hmos: @hmos
         }.select { |_, value| !value.nil? }
         raise Utils::Exceptions::JPushError, 'Notification can not be empty.' if @notification.empty?
         @notification

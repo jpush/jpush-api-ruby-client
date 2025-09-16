@@ -131,7 +131,7 @@ module JPush
       assert_equal 200, response.http_code
       @tags.add_devices($test_common_tag, $test_common_registration_id)
 
-      response = @tags.delete($test_common_tag, ['android', 'ios'])
+      response = @tags.delete($test_common_tag, ['android', 'ios', 'hmos'])
       assert_equal 200, response.http_code
       @tags.add_devices($test_common_tag, $test_common_registration_id)
     end

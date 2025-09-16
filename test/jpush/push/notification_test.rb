@@ -25,17 +25,20 @@ module JPush
         result = @notification.
           set_alert('Hello JPush').
           set_android(alert: 'Hello Android').
+          set_hmos(alert: 'Hello Hmos').
           set_ios(alert: 'Hello IOS').to_hash
-        assert_equal 3, result.size
+        assert_equal 4, result.size
         assert_true result.has_key?(:alert)
         assert_true result.has_key?(:android)
+        assert_true result.has_key?(:hmos)
         assert_true result.has_key?(:ios)
 
         result = @notification.
           set_alert('Hello JPush').
           set_android(alert: 'Hello Android').
+          set_hmos(alert: 'Hello Hmos').
           set_ios(alert: { k1: 'v1', k2: 'v2' }).to_hash
-        assert_equal 3, result.size
+        assert_equal 4, result.size
         assert_true result[:ios][:alert].is_a? Hash
         assert_equal 2, result[:ios][:alert].size
       end
@@ -50,6 +53,15 @@ module JPush
               key0: 'value0',
               key1: 'value1'
             }
+          ).set_hmos(
+            alert: 'Hello Hmos',
+            title: 'hello',
+            category: 'IM',
+            # intent: {url: 'scheme://test?key1=val1&key2=val2'},
+            extras: {
+              key4: 'value4',
+              key5: 'value5'
+            }
           ).set_ios(
             alert: 'Hello IOS',
             sound: 'sound',
@@ -61,13 +73,15 @@ module JPush
               key3: 'value3'
             }
           ).to_hash
-        assert_equal 3, result.size
+        assert_equal 4, result.size
         assert_true result.has_key?(:alert)
         assert_true result.has_key?(:android)
         assert_true result.has_key?(:ios)
+        assert_true result.has_key?(:hmos)
 
         assert_equal 3, result[:android].length
         assert_equal 6, result[:ios].length
+        assert_equal 4, result[:hmos].length
       end
 
       def test_content_available

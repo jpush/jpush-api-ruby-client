@@ -58,6 +58,7 @@ module JPush
 
       assert_instance_of Hash, result['android']
       assert_instance_of Hash, result['ios']
+      assert_instance_of Hash, result['hmos']
       assert_instance_of Hash, result['winphone']
     end
 
@@ -76,6 +77,7 @@ module JPush
       assert_instance_of Hash, result['jpush']
       assert_instance_of Hash, result['android_pns']
       assert_instance_of Hash, result['ios']
+      assert_instance_of Hash, result['hmos']
       assert_instance_of Hash, result['winphone']
     end
 
