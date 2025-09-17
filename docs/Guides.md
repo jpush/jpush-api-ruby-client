@@ -182,7 +182,7 @@ notification.set_hmos(
 | --- | :---: | --- |
 | alert | 是 | 这里指定后会覆盖上级统一指定的 alert 信息. 内容不可以是空字符串，否则推送厂商会返回失败 |
 | title | 否 | 如果指定了，则通知里原来展示 App 名称的地方，将展示 title。否则使用WebPortal配置的默认title |
-| category | 是 | 此字段由于厂商为必填字段，效果也完全依赖 rom 厂商对 category 的处理策略，请开发者务必填写。极光内部对此字段实际未进行必填校验，请开发者按照必填处理。  此字段值对应官方「云端category」取值，开发者通过极光服务发起推送时如果传递了此字段值，请务必按照官方要求传递，官方category分类取值规则也可参考[鸿蒙消息分类标准?](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/push-apply-right-V5)  |
+| category | 是 | 此字段由于厂商为必填字段，效果也完全依赖 rom 厂商对 category 的处理策略，请开发者务必填写。极光内部对此字段实际未进行必填校验，请开发者按照必填处理。  此字段值对应官方「云端category」取值，开发者通过极光服务发起推送时如果传递了此字段值，请务必按照官方要求传递，官方category分类取值规则也可参考[鸿蒙消息分类标准](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/push-apply-right-V5)  |
 | intent | 是 | 支持跳转到应用首页、deeplink 地址和Action跳转三种类型：1. 跳转应用首页：固定 action.system.home 2. 跳转到 deeplink 地址: scheme://test?key1=val1&key2=val2 3. 跳转到 action 地址: com.test.action。 说明：此字段由于厂商为必填字段，请开发者务必填写。极光内部对此字段实际未进行必填校验，请开发者按照必填处理。 |
 | extras | 否 | 这里自定义 JSON 格式的 Key / Value 信息，以供业务使用。 |
 
