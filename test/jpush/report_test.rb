@@ -72,7 +72,7 @@ module JPush
 
       result = body.first
       assert_instance_of(Hash, result)
-      assert_equal 5, result.size
+      assert_equal 8, result.size
 
       assert_instance_of Hash, result['jpush']
       assert_instance_of Hash, result['android_pns']
