@@ -21,7 +21,8 @@ module JPush
         notification = {
           alert: 'Hello world',
           android: {
-            title: 'welcome android'
+            title: 'welcome',
+            alert: 'welcome android'
           }
         }
         @hello_payload.set_notification(notification)
