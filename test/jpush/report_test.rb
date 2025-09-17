@@ -58,7 +58,7 @@ module JPush
 
       assert_instance_of Hash, result['android']
       assert_instance_of Hash, result['ios']
-      assert_instance_of Hash, result['hmos']
+      # assert_instance_of Hash, result['hmos'] #旧接口没维护了，不支持hmos
       assert_instance_of Hash, result['winphone']
     end
 
