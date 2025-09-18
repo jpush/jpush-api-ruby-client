@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../../test_helper'
 
 module JPush
   module Schedule
@@ -18,8 +18,8 @@ module JPush
 
       def test_periodical
         trigger = @trigger.set_periodical(
-          Time.new(2015, 4, 20),
-          Time.new(2016, 4, 20),
+          Time.new(2025, 4, 20),
+          Time.new(2026, 4, 20),
           '13:20',
           'week',
           2,

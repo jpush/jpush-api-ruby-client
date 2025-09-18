@@ -5,7 +5,8 @@ module JPush
 
     def setup
       pusher = @@jpush.pusher
-      push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from report api')
+      @audience = Push::Audience.new().set_registration_id($test_common_registration_id)
+      push_payload = Push::PushPayload.new(platform: 'all', audience: @audience, notification: 'hello from report api')
       @msg_id = pusher.push(push_payload).body['msg_id']
       sleep $test_report_delay_time
 
@@ -74,11 +75,12 @@ module JPush
       assert_instance_of(Hash, result)
       assert_equal 8, result.size
 
+      assert_instance_of Hash, result['details'] #hmos指标在details里
       assert_instance_of Hash, result['jpush']
       assert_instance_of Hash, result['android_pns']
-      assert_instance_of Hash, result['ios']
-      assert_instance_of Hash, result['hmos']
-      assert_instance_of Hash, result['winphone']
+      # assert_instance_of Hash, result['ios'] #ios指标可能为空
+      # assert_instance_of Hash, result['hmos'] #前旧体系指标不包含hmos
+      # assert_instance_of Hash, result['winphone'] #winphone指标可能为空
     end
 
     def test_status_message

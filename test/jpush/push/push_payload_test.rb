@@ -5,13 +5,14 @@ module JPush
     class PushPayloadTest < JPush::Test
 
       def setup
-        @hello_payload = PushPayload.new(platform: 'all', audience: 'all', notification: 'hello')
+        @audience = Audience.new().set_registration_id($test_common_registration_id)
+        @hello_payload = PushPayload.new(platform: 'all', audience: @audience, notification: 'hello')
       end
 
       def test_platform
         push_payload = PushPayload.new(
           platform: 'android',
-          audience: 'all',
+          audience: @audience,
           notification: 'hello'
         ).to_hash
         assert_true push_payload[:platform].include?('android')
@@ -30,7 +31,7 @@ module JPush
       def test_notification
         push_payload = PushPayload.new(
           platform: 'all',
-          audience: 'all',
+          audience: @audience,
           notification: 'hello'
         ).to_hash
         assert_true push_payload[:notification].has_key?(:alert)

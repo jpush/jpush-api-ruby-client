@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 module JPush
   class TagTest < JPush::Test
@@ -23,17 +23,21 @@ module JPush
       end
 
       response = @tags.has_device?('INVALID_TAG', $test_common_registration_id)
+      puts "Response for test_tag_has_device_with_invalid_argument: #{response.inspect}"
       assert_equal 200, response.http_code
       body = response.body
+      puts "Body for test_tag_has_device_with_invalid_argument: #{body.inspect}"
       assert_true body.has_key?('result')
       assert_false body['result']
     end
 
     def test_tag_has_device
       response = @tags.has_device?($test_common_tag, $test_common_registration_id)
+      puts "Response for test_tag_has_device: #{response.inspect}"
       assert_equal 200, response.http_code
 
       body = response.body
+      puts "Body for test_tag_has_device: #{body.inspect}"
       assert_true body.has_key?('result')
       assert_true body['result']
     end
@@ -104,13 +108,16 @@ module JPush
 
     def test_delete_tag
       body = tags_list_body
+      puts "Before deleting tag: tags_list_body = #{body.inspect}"
       before_tag_len = body['tags'].length
       assert_true body['tags'].include?($test_common_tag)
 
       response = @tags.delete($test_common_tag)
+      puts "Response after deleting tag: #{response.inspect}"
       assert_equal 200, response.http_code
 
       body = tags_list_body
+      puts "After deleting tag: tags_list_body = #{body.inspect}"
       after_tag_len = body['tags'].length
       assert_false body['tags'].include?($test_common_tag)
       assert_equal 1, before_tag_len  - after_tag_len
@@ -118,20 +125,24 @@ module JPush
       @tags.add_devices($test_common_tag, $test_common_registration_id)
 
       body = tags_list_body
+      puts "After re-adding tag: tags_list_body = #{body.inspect}"
       final_tag_len = body['tags'].length
       assert_true body['tags'].include?($test_common_tag)
       assert_equal before_tag_len, final_tag_len
 
       body = @tags.has_device?($test_common_tag, $test_common_registration_id).body
+      puts "Body after re-adding tag: #{body.inspect}"
       assert_true body['result']
     end
 
     def test_delete_tag_with_platform
       response = @tags.delete($test_common_tag, 'android')
+      puts "Response after deleting tag with platform (android): #{response.inspect}"
       assert_equal 200, response.http_code
       @tags.add_devices($test_common_tag, $test_common_registration_id)
 
       response = @tags.delete($test_common_tag, ['android', 'ios', 'hmos'])
+      puts "Response after deleting tag with multiple platforms: #{response.inspect}"
       assert_equal 200, response.http_code
       @tags.add_devices($test_common_tag, $test_common_registration_id)
     end
