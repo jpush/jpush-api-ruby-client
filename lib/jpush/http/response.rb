@@ -13,7 +13,8 @@ module JPush
       private
 
         def parse_body(body)
-          body = JSON.parse(body)
+          parsed_body = JSON.parse(body)
+          return parsed_body
         rescue JSON::ParserError
           raise Utils::Exceptions::JPushResponseError.new(http_code, http_code, body)
         end

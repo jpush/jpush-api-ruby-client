@@ -21,12 +21,15 @@ module JPush
         notification = {
           alert: 'Hello world',
           android: {
-            title: 'welcome android'
+            title: 'welcome',
+            alert: 'welcome android'
           }
         }
         @hello_payload.set_notification(notification)
         payload_hash = @hello_payload.to_hash
         assert_true payload_hash[:notification].has_key?(:alert)
+        assert_equal 'Hello world', payload_hash[:notification][:alert]
+        assert_equal 'welcome', payload_hash[:notification][:android][:title]
         assert_equal 'welcome android', payload_hash[:notification][:android][:alert]
       end
 

@@ -1,10 +1,11 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 module JPush
   class PushTest < JPush::Test
 
     def setup
-      @push_payload = Push::PushPayload.new(platform: 'all', audience: 'all', notification: 'hello from schedule api')
+      @audience = Push::Audience.new().set_registration_id($test_common_registration_id)
+      @push_payload = Push::PushPayload.new(platform: 'all', audience: @audience, notification: 'hello from schedule api')
       @schedule_name = "jpush#{rand(0..100)}"
       @schedule_payload = Schedule::SchedulePayload.new(@schedule_name, Time.now + 3600 * 24 * 360, @push_payload)
       @pusher = @@jpush.pusher

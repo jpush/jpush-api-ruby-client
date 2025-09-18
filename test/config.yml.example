@@ -3,6 +3,7 @@ master_secret: <%= ENV['master_secret'] %>
 common_rid: <%= ENV['common_rid'] %>
 android_rid: <%= ENV['android_rid'] %>
 ios_rid: <%= ENV['ios_rid'] %>
+hmos_rid: <%= ENV['hmos_rid'] %>
 common_tag: <%= ENV['common_tag'] %>
 common_alias: <%= ENV['common_alias'] %>
 report_delay_time: <%= ENV['report_delay_time'] %>

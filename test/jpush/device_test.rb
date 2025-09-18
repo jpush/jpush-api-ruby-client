@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 module JPush
   class DeviceTest < JPush::Test
@@ -33,19 +33,24 @@ module JPush
       invalid_tag = 'INVALID_TAG'
 
       body = tags_list_body
+      puts "Before adding tag: tags_list_body = #{body.inspect}"
       assert_false body['tags'].include?(invalid_tag)
       before_tag_len = body['tags'].length
 
       body = device_body($test_common_registration_id)
+      puts "Before adding tag: device_body = #{body.inspect}"
       assert_false body['tags'].include?(invalid_tag)
 
       response = @devices.add_tags($test_common_registration_id, invalid_tag)
+      puts "Response after adding tag: #{response.inspect}"
       assert_equal 200, response.http_code
 
       body = device_body($test_common_registration_id)
+      puts "After adding tag: device_body = #{body.inspect}"
       assert_true body['tags'].include?(invalid_tag)
 
       body = tags_list_body
+      puts "After adding tag: tags_list_body = #{body.inspect}"
       assert_true body['tags'].include?(invalid_tag)
       after_tag_len = body['tags'].length
       assert_equal 1, after_tag_len - before_tag_len
@@ -53,9 +58,11 @@ module JPush
       @@jpush.tags.delete(invalid_tag)
 
       body = device_body($test_common_registration_id)
+      puts "After deleting tag: device_body = #{body.inspect}"
       assert_false body['tags'].include?(invalid_tag)
 
       body = tags_list_body
+      puts "After deleting tag: tags_list_body = #{body.inspect}"
       assert_false body['tags'].include?(invalid_tag)
       final_tag_len = body['tags'].length
 
@@ -64,16 +71,21 @@ module JPush
 
     def test_remove_invalid_tag_value
       invalid_tag = 'INVALID_TAG'
-      assert_false tags_list_body['tags'].include?(invalid_tag)
+      body = tags_list_body
+      puts "Before removing tag: tags_list_body = #{body.inspect}"
+      assert_false body['tags'].include?(invalid_tag)
 
       body = device_body($test_common_registration_id)
+      puts "Before removing tag: device_body = #{body.inspect}"
       assert_false body['tags'].include?(invalid_tag)
       before_tag_len = body['tags'].length
 
       response = @devices.remove_tags($test_common_registration_id, invalid_tag)
+      puts "Response after removing tag: #{response.inspect}"
       assert_equal 200, response.http_code
 
       body = device_body($test_common_registration_id)
+      puts "After removing tag: device_body = #{body.inspect}"
       assert_false body['tags'].include?(invalid_tag)
       after_tag_len = body['tags'].length
 

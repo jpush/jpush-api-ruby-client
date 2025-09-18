@@ -164,6 +164,28 @@ notification.set_ios(
 | category | 否 | IOS8才支持。设置 APNs payload 中的 'category' 字段值 |
 | extras | 否 | 表示扩展字段，接受一个 Hash 对象，以供业务使用 |
 
+###### hmos
+
+```ruby
+notification.set_hmos(
+  alert: alert,
+  title: title,
+  category: category,
+  intent: intent,
+  extras: extras
+)
+```
+
+参数说明
+
+| 参数 | 是否必须 | 说明 |
+| --- | :---: | --- |
+| alert | 是 | 这里指定后会覆盖上级统一指定的 alert 信息. 内容不可以是空字符串，否则推送厂商会返回失败 |
+| title | 否 | 如果指定了，则通知里原来展示 App 名称的地方，将展示 title。否则使用WebPortal配置的默认title |
+| category | 是 | 此字段由于厂商为必填字段，效果也完全依赖 rom 厂商对 category 的处理策略，请开发者务必填写。极光内部对此字段实际未进行必填校验，请开发者按照必填处理。  此字段值对应官方「云端category」取值，开发者通过极光服务发起推送时如果传递了此字段值，请务必按照官方要求传递，官方category分类取值规则也可参考[鸿蒙消息分类标准](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/push-apply-right-V5)  |
+| intent | 是 | 支持跳转到应用首页、deeplink 地址和Action跳转三种类型：1. 跳转应用首页：固定 action.system.home 2. 跳转到 deeplink 地址: scheme://test?key1=val1&key2=val2 3. 跳转到 action 地址: com.test.action。 说明：此字段由于厂商为必填字段，请开发者务必填写。极光内部对此字段实际未进行必填校验，请开发者按照必填处理。 |
+| extras | 否 | 这里自定义 JSON 格式的 Key / Value 信息，以供业务使用。 |
+
 ###### 链式调用
 
 ```ruby
@@ -181,6 +203,12 @@ notification = JPush::Push::Notification.new.
     contentavailable: contentavailable,
     mutablecontent: mutablecontent,
     category: category,
+    extras: extras
+  ).set_hmos(
+    alert: alert,
+    title: title,
+    category: category,
+    intent: intent,
     extras: extras
   )
 ```
@@ -211,7 +239,7 @@ push_payload = JPush::Push::PushPayload.new(
 
 | 参数 | 是否必须 | 说明 |
 | --- | :---: | --- |
-| platform | 是 | 表示推送的平台，其可接受的参数为 'all'（表示推送到所有平台）, 'android' 或 'ios' 或 ['android', 'ios'] |
+| platform | 是 | 表示推送的平台，其可接受的参数为 'all'（表示推送到所有平台）, 'android' 或 'ios' 或 'hmos' 或 ['android', 'ios', 'hmos'] |
 | audience | 是 | 表示推送的设备，其可接受的参数为 'all' （表示发广播,推送到全部设备） 或者一个 Audience 对象 |
 | notification | 否 | 接受一个字符串快速设置最基本的 'alert' 属性，或者一个 Notifcation 对象 |
 | message | 否 | 表示应用内消息，仅接受一个字符串来快速设置消息内容本身，要构建复杂的 Message 对象，需使用 PushPayload 的实例方法 set_message |
@@ -262,7 +290,7 @@ push_payload.set_sms_message(sms_message)
 
 | 参数 | 是否必须 | 说明 |
 | --- | :---: | --- |
-| delay_time | 是 | 单位为秒，不能超过 24 小时。设置为 0，表示立即发送短信。该参数仅对 android 和 iOS 平台有效，Winphone 平台则会立即发送短信。 |
+| delay_time | 是 | 单位为秒，不能超过 24 小时。设置为 0，表示立即发送短信。该参数仅对 android 、iOS 和 HarmonyOS有效，Winphone 平台则会立即发送短信。 |
 | signid | 否 | 签名ID，该字段为空则使用应用默认签名。 |
 | temp_id | 是 | 短信补充的内容模板 ID。没有填写该字段即表示不使用短信补充功能。 |
 | temp_para | 否 | 短信模板中的参数。 |
@@ -337,7 +365,7 @@ single_push_payload = Push::SinglePushPayload.new(
 
 | 参数 | 是否必须 | 说明 |
 | --- | :---: | --- |
-| platform | 是 | 表示推送的平台，其可接受的参数为 'all'（表示推送到所有平台）, 'android' 或 'ios' 或 ['android', 'ios'] |
+| platform | 是 | 表示推送的平台，其可接受的参数为 'all'（表示推送到所有平台）, 'android' 或 'ios' 或 'hmos' 或 ['android', 'ios', 'hmos'] |
 | target | 是 | 推送设备指定。如果是调用RegID方式批量单推接口（/v3/push/batch/regid/single），那此处就是指定regid值；如果是调用Alias方式批量单推接口（/v3/push/batch/alias/single），那此处就是指定alias值。 |
 | notification | 否 | 通知内容体。是被推送到客户端的内容。与 message 一起二者必须有其一，可以二者并存 |
 | message | 否 | 消息内容体。是被推送到客户端的内容。与 notification 一起二者必须有其一，可以二者并存 |
