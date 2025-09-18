@@ -14,8 +14,8 @@ module JPush
 
       def set_android(alert: , title: nil, builder_id: nil, channel_id: nil,
         priority: nil, category: nil, style: nil, alert_type: nil, big_text: nil, inbox: nil, big_pic_path: nil, extras: nil,
-        large_icon: nil, small_icon_uri: nil, icon_bg_color: nil, intent: nil,badge_add_num: nil, badge_set_num: nil,
-        badge_class: nil, sound: nil, show_begin_time: nil, show_end_time: nil, display_foreground: nil
+        large_icon: nil, small_icon_uri: nil, icon_bg_color: nil, intent: nil, uri_activity: nil, uri_action:nil, badge_add_num: nil,
+        badge_set_num: nil, badge_class: nil, sound: nil, show_begin_time: nil, show_end_time: nil, display_foreground: nil
         )
         @android = {
           alert: alert,
@@ -32,6 +32,8 @@ module JPush
           extras: extras,
           large_icon: large_icon,
           intent: intent,
+          uri_activity: uri_activity,
+          uri_action: uri_action,
           small_icon_uri: small_icon_uri,
           icon_bg_color: icon_bg_color,
           badge_add_num: badge_add_num,
